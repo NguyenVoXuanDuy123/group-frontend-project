@@ -1,12 +1,18 @@
+import SideBarLeft from "@/components/SideBarLeft";
+import SideBarRight from "@/components/SideBarRight";
 import { Outlet } from "react-router-dom";
-import Header from "@/components/header/Header";
 
 const BaseLayout = () => {
   return (
-    <>
-      <Header />
-      <Outlet />
-    </>
+    <div className="h-screen">
+      <div className="mx-auto flex w-full h-full max-w-[1280px]">
+        <SideBarLeft />
+        <div className="flex-1 pt-10 px-8">
+          <Outlet />
+        </div>
+        <SideBarRight />
+      </div>
+    </div>
   );
 };
 
