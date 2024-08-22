@@ -1,5 +1,11 @@
+import CreatePostPrompt from "@/components/home/CreatePostPrompt";
+
 const Home = () => {
-  return <h1 className="bg-black">Home</h1>;
+  return (
+    <>
+      <CreatePostPrompt />
+    </>
+  );
 };
 
 export default Home;
