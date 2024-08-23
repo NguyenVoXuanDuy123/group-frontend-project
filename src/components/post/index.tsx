@@ -21,15 +21,15 @@ const PostCard = () => {
               photoURL="https://scontent.fsgn2-3.fna.fbcdn.net/v/t39.30808-6/447670612_1510338959911026_7071178279042352058_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGg0BBSpcTY_athjcZsckWU28AT3bK6fNLbwBPdsrp80jm52aGZhpFZQQ_DUnsHhQdInt7g6U9ZvwTsb-A4e2mF&_nc_ohc=nzbvn1rf8IYQ7kNvgHc3Qv3&_nc_ht=scontent.fsgn2-3.fna&oh=00_AYD_4AJiHIB9yz1oKUb8JuebZniug6RX4UvA4KPxivu1cw&oe=66CCFB24"
             />
             <div className="ml-4">
-              <div className="text-xl font-medium text-black">
+              <div className="text-md font-medium text-black">
                 Huong Dat Huy
               </div>
-              <div className="text-gray-500">Just now</div>
+              <div className="text-grey">Just now</div>
             </div>
           </div>
 
           {/* Post Content */}
-          <p className="mt-2 text-gray-500">
+          <p className="mt-2">
             Are we in gaming paradise up here at Gamescom? When Porsche meets
             gaming, magic happens. Packed with exciting activities – from
             karaoke and fun meet-and-greets to a full gaming setup – the Porsche
