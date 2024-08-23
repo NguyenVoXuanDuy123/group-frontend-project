@@ -1,5 +1,5 @@
-import ImageAdd from "@/components/svg/ImageAdd";
-import Avatar from "@/components/user/Avatar";
+import ImageAdd from "../svg/ImageAdd";
+import Avatar from "../user/Avatar";
 
 const CreatePostPrompt = () => {
   return (

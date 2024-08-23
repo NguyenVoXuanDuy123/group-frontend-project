@@ -4,13 +4,6 @@ const Home = () => {
   return (
     <>
       <CreatePostPrompt />
-      <CreatePostPrompt />
-      <CreatePostPrompt />
-      <CreatePostPrompt />
-      <CreatePostPrompt />
-      <CreatePostPrompt />
-      <CreatePostPrompt />
-      <CreatePostPrompt />
     </>
   );
 };
