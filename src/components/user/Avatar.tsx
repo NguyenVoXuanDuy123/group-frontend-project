@@ -1,9 +1,11 @@
+import { profileImgURL } from "@/constants";
+
 interface AvatarProps {
-  size: number;
-  photoURL: string;
+  photoURL?: string;
+  size?: number;
 }
 
-const Avatar = ({ size, photoURL }: AvatarProps) => {
+const Avatar = ({ photoURL = profileImgURL, size = 12 }: AvatarProps) => {
   return (
     <img
       src={photoURL}
