@@ -10,7 +10,6 @@ const Home = () => {
       <CreatePostPrompt />
       <CreatePostPrompt />
       <CreatePostPrompt />
-      concac
       <CreatePostPrompt />
     </>
   );
