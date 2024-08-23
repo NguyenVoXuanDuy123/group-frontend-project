@@ -1,5 +1,5 @@
 const SideBarLeft = () => {
-  return <div className="w-80 h-full bg-grey">SsideBarLeft</div>;
+  return <div className="w-80 h-screen bg-grey">SideBarLeft</div>;
 };
 
 export default SideBarLeft;
