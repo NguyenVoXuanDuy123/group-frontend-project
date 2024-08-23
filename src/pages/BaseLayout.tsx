@@ -4,14 +4,12 @@ import { Outlet } from "react-router-dom";
 
 const BaseLayout = () => {
   return (
-    <div className="h-screen">
-      <div className="mx-auto flex w-full h-full max-w-[1280px]">
-        <SideBarLeft />
-        <div className="flex-1 pt-10 px-8">
-          <Outlet />
-        </div>
-        <SideBarRight />
+    <div className="relative mx-auto flex justify-between w-full h-full">
+      <SideBarLeft />
+      <div className=" flex-1 pt-10 px-8 max-w-[744px]">
+        <Outlet />
       </div>
+      <SideBarRight />
     </div>
   );
 };

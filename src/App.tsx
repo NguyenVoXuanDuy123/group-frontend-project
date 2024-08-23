@@ -1,5 +1,5 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { BaseLayout, Home, Login, NoPage, Profile, Register } from "@/pages";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 export default function App() {
   return (
