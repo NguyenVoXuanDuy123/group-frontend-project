@@ -5,9 +5,11 @@ interface AvatarProps {
 
 const Avatar = ({ size, photoURL }: AvatarProps) => {
   return (
-    <div className={`w-${size} h-${size} rounded-full overflow-hidden`}>
-      <img src={photoURL} alt="Avatar" className="w-full h-full object-cover" />
-    </div>
+    <img
+      src={photoURL}
+      alt="Avatar"
+      className={`w-${size} h-${size} rounded-full object-cover`}
+    />
   );
 };
 

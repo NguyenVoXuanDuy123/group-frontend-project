@@ -2,11 +2,13 @@
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    colors: {
-      "white": "#ffffff",
-      "black": "#2F3135",
-      "grey": "#CCCCCC",
-      "light-grey": "#F3F1F1",
+    extend: {
+      colors: {
+        "white": "#ffffff",
+        "black": "#2F3135",
+        "grey": "#CCCCCC",
+        "light-grey": "#F3F1F1",
+      },
     },
     fontFamily: {
       sans: ["Montserrat", "sans-serif", {
