@@ -1,18 +1,40 @@
-import { BaseLayout, Home, Login, NoPage, Profile, Register } from "@/pages";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import MessageModal from "@/components/MessageModal";
+import { useAuth } from "@/hooks/useAuth";
+import { AuthPage, BaseLayout, Home, NoPage, Profile } from "@/pages";
+import { store } from "@/redux/store";
+import { Provider } from "react-redux";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+
+function ProtectedRoute() {
+  const { status, isAuthenticated } = useAuth();
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <AuthPage />;
+  }
+  return <Outlet />;
+}
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<BaseLayout />}>
-          <Route index element={<Home />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="*" element={<NoPage />} />
-        </Route>
-        <Route path="/accounts/login" element={<Login />} />
-        <Route path="/accounts/register" element={<Register />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<BaseLayout />}>
+              <Route index element={<Home />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="*" element={<NoPage />} />
+            </Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+
+      {/* Global Modals, will trigger from anywhere when dispatch action */}
+      <MessageModal />
+    </Provider>
   );
 }

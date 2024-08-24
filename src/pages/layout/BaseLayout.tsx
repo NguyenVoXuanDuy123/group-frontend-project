@@ -1,5 +1,6 @@
 import SideBarLeft from "@/components/SideBarLeft";
 import SideBarRight from "@/components/SideBarRight";
+
 import { Outlet } from "react-router-dom";
 
 const BaseLayout = () => {
