@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 import { clearMessage } from "@/redux/slices/errorModalSlice";
+import { RootState } from "@/redux/store";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const MessageModal = () => {
   const dispatch = useDispatch();

@@ -8,6 +8,7 @@ import HahaReaction from "../svg/reactions/Haha";
 import AngryReaction from "../svg/reactions/Angry";
 import { Post } from "@/types/post.types";
 import getFullName from "@/helpers/getFullName";
+import { timeAgo } from "@/helpers/timeAgo";
 
 type PostCardProps = {
   post: Post; 
@@ -26,7 +27,7 @@ const PostCard = ({post}: PostCardProps) => {
             <Avatar photoURL={post.author.avatar} />
             <div className="ml-4">
               <div className="">{getFullName(post.author)}</div>
-              <div className="text-dark-grey text-sm">{post.createdAt}</div>
+              <div className="text-dark-grey text-sm">{timeAgo(post.createdAt)}</div>
             </div>
           </div>
 

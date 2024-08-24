@@ -1,5 +1,5 @@
 import EnvVars from "@/constants/EnvVars";
-import { UserRole, UserStatus } from "@/enums/user.enum";
+import { UserRole, UserStatus } from "@/enums/user.enums";
 import { RootState } from "@/redux/store";
 import { ErrorType } from "@/types/api.types";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";

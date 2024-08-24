@@ -1,7 +1,10 @@
-import { UserInformation } from "@/types/user.types"
 
+type Nameable = {
+    firstName: string;
+    lastName: string;
+}
 
-const getFullName = (user: UserInformation): string => {
+const getFullName = (user: Nameable): string => {
     return `${user.firstName} ${user.lastName}`;
 }   
 

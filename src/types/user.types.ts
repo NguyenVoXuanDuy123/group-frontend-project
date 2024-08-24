@@ -16,4 +16,5 @@ export type UserInformation = {
      * The username for the user.
      */
     username: string;
+    
 }
