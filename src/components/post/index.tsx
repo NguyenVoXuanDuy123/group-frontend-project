@@ -11,7 +11,7 @@ const PostCard = () => {
   const [showReactions, setShowReactions] = useState(false);
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-xl border border-light-grey overflow-hidden md:max-w-2xl my-4">
+    <div className="max-w-md mx-auto bg-white rounded-xl overflow-hidden md:max-w-2xl my-4">
       <div className="md:flex">
         <div className="px-4 pt-4">
           {/* Profile Section */}

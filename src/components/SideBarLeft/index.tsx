@@ -8,10 +8,10 @@ import LogOutIcon from "../svg/side_bar_icons/LogOutIcon";
 
 const SideBarLeft = () => {
   return (
-    <div className="w-80 h-screen p-4 flex flex-col justify-between sticky top-0">
-      <div className="flex flex-col items-center">
-        <Logo width={64} height={64} />
-        <h1 className="text-2xl font-bold mt-2 mb-8">{appName}</h1>
+    <div className="w-80 h-screen p-4 flex flex-col justify-between sticky top-0 bg-white">
+      <div className="flex items-center justify-center w-full mb-10">
+        <Logo width={48} height={48} />
+        <h1 className="text-2xl font-bold ml-5 text-primary">{appName}</h1>
       </div>
       <div className="flex flex-1 flex-col justify-between">
         <div>

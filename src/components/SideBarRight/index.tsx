@@ -4,7 +4,7 @@ import FriendCard from "./FriendCard";
 
 const SideBarRight = () => {
   return (
-    <div className="w-80 h-screen p-4 sticky top-0">
+    <div className="w-80 h-screen p-4 sticky top-0 bg-white">
       <div className="flex justify-end">
         <div className="mr-3 flex items-center justify-center w-12 h-12 bg-light-grey rounded-full">
           <NotificationIcon />
