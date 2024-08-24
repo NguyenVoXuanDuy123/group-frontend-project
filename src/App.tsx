@@ -8,8 +8,8 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 function ProtectedRoute() {
   const { status, isAuthenticated } = useAuth();
 
-  if (status === "loading") {
-    return <div>Loading...</div>;
+  if (status === "firstLoading") {
+    return;
   }
 
   if (!isAuthenticated) {

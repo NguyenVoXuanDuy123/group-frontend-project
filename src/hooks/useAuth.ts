@@ -6,15 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 
 export const useAuth = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { user, isAuthenticated, status, error } = useSelector(
+  const { user, isAuthenticated, status } = useSelector(
     (state: RootState) => state.auth
   );
 
   useEffect(() => {
     if (!isAuthenticated) {
-      dispatch(introspectUser());
+      dispatch(introspectUser({ dispatch }));
     }
   }, [dispatch, isAuthenticated]);
 
-  return { user, isAuthenticated, status, error };
+  return { user, isAuthenticated, status };
 };

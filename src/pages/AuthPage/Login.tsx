@@ -24,7 +24,7 @@ const Login = ({ setIsLogin }: LoginProps) => {
       );
       return;
     }
-    dispatch(loginUser({ username, password }));
+    dispatch(loginUser({ username, password, dispatch }));
   };
 
   return (
