@@ -2,6 +2,16 @@
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    extend: {
+      colors: {
+        primary: "#3B82F6",
+        white: "#ffffff",
+        black: "#2F3135",
+        grey: "#CCCCCC",
+        "light-grey": "#FCFCFC",
+        "dark-grey": "#777777",
+      },
+    },
     fontFamily: {
       sans: [
         "Montserrat",
@@ -14,15 +24,6 @@ module.exports = {
           extrabold: 800,
         },
       ],
-    },
-    extend: {
-      colors: {
-        primary: "#3B82F6",
-        white: "#ffffff",
-        black: "#2F3135",
-        grey: "#CCCCCC",
-        "light-grey": "#FCFCFC",
-      },
     },
   },
   plugins: [],

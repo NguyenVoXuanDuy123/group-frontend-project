@@ -13,7 +13,7 @@ const TabItem = ({ title, icon, onclick }: TabItemProps) => {
       className="w-full p-3 rounded-lg bg-light-grey mb-3 flex "
     >
       {icon}
-      <span className="ml-3 font-bold">{title}</span>
+      <span className="ml-3">{title}</span>
     </div>
   );
 };

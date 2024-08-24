@@ -1,8 +1,17 @@
 import EnvVars from "@/constants/EnvVars";
+import { UserRole, UserStatus } from "@/enums/user.enum";
 import { RootState } from "@/redux/store";
 import { ErrorType } from "@/types/api.types";
-import { UserAuth } from "@/types/users.types";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+type UserAuth = {
+  firstName: string;
+  lastName: string;
+  role: UserRole;
+  status: UserStatus;
+  avatar: string;
+  username: string;
+};
 
 type AuthState = {
   isAuthenticated: boolean;

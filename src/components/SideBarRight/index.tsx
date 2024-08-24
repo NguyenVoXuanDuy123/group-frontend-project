@@ -11,7 +11,7 @@ const SideBarRight = () => {
         </div>
         <Avatar />
       </div>
-      <div className="my-5">
+      <div className="my-4">
         <h2 className="text-lg font-bold">Friends</h2>
         <FriendCard name="Huong Dat Huy" onclick={() => {}} />
         <FriendCard name="Nguyen Vo Xuan Duy" onclick={() => {}} />
