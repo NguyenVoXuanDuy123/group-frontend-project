@@ -6,8 +6,15 @@ import LikeAction from "../svg/post/LikeAction";
 import CommentAction from "../svg/post/CommentAction";
 import HahaReaction from "../svg/reactions/Haha";
 import AngryReaction from "../svg/reactions/Angry";
+import { Post } from "@/types/post.types";
+import getFullName from "@/helpers/getFullName";
 
-const PostCard = () => {
+type PostCardProps = {
+  post: Post; 
+}
+
+
+const PostCard = ({post}: PostCardProps) => {
   const [showReactions, setShowReactions] = useState(false);
 
   return (
@@ -16,27 +23,24 @@ const PostCard = () => {
         <div className="px-4 pt-4">
           {/* Profile Section */}
           <div className="flex items-center mb-4">
-            <Avatar />
+            <Avatar photoURL={post.author.avatar} />
             <div className="ml-4">
-              <div className="">Huong Dat Huy</div>
-              <div className="text-dark-grey text-sm">Just now</div>
+              <div className="">{getFullName(post.author)}</div>
+              <div className="text-dark-grey text-sm">{post.createdAt}</div>
             </div>
           </div>
 
           {/* Post Content */}
           <p className="mt-2 leading-6">
-            Are we in gaming paradise up here at Gamescom? When Porsche meets
-            gaming, magic happens. Packed with exciting activities – from
-            karaoke and fun meet-and-greets to a full gaming setup – the Porsche
-            x Overwatch 2 stand at Gamescom 2024 is a gamer’s paradise. Stop by
-            between 21 and 25 August to meet other community members...
+            {post.content}
             <span className="font-bold">See more</span>
           </p>
 
           {/* Image Section */}
           <img
             className="mt-4 w-full object-cover rounded-lg"
-            src="https://images.unsplash.com/photo-1548978886-6badb16fc09f?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Replace this with the path to your image
+            // src="https://images.unsplash.com/photo-1548978886-6badb16fc09f?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Replace this with the path to your image
+            src={post.images[0]}
             alt="Porsche Car"
           />
 
@@ -45,10 +49,10 @@ const PostCard = () => {
             <div className="flex items-center">
               <LikeReaction />
               <LoveReaction />
-              <span className="ml-2">76 Reactions</span>
+              <span className="ml-2">{post.reactionCount} Reactions</span>
             </div>
             <div className="flex items-center">
-              <span className="">12 Comments</span>
+              <span className="">{post.commentCount} Comments</span>
             </div>
           </div>
 

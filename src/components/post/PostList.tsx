@@ -1,7 +1,26 @@
-const PostList = () => {
-  //   const [postsList, setPostsList] = useState<Post[]>([]);
+import { fetchApi } from "@/services/api.service";
+import { Post } from "@/types/post.types";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import PostCard from ".";
 
-  return <div>PostList</div>;
+const PostList = () => {
+  const [postsList, setPostsList] = useState<Post[]>([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getPosts = async () => {
+      // Fetch the posts from the API
+      const posts = await fetchApi<Post[]>('/api/users/me/feeds', "GET", dispatch);
+      if(posts){
+        setPostsList(posts)
+      }
+    }
+    getPosts();
+    
+  },[dispatch])
+
+  return postsList.map((post) => <PostCard key={post.id} post={post}/>);
 };
 
 export default PostList;

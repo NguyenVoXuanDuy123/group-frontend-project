@@ -1,5 +1,4 @@
 const CreatePostModal = () => {
-  console.log("run");
 
   return (
     <div
