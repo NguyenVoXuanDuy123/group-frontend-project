@@ -26,41 +26,6 @@ const initialState: AuthState = {
   status: "firstLoading",
 };
 
-export const loginUser = createAsyncThunk(
-  "auth/loginUser",
-  async (
-    payload: {
-      username: string;
-      password: string;
-      dispatch: Dispatch;
-    },
-    { rejectWithValue }
-  ) => {
-    const response = await fetchApi(
-      "/api/auth/login",
-      "POST",
-      payload.dispatch,
-      {
-        username: payload.username,
-        password: payload.password,
-      }
-    );
-
-    if (response?.status === "success") {
-      const userAuth = await fetchApi<{
-        isAuthenticated: boolean;
-        user: UserAuth;
-      }>("/api/auth/introspect", "GET", payload.dispatch);
-
-      if (userAuth?.isAuthenticated) {
-        return userAuth.user;
-      }
-    }
-
-    return rejectWithValue("Failed to login");
-  }
-);
-
 export const introspectUser = createAsyncThunk(
   "auth/introspectUser",
   async (
@@ -93,18 +58,6 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loginUser.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(loginUser.fulfilled, (state, action) => {
-        console.log(action.payload);
-        state.status = "idle";
-        state.isAuthenticated = true;
-        state.user = action.payload;
-      })
-      .addCase(loginUser.rejected, (state) => {
-        state.status = "idle";
-      })
       .addCase(introspectUser.fulfilled, (state, action) => {
         state.status = "idle";
         state.isAuthenticated = true;

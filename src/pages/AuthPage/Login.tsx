@@ -1,4 +1,5 @@
-import { loginUser } from "@/redux/slices/authSlice";
+import { fetchApi } from "@/helpers/fetchApi";
+import { introspectUser } from "@/redux/slices/authSlice";
 import { setMessage } from "@/redux/slices/errorModalSlice";
 import { AppDispatch } from "@/redux/store";
 import React, { useState } from "react";
@@ -11,9 +12,10 @@ type LoginProps = {
 const Login = ({ setIsLogin }: LoginProps) => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!username || !password) {
       dispatch(
@@ -24,7 +26,17 @@ const Login = ({ setIsLogin }: LoginProps) => {
       );
       return;
     }
-    dispatch(loginUser({ username, password, dispatch }));
+
+    setIsLoading(true);
+    const response = await fetchApi("/api/auth/login", "POST", dispatch, {
+      username,
+      password,
+    });
+
+    if (response?.status === "success") {
+      await dispatch(introspectUser({ dispatch }));
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -58,6 +70,7 @@ const Login = ({ setIsLogin }: LoginProps) => {
           </div>
           <div className="flex items-center justify-between">
             <button
+              disabled={isLoading}
               type="submit"
               className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
               Login
