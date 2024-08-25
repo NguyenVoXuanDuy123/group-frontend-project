@@ -47,6 +47,28 @@ export const introspectUser = createAsyncThunk(
   }
 );
 
+export const logOut = createAsyncThunk(
+  "auth/logOut",
+  async (
+    payload: {
+      dispatch: Dispatch;
+    },
+    { rejectWithValue }
+  ) => {
+    const response = await fetchApi(
+      "/api/auth/logout",
+      "POST",
+      payload.dispatch
+    );
+
+    if (response?.status === "success") {
+      return true;
+    }
+
+    return rejectWithValue("Failed to logout");
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -58,6 +80,10 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(logOut.fulfilled, (state) => {
+        state.isAuthenticated = false;
+        state.user = null;
+      })
       .addCase(introspectUser.fulfilled, (state, action) => {
         state.status = "idle";
         state.isAuthenticated = true;
