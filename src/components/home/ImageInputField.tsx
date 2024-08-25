@@ -5,14 +5,16 @@ interface ImageInputProps {
 }
 
 const ImageInput: React.FC<ImageInputProps> = ({ onImageSelect }) => {
-  const [image, setImage] = useState<string | null>(null);
+  const [currentImage, setCurrentImage] = useState<string | null>(null);
+  const [images, setImages] = useState<string[]>([]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file && (file.type.startsWith("image/"))) {
+    if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onload = () => {
-        setImage(reader.result as string);
+        setCurrentImage(reader.result as string);
+        setImages([...images, reader.result as string]);
         onImageSelect(file);
       };
       reader.readAsDataURL(file);
@@ -28,10 +30,11 @@ const ImageInput: React.FC<ImageInputProps> = ({ onImageSelect }) => {
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
-    if (file && (file.type.startsWith("image/") || file.type.startsWith("video/"))) {
+    if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onload = () => {
-        setImage(reader.result as string);
+        setCurrentImage(reader.result as string);
+        setImages([...images, reader.result as string]);
         onImageSelect(file);
       };
       reader.readAsDataURL(file);
@@ -40,27 +43,46 @@ const ImageInput: React.FC<ImageInputProps> = ({ onImageSelect }) => {
     }
   };
 
-  const handleClear = () => {
-    setImage(null);
+  const handleClear = (index: number) => {
+    if (images[index] === currentImage) setCurrentImage(null);
+
+    const newImages = images.filter((_, i) => i !== index);
+    setImages(newImages);
   };
 
   return (
     <div className="relative w-full mt-4 rounded-lg text-dark-grey text-center">
+      <div className="flex ">
+        {images?.map((image, index) => (
+          <div className="relative">
+            <img
+              src={image}
+              className="h-32 max-w-24 object-cover"
+              height={100}
+            />
+            {currentImage && (
+              <button
+                className="absolute top-2 right-2 text-gray-300 hover:text-white"
+                onClick={() => handleClear(index)}
+              >
+                x
+              </button>
+            )}
+          </div>
+        ))}
+      </div>
+
       <div
         className="flex flex-col items-center justify-center h-40 bg-light-grey rounded-lg border-2 border-dashed border-gray-500"
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
-        {image ? (
-          <img src={image} alt="Selected" className="w-full h-full object-contain rounded-lg" />
-        ) : (
-          <div className="flex flex-col items-center">
-            {/* <FaPlus className="text-3xl mb-4" /> */}
-            <p>+</p>
-            <p className="font-semibold">Add photos/videos</p>
-            <p className="text-sm text-gray-400">or drag and drop</p>
-          </div>
-        )}
+        <div className="flex flex-col items-center">
+          <p>+</p>
+          <p className="font-semibold">Add photos/videos</p>
+          <p className="text-sm text-gray-400">or drag and drop</p>
+        </div>
+
         <input
           type="file"
           accept="image/*,video/*"
@@ -68,15 +90,6 @@ const ImageInput: React.FC<ImageInputProps> = ({ onImageSelect }) => {
           className="hidden"
         />
       </div>
-      {image && (
-        <button
-          className="absolute top-2 right-2 text-gray-300 hover:text-white"
-          onClick={handleClear}
-        >
-          {/* <FaTimes className="text-xl" /> */}
-          x
-        </button>
-      )}
     </div>
   );
 };
