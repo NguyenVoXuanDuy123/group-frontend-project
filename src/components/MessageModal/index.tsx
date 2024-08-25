@@ -39,7 +39,7 @@ const MessageModal = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isVisible]);
+  }, [isVisible, handleClickOutside]);
 
   if (!message && !isVisible) return null;
 

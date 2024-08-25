@@ -11,23 +11,24 @@ import getFullName from "@/helpers/getFullName";
 import { timeAgo } from "@/helpers/timeAgo";
 
 type PostCardProps = {
-  post: Post; 
-}
+  post: Post;
+};
 
-
-const PostCard = ({post}: PostCardProps) => {
+const PostCard = ({ post }: PostCardProps) => {
   const [showReactions, setShowReactions] = useState(false);
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-xl overflow-hidden md:max-w-2xl my-4">
-      <div className="md:flex">
-        <div className="px-4 pt-4">
+      <div className="md:flex flex-1">
+        <div className="px-4 pt-4 flex-1">
           {/* Profile Section */}
           <div className="flex items-center mb-4">
             <Avatar photoURL={post.author.avatar} />
             <div className="ml-4">
               <div className="">{getFullName(post.author)}</div>
-              <div className="text-dark-grey text-sm">{timeAgo(post.createdAt)}</div>
+              <div className="text-dark-grey text-sm">
+                {timeAgo(post.createdAt)}
+              </div>
             </div>
           </div>
 
