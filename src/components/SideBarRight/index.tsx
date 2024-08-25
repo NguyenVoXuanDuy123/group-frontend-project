@@ -12,7 +12,7 @@ const SideBarRight = () => {
         <Avatar />
       </div>
       <div className="my-4">
-        <h2 className="text-lg font-bold">Friends</h2>
+        <h2 className="text-lg font-bold">friend</h2>
         <FriendCard name="Huong Dat Huy" onclick={() => {}} />
         <FriendCard name="Nguyen Vo Xuan Duy" onclick={() => {}} />
         <FriendCard name="Le Nguyen Viet Cuong" onclick={() => {}} />

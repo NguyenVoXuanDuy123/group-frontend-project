@@ -15,7 +15,7 @@ export const messageSlice = createSlice({
   name: "message",
   initialState,
   reducers: {
-    setMessage: (
+    setModalMessage: (
       state,
       action: PayloadAction<{ message: string; type: "success" | "error" }>
     ) => {
@@ -29,4 +29,4 @@ export const messageSlice = createSlice({
   },
 });
 
-export const { setMessage, clearMessage } = messageSlice.actions;
+export const { setModalMessage, clearMessage } = messageSlice.actions;

@@ -24,7 +24,7 @@ const SideBarLeft = () => {
             icon={<NewsFeedIcon />}
             onclick={() => {}}
           />
-          <TabItem title="Friends" icon={<FriendIcon />} onclick={() => {}} />
+          <TabItem title="friend" icon={<FriendIcon />} onclick={() => {}} />
           <TabItem title="Groups" icon={<GroupIcon />} onclick={() => {}} />
         </div>
         <TabItem

@@ -1,9 +1,30 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Avatar from "../user/Avatar";
 import ImageInput from "./ImageInputField";
+import { fetchApi } from "@/helpers/fetchApi";
+import { useDispatch } from "react-redux";
 
 const CreatePostModal = () => {
-  const [privacy, setPrivacy] = useState<"Public" | "Friends">("Public");
+  const contentInputRef = useRef<HTMLTextAreaElement | null>(null);
+  const [images, setImages] = useState<string[]>([]);
+  const [privacy, setPrivacy] = useState<"public" | "friend">("public");
+  const dispatch = useDispatch();
+
+  const updateImages = (images: string[]) => {
+    setImages(images);
+  };
+
+  const submitPost = () => {
+    if (!contentInputRef.current) {
+      return;
+    }
+    const content = contentInputRef.current.value;
+    fetchApi("/api/posts", "POST", dispatch, {
+      content,
+      images,
+      visibilityLevel: privacy,
+    });
+  };
 
   return (
     <div className="modal modal-lg fade" id="exampleModal">
@@ -16,26 +37,26 @@ const CreatePostModal = () => {
               <select
                 value={privacy}
                 onChange={(e) =>
-                  setPrivacy(e.target.value as "Public" | "Friends")
+                  setPrivacy(e.target.value as "public" | "friend")
                 }
                 className="text-sm border border-gray-300 rounded px-2 py-1"
               >
-                <option value="Public">Public</option>
-                <option value="Friends">Friends</option>
+                <option value="public">Public</option>
+                <option value="friend">friend</option>
               </select>
             </div>
           </div>
           <textarea
+            ref={contentInputRef}
             className="w-full mt-3 p-2 border border-gray-300 rounded focus:outline-none resize-none"
             placeholder="What's on your mind, Huy?"
             rows={5}
-          ></textarea>
-          <ImageInput
-            onImageSelect={(file) => {
-              console.log(file);
-            }}
           />
-          <button className="mt-4 w-full bg-blue-500 text-white py-2 rounded disabled:bg-blue-300">
+          <ImageInput images={images} updateImages={updateImages} />
+          <button
+            onClick={submitPost}
+            className="mt-4 w-full bg-blue-500 text-white py-2 rounded disabled:bg-blue-300"
+          >
             Post
           </button>
         </div>

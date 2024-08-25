@@ -1,16 +1,23 @@
+import { uploadImage } from "@/helpers/uploadImage";
+import { setModalMessage } from "@/redux/slices/errorModalSlice";
 import React, { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 
 interface ImageInputProps {
-  onImageSelect: (file: File) => void;
+  images: string[];
+  updateImages: (images: string[]) => void;
 }
 
-const ImageInput: React.FC<ImageInputProps> = ({ onImageSelect }) => {
-  const [images, setImages] = useState<string[]>([]);
-  const [currentImage, setCurrentImage] = useState<string | null>(null);
+const ImageInput: React.FC<ImageInputProps> = ({
+  images,
+  updateImages,
+}: ImageInputProps) => {
+  const [scrolled, setScrolled] = useState<boolean>(false);
+
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const [scrolled, setScrolled] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
@@ -32,16 +39,32 @@ const ImageInput: React.FC<ImageInputProps> = ({ onImageSelect }) => {
     }
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (images.length == 5) {
+      dispatch(
+        setModalMessage({
+          type: "error",
+          message: "You can only upload 5 images at a time",
+        })
+      );
+      return;
+    }
     const file = event.target.files?.[0];
     if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setCurrentImage(reader.result as string);
-        setImages([...images, reader.result as string]);
-        onImageSelect(file);
-      };
-      reader.readAsDataURL(file);
+      const formData = new FormData();
+      formData.append("image", file);
+      console.log("formData", formData);
+      console.log("file", file);
+
+      const { url } = await uploadImage(
+        "/api/upload",
+        "POST",
+        dispatch,
+        formData
+      );
+      updateImages([...images, url!]);
     } else {
       alert("Please select an image file.");
     }
@@ -53,14 +76,21 @@ const ImageInput: React.FC<ImageInputProps> = ({ onImageSelect }) => {
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
+
+    if (images.length == 5) {
+      dispatch(
+        setModalMessage({
+          type: "error",
+          message: "You can only upload 5 images at a time",
+        })
+      );
+      return;
+    }
     const file = event.dataTransfer.files[0];
     if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onload = () => {
-        setCurrentImage(reader.result as string);
-        setImages([...images, reader.result as string]);
-
-        onImageSelect(file);
+        updateImages([...images, reader.result as string]);
       };
       reader.readAsDataURL(file);
     } else {
@@ -69,12 +99,20 @@ const ImageInput: React.FC<ImageInputProps> = ({ onImageSelect }) => {
   };
 
   const handleClick = () => {
+    if (images.length == 5) {
+      dispatch(
+        setModalMessage({
+          type: "error",
+          message: "You can only upload 5 images at a time",
+        })
+      );
+      return;
+    }
     fileInputRef.current?.click(); // Trigger the file input click when the div is clicked
   };
 
   const handleClear = (index: number) => {
-    setImages(images.filter((_, i) => i !== index));
-    if (images[index] === currentImage) setCurrentImage(null);
+    updateImages(images.filter((_, i) => i !== index));
   };
 
   return (
