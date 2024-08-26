@@ -18,7 +18,7 @@ const Modal = ({ open, hideModal, children }: Props) => {
       {/* Modal */}
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`bg-white rounded-xl shadow p-6 transition-transform duration-300 max-w-[744px] mx-auto my-8 ${open ? "scale-100" : "scale-95"}`}
+        className={`bg-white rounded-xl shadow p-6 transition-transform duration-300 w-fit mx-auto my-8 ${open ? "scale-100" : "scale-95"}`}
       >
         <button
           onClick={hideModal}

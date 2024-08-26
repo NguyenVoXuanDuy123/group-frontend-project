@@ -3,6 +3,8 @@ import { setModalMessage } from "@/redux/slices/errorModalSlice";
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import PlusIcon from "../svg/PlusIcon";
+import ChevronLeft from "../svg/ChevronLeft";
+import ChevronRight from "../svg/ChevronRight";
 
 interface ImageInputProps {
   images: string[];
@@ -123,7 +125,7 @@ const ImageInput: React.FC<ImageInputProps> = ({
               className="absolute left-0 z-10 bg-light-grey text-white rounded-full p-2 ml-2 hover:bg-grey"
               onClick={scrollLeft}
             >
-              &lt;
+              <ChevronLeft />
             </button>
           )}
 
@@ -154,7 +156,7 @@ const ImageInput: React.FC<ImageInputProps> = ({
               className="absolute left-0 z-10 bg-light-grey text-white rounded-full p-2 ml-2 hover:bg-grey"
               onClick={scrollRight}
             >
-              &gt;
+              <ChevronRight />
             </button>
           )}
         </div>

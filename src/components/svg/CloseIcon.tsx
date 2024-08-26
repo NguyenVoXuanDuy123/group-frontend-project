@@ -10,7 +10,7 @@ const CloseIcon = (props: SVGProps<SVGSVGElement>) => (
     {...props}
   >
     <path
-      className="fill-dark-grey"
+      className="fill-current"
       d="m355.269 191.767-35.036-35.036L256 220.964l-64.233-64.233-35.036 35.036L220.964 256l-64.233 64.233 35.036 35.036L256 291.036l64.233 64.233 35.036-35.036L291.036 256z"
     />
   </svg>

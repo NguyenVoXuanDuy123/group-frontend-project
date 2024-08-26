@@ -38,7 +38,7 @@ export type Post = {
    * The count of reactions for the post.
    */
   reactionCount: number;
-  reactionSummary: ReactionSummary[];
+  reactionSummary: ReactionCounter[];
   /**
    * Represents the timestamp of when the entity was last updated.
    */
@@ -88,7 +88,7 @@ export type UserReaction = {
   type: ReactionType;
 };
 
-export type ReactionSummary = {
+export type ReactionCounter = {
   count: number;
   /**
    * Representing different types of reactions that users can give to posts or comments.
