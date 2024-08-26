@@ -2,6 +2,7 @@ import ProfileActions from "@/components/ProfileHeader/ProfileActions";
 // import UploadAvatarModal from "@/components/Modal/UploadAvatarModal";
 import TabItem from "@/components/ProfileHeader/TabItem";
 import Avatar from "@/components/user/Avatar";
+import { UserFriendRelation } from "@/enums/user.enums";
 import getFullName from "@/helpers/getFullName";
 import { UserProfile } from "@/types/user.types";
 
@@ -18,13 +19,14 @@ const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
 
   console.log(user);
   return (
-    <div className="bg-white pt-6 pl-6 pr-6">
+    <div className="bg-white pt-6 ">
       {/* Profile image and details */}
-      <div className="flex items-center  relative">
+      <div className="flex items-center  relative ">
         {/* Avatar Upload Modal */}
         {/* <UploadAvatarModal open={open} onClose={() => setOpen(false)} /> */}
 
         {/* Profile Image */}
+
         <Avatar photoURL={user.avatar} size={168} />
 
         {/* Profile Details */}
@@ -35,10 +37,14 @@ const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
             onClick={() => {
               navigate(`/${user.username}/friends`);
             }}>
-            {user.friendCount + " friends"}
+            {user.friendCount + " friends "}•{" "}
+            {user.userFriendRelation !== UserFriendRelation.SELF &&
+              user.mutualFriendCount + " mutual"}
           </span>
           {/* Bio */}
-          <p className="mt-2 text-dark-grey m-0 w-[390px]">{user.bio}</p>
+          <p className="mt-2 text-dark-grey m-0 w-[390px] break-words">
+            {user.bio}
+          </p>
         </div>
 
         {/* Edit Profile Action */}

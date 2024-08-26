@@ -1,8 +1,10 @@
 import { EditProfileModal } from "@/components/Modal/EditProfileModal";
 import WarningUnfriendModal from "@/components/Modal/WarningUnfriendModal";
-import AddFriend from "@/components/svg/profile-actions/AddFriend";
-import CancelFriendRequest from "@/components/svg/profile-actions/CancelFriendRequest";
-import EditProfile from "@/components/svg/profile-actions/EditProfile";
+import AcceptFriendRequestIcon from "@/components/svg/profile-actions/AcceptFriendRequestIcon";
+import AddFriendIcon from "@/components/svg/profile-actions/AddFriendIcon";
+import CancelFriendRequestIcon from "@/components/svg/profile-actions/CancelFriendRequestIcon";
+import EditProfileIcon from "@/components/svg/profile-actions/EditProfileIcon";
+import RemoveFriendIcon from "@/components/svg/profile-actions/RemoveFriendIcon";
 import { FriendRequestStatus, UserFriendRelation } from "@/enums/user.enums";
 import { fetchApi } from "@/helpers/fetchApi";
 import { FriendRequest, UserProfile } from "@/types/user.types";
@@ -20,10 +22,9 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
     useState<boolean>(false);
   const [warningUnfriendModalOpen, setWarningUnfriendModalOpen] =
     useState<boolean>(false);
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleUnfriend = async () => {
+  const handleRemoveFriend = async () => {
     setIsLoading(true);
     setWarningUnfriendModalOpen(false);
     const response = await fetchApi(
@@ -35,6 +36,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
     if (response?.status === "success") {
       const updatedUser: UserProfile = {
         ...user,
+        friendCount: user.friendCount - 1,
         userFriendRelation: UserFriendRelation.NOT_FRIEND,
       };
       setUser(updatedUser);
@@ -97,6 +99,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
     if (response?.status === "success") {
       const updatedUser: UserProfile = {
         ...user,
+        friendCount: user.friendCount + 1,
         userFriendRelation: UserFriendRelation.FRIEND,
         friendRequest: null,
       };
@@ -142,7 +145,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
           className="bg-gray-700 hover:bg-gray-800 text-white font-semibold 
           py-2 px-4 rounded flex justify-center items-center">
           <div className="mb-1   mr-1">
-            <EditProfile />
+            <EditProfileIcon />
           </div>
           Edit Profile
         </button>
@@ -157,14 +160,18 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
         <WarningUnfriendModal
           open={warningUnfriendModalOpen}
           onClose={() => setWarningUnfriendModalOpen(false)}
-          onConfirm={handleUnfriend}
+          onConfirm={handleRemoveFriend}
         />
         <button></button>
         <button
           disabled={isLoading}
           onClick={() => setWarningUnfriendModalOpen(true)}
-          className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded">
-          Unfriend
+          className="bg-red-600 hover:bg-red-700 text-white font-semibold 
+          py-2 px-4 rounded flex justify-center items-center">
+          <div className="mb-[2px] mr-1">
+            <RemoveFriendIcon color="white" />
+          </div>
+          Remove Friend
         </button>
       </div>
     );
@@ -179,7 +186,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
           onClick={handleAddFriend}
           className="bg-primary text-white font-semibold py-2 px-4 rounded flex items-center justify-center">
           <div className="mb-[2px] mr-1">
-            <AddFriend />
+            <AddFriendIcon />
           </div>
           Add Friend
         </button>
@@ -196,7 +203,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
           onClick={handleCancelRequest}
           className="flex flex-row bg-grey/50 hover:bg-grey/80 text-black font-semibold py-2 px-4 rounded">
           <div className="mr-1 mt-[1px]">
-            <CancelFriendRequest />
+            <CancelFriendRequestIcon />
           </div>
           Cancel Request
         </button>
@@ -211,13 +218,19 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
         <button
           onClick={handleAcceptRequest}
           disabled={isLoading}
-          className="bg-primary  text-white font-semibold py-2 px-4 rounded">
+          className="bg-primary  text-white font-semibold py-2 px-4 rounded flex justify-center items-center">
+          <div className="mb-[2px] mr-1">
+            <AcceptFriendRequestIcon />
+          </div>
           Accept
         </button>
         <button
           onClick={handleDeclineRequest}
           disabled={isLoading}
-          className="bg-grey/50 hover:bg-grey/80 text-black font-semibold py-2 px-4 rounded">
+          className="bg-grey/50 hover:bg-grey/80 text-black font-semibold py-2 px-4 rounded flex">
+          <div className="mt-[1px] mr-1">
+            <RemoveFriendIcon color="black" />
+          </div>
           Decline
         </button>
       </div>

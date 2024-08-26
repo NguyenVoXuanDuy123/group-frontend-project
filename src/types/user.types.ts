@@ -76,6 +76,12 @@ export type UserProfile = {
    * The username for the new user.
    */
   username: string;
+
+  /**
+   * The count of friends the user has in common with the authenticated user.
+   * This field is only available when the authenticated user is viewing another user's profile.
+   */
+  mutualFriendCount: number;
 };
 
 export type FriendRequest = {

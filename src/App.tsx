@@ -5,6 +5,10 @@ import { store } from "@/redux/store";
 import { Provider } from "react-redux";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import Toast from "./components/Toast";
+import ProfilePosts from "@/pages/ProfilePage/ProfilePosts";
+import ProfileFriends from "@/pages/ProfilePage/ProfileFriends";
+import ProfileRequests from "@/pages/ProfilePage/ProfileRequests";
+import ProfileGroups from "@/pages/ProfilePage/ProfileGroups";
 
 function ProtectedRoute() {
   const { status, isAuthenticated } = useAuth();
@@ -29,7 +33,13 @@ export default function App() {
               <Route index element={<Home />} />
               <Route path="*" element={<NoPage />} />
             </Route>
-            <Route path="/:username/*" element={<ProfileLayout />}></Route>
+            <Route path="/:username/" element={<ProfileLayout />}>
+              <Route index element={<ProfilePosts />} />
+              <Route path="friends" element={<ProfileFriends />} />
+              <Route path="groups" element={<ProfileGroups />} />
+              <Route path="friend-requests" element={<ProfileRequests />} />
+              <Route path="*" element={<NoPage />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

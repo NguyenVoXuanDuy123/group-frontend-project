@@ -28,11 +28,13 @@ const ProfileLayout = () => {
   return (
     <div>
       <div className="bg-white">
-        <div className="max-w-[876px] mx-auto ">
+        <div className="max-w-[880px] mx-auto px-6">
           <ProfileHeader user={user} setUser={setUser} />
         </div>
       </div>
-      <Outlet />
+      <div className="max-w-[880px] mx-auto px-6 pt-3 rounded-lg mt-3">
+        <Outlet />
+      </div>
     </div>
   );
 };
