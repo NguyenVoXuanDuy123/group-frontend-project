@@ -12,7 +12,6 @@ export const uploadImage = async (
 ): Promise<ImageResponse> => {
   try {
     // Fetch the data from the API
-    console.log("body", body.get("image"));
     const response = await fetch(`${EnvVars.API_URL}${url}`, {
       method: method,
 

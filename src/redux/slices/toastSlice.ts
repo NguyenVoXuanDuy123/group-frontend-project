@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type ToastType = 'success' | 'error';
+type ToastType = "success" | "error";
 
 interface Toast {
   message: string;
@@ -16,7 +16,7 @@ const initialState: ToastState = {
 };
 
 const toastSlice = createSlice({
-  name: 'toast',
+  name: "toast",
   initialState,
   reducers: {
     setToast: (state, action: PayloadAction<Toast>) => {
@@ -30,4 +30,4 @@ const toastSlice = createSlice({
 
 export const { setToast, clearToast } = toastSlice.actions;
 
-export default toastSlice.reducer;
+export default toastSlice;

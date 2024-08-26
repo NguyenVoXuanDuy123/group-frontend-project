@@ -17,7 +17,6 @@ const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  console.log(user);
   return (
     <div className="bg-white pt-6 ">
       {/* Profile image and details */}
@@ -36,7 +35,8 @@ const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
             className="text-dark-grey font-semibold cursor-pointer hover:underline"
             onClick={() => {
               navigate(`/${user.username}/friends`);
-            }}>
+            }}
+          >
             {user.friendCount + " friends "}•{" "}
             {user.userFriendRelation !== UserFriendRelation.SELF &&
               user.mutualFriendCount + " mutual"}

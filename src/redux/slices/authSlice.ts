@@ -44,7 +44,6 @@ export const introspectUser = createAsyncThunk(
       user: UserAuth;
     }>("/api/auth/introspect", "GET", payload.dispatch);
 
-    console.log(userAuth);
     if (userAuth?.isAuthenticated) {
       return userAuth.user;
     }
@@ -115,4 +114,5 @@ export const authSlice = createSlice({
 export const { logout, updateUser } = authSlice.actions;
 
 export const selectAuthState = (state: RootState) => state.auth;
-export default authSlice.reducer;
+
+export default authSlice;

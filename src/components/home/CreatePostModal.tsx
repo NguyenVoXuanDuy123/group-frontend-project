@@ -10,9 +10,14 @@ import ImageInput from "./ImageInput";
 type CreatePostModalProps = {
   modalShowing: boolean;
   hideModal: () => void;
+  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
 };
 
-const CreatePostModal = ({ modalShowing, hideModal }: CreatePostModalProps) => {
+const CreatePostModal = ({
+  modalShowing,
+  hideModal,
+  setPosts,
+}: CreatePostModalProps) => {
   const contentInputRef = useRef<HTMLTextAreaElement | null>(null);
   const [images, setImages] = useState<string[]>([]);
   const [privacy, setPrivacy] = useState<"public" | "friend">("public");
@@ -28,17 +33,13 @@ const CreatePostModal = ({ modalShowing, hideModal }: CreatePostModalProps) => {
       return;
     }
     const content = contentInputRef.current.value;
-    const res = await fetchApi<{ message: string; result: Post }>(
-      "/api/posts",
-      "POST",
-      dispatch,
-      {
-        content,
-        images,
-        visibilityLevel: privacy,
-      }
-    );
+    const res = await fetchApi<Post>("/api/posts", "POST", dispatch, {
+      content,
+      images,
+      visibilityLevel: privacy,
+    });
     if (res) {
+      setPosts((posts) => [res, ...posts]);
       hideModal();
 
       setImages([]);
