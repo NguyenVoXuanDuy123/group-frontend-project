@@ -1,10 +1,10 @@
-import MessageModal from "@/components/Modal/MessageModal";
 import { useAuth } from "@/hooks/useAuth";
 import { AuthPage, BaseLayout, Home, NoPage } from "@/pages";
 import ProfileLayout from "@/pages/layout/ProfileLayout";
 import { store } from "@/redux/store";
 import { Provider } from "react-redux";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import Toast from "./components/Toast";
 
 function ProtectedRoute() {
   const { status, isAuthenticated } = useAuth();
@@ -35,7 +35,8 @@ export default function App() {
       </BrowserRouter>
 
       {/* Global Modals, will trigger from anywhere when dispatch action */}
-      <MessageModal />
+      {/* <MessageModal /> */}
+      <Toast />
     </Provider>
   );
 }

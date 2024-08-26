@@ -1,12 +1,10 @@
-import CreatePostModal from "@/components/home/CreatePostModal";
 import CreatePostPrompt from "@/components/home/CreatePostPrompt";
-import PostList from "@/components/post/PostList";
+import PostList from "@/components/Post/PostList";
 
 const Home = () => {
   return (
     <div>
       <CreatePostPrompt />
-      <CreatePostModal />
       <PostList />
     </div>
   );

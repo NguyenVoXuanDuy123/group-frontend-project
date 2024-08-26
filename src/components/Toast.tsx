@@ -2,16 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { clearToast } from "@/redux/slices/toastSlice";
+import CloseIcon from "./svg/CloseIcon";
+import CheckIcon from "./svg/CheckIcon";
 
 const Toast: React.FC = () => {
   const dispatch = useDispatch();
   const toast = useSelector((state: RootState) => state.toast.currentToast);
   const [progress, setProgress] = useState(100);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     if (toast) {
-      // Reset progress when a new toast is shown
+      // Reset progress and visibility
       setProgress(100);
+      setIsVisible(true);
 
       // Decrease the progress over time
       const interval = setInterval(() => {
@@ -20,7 +24,10 @@ const Toast: React.FC = () => {
 
       // Clear the toast after 3 seconds
       const timeout = setTimeout(() => {
-        dispatch(clearToast());
+        setIsVisible(false); // Trigger sliding down animation
+        setTimeout(() => {
+          dispatch(clearToast());
+        }, 300); // Wait for the animation to complete before clearing
       }, 3000);
 
       // Clean up interval and timeout
@@ -34,21 +41,23 @@ const Toast: React.FC = () => {
   if (!toast) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 w-72 bg-white shadow-lg rounded-md overflow-hidden border border-gray-300">
+    <div
+      className={`fixed z-[2000] bottom-4 right-4 w-[320px] bg-white shadow-lg rounded-md overflow-hidden border border-grey  ${isVisible ? "animate-slideUp" : "animate-slideDown"}`}
+    >
       <div className="p-4 flex items-center justify-between">
         <div className="flex items-center">
           {toast.type === "success" ? (
-            <span className="text-green-500 text-lg mr-2">✔️</span>
+            <CheckIcon />
           ) : (
             <span className="text-red-500 text-lg mr-2">❗</span>
           )}
-          <span className="text-gray-700">{toast.message}</span>
+          <span className="text-dark-grey text-sm ml-4">{toast.message}</span>
         </div>
         <button
           onClick={() => dispatch(clearToast())}
-          className="text-gray-500"
+          className="text-dark-grey"
         >
-          ✖️
+          <CloseIcon />
         </button>
       </div>
       <div

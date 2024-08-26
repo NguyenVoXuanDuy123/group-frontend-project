@@ -55,8 +55,6 @@ const ImageInput: React.FC<ImageInputProps> = ({
     if (file && file.type.startsWith("image/")) {
       const formData = new FormData();
       formData.append("image", file);
-      console.log("formData", formData);
-      console.log("file", file);
 
       const { url } = await uploadImage(
         "/api/upload",
@@ -121,7 +119,7 @@ const ImageInput: React.FC<ImageInputProps> = ({
         <div className="relative flex w-full items-center">
           {images.length > 0 && scrolled && (
             <button
-              className="absolute left-0 z-10 bg-gray-500 text-white rounded-full p-2 ml-2 hover:bg-gray-600"
+              className="absolute left-0 z-10 bg-grey text-white rounded-full p-2 ml-2 hover:bg-gray-600"
               onClick={scrollLeft}
             >
               &lt;
@@ -152,7 +150,7 @@ const ImageInput: React.FC<ImageInputProps> = ({
 
           {images.length > 4 && !scrolled && (
             <button
-              className="absolute right-0 z-10 bg-gray-500 text-white rounded-full p-2 mr-2 hover:bg-gray-600"
+              className="absolute right-0 z-10 bg-gray text-white rounded-full p-2 mr-2 hover:bg-gray-600"
               onClick={scrollRight}
             >
               &gt;
@@ -161,14 +159,14 @@ const ImageInput: React.FC<ImageInputProps> = ({
         </div>
       </div>
       <div
-        className="flex flex-col cursor-pointer items-center justify-center h-40 bg-light-grey rounded-lg border-2 border-dashed border-gray-500"
+        className="flex flex-col cursor-pointer items-center justify-center h-40 bg-light-grey rounded-lg border-2 border-dashed border-grey"
         onDragOver={handleDragOver}
         onDrop={handleDrop}
         onClick={handleClick}
       >
         <div className="flex flex-col items-center">
           + <p className="font-semibold">Add photos</p>
-          <p className="text-sm text-gray-400">or drag and drop</p>
+          <p className="text-sm text-dark-grey">or drag and drop</p>
         </div>
 
         <input

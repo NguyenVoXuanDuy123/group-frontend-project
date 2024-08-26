@@ -1,8 +1,8 @@
 import { Post } from "@/types/post.types";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import PostCard from ".";
 import { fetchApi } from "@/helpers/fetchApi";
+import PostCard from ".";
 
 const PostList = () => {
   const [postsList, setPostsList] = useState<Post[]>([]);

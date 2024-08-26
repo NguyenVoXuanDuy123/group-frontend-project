@@ -56,7 +56,7 @@ const UploadAvatarModal = ({ open, onClose }: UploadAvatarModalProps) => {
   };
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} hideModal={onClose}>
       <div className="flex flex-col items-center p-4 space-y-4">
         <input type="file" accept="image/*" onChange={handleImageChange} />
         {image && (
@@ -92,7 +92,8 @@ const UploadAvatarModal = ({ open, onClose }: UploadAvatarModalProps) => {
         </div>
         <button
           onClick={handleCrop}
-          className="px-4 py-2 bg-blue-500 text-white rounded">
+          className="px-4 py-2 bg-blue-500 text-white rounded"
+        >
           Crop
         </button>
         {croppedImage && (
