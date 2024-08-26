@@ -1,7 +1,7 @@
 import ProfileHeader from "@/components/ProfileHeader";
 import { fetchApi } from "@/helpers/fetchApi";
 import { UserProfile } from "@/types/user.types";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Outlet, useParams } from "react-router-dom";
 

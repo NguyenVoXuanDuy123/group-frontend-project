@@ -43,7 +43,7 @@ export const EditProfileModal = ({
     );
 
     if (response?.status === "success") {
-      const newUser = { ...user, firstName, lastName, bio };
+      const newUser: UserProfile = { ...user, firstName, lastName, bio };
       setUser(newUser);
       dispatch(updateUser(user));
       handleClose();
@@ -66,15 +66,14 @@ export const EditProfileModal = ({
 
   return (
     <Modal open={open} hideModal={handleClose}>
-      <div className="flex flex-col p-6 space-y-6 bg-white rounded-lg ">
+      <div className="flex flex-col space-y-6 bg-white rounded-lg ">
         <h2 className="text-2xl font-bold text-gray-900">Edit Profile</h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label
                 htmlFor="firstName"
-                className="block text-sm font-medium text-gray-700"
-              >
+                className="block text-sm font-medium text-gray-700">
                 First Name
               </label>
               <input
@@ -89,8 +88,7 @@ export const EditProfileModal = ({
             <div>
               <label
                 htmlFor="lastName"
-                className="block text-sm font-medium text-gray-700"
-              >
+                className="block text-sm font-medium text-gray-700">
                 Last Name
               </label>
               <input
@@ -107,8 +105,7 @@ export const EditProfileModal = ({
           <div>
             <label
               htmlFor="bio"
-              className="block text-sm font-medium text-gray-700 flex items-center justify-between"
-            >
+              className="text-sm font-medium text-gray-700 flex items-center justify-between">
               Bio
               <span className="text-gray-500 text-sm">
                 {countWords(bio)}/{MAX_WORD_COUNT}
@@ -127,14 +124,12 @@ export const EditProfileModal = ({
             <button
               type="button"
               onClick={handleClose}
-              className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-            >
+              className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
               Cancel
             </button>
             <button
               type="submit"
-              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-            >
+              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
               Save
             </button>
           </div>
