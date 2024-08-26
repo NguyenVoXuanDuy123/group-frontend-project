@@ -2,6 +2,7 @@ import { uploadImage } from "@/helpers/uploadImage";
 import { setModalMessage } from "@/redux/slices/errorModalSlice";
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import PlusIcon from "../svg/PlusIcon";
 
 interface ImageInputProps {
   images: string[];
@@ -115,11 +116,11 @@ const ImageInput: React.FC<ImageInputProps> = ({
 
   return (
     <div className="relative mt-4 w-full mx-auto rounded-lg text-dark-grey text-center">
-      <div className="flex mb-4">
-        <div className="relative flex w-full items-center">
+      {images.length > 0 && (
+        <div className="mb-4 relative flex w-full items-center">
           {images.length > 0 && scrolled && (
             <button
-              className="absolute left-0 z-10 bg-grey text-white rounded-full p-2 ml-2 hover:bg-gray-600"
+              className="absolute left-0 z-10 bg-light-grey text-white rounded-full p-2 ml-2 hover:bg-grey"
               onClick={scrollLeft}
             >
               &lt;
@@ -150,14 +151,14 @@ const ImageInput: React.FC<ImageInputProps> = ({
 
           {images.length > 4 && !scrolled && (
             <button
-              className="absolute right-0 z-10 bg-gray text-white rounded-full p-2 mr-2 hover:bg-gray-600"
+              className="absolute left-0 z-10 bg-light-grey text-white rounded-full p-2 ml-2 hover:bg-grey"
               onClick={scrollRight}
             >
               &gt;
             </button>
           )}
         </div>
-      </div>
+      )}
       <div
         className="flex flex-col cursor-pointer items-center justify-center h-40 bg-light-grey rounded-lg border-2 border-dashed border-grey"
         onDragOver={handleDragOver}
@@ -165,8 +166,9 @@ const ImageInput: React.FC<ImageInputProps> = ({
         onClick={handleClick}
       >
         <div className="flex flex-col items-center">
-          + <p className="font-semibold">Add photos</p>
-          <p className="text-sm text-dark-grey">or drag and drop</p>
+          <PlusIcon />
+          <span className="my-2 font-bold">Add photos</span>
+          <span className="text-sm text-dark-grey">or drag and drop</span>
         </div>
 
         <input

@@ -51,7 +51,9 @@ const Toast: React.FC = () => {
           ) : (
             <span className="text-red-500 text-lg mr-2">❗</span>
           )}
-          <span className="text-dark-grey text-sm ml-4">{toast.message}</span>
+          <span className="flex-1 text-dark-grey text-sm ml-4 wrap">
+            {toast.message}
+          </span>
         </div>
         <button
           onClick={() => dispatch(clearToast())}
