@@ -1,16 +1,16 @@
-import { useState } from "react";
-import LikeAction from "@/components/svg/post/LikeAction";
-import AngryReaction from "@/components/svg/reactions/Angry";
-import HahaReaction from "@/components/svg/reactions/Haha";
-import LikeReaction from "@/components/svg/reactions/Like";
-import LoveReaction from "@/components/svg/reactions/Love";
+import reactionMap from "@/constants/reactionMap";
 import { ReactionType } from "@/enums/post.enums";
 import { fetchApi } from "@/helpers/fetchApi";
-import { useDispatch } from "react-redux";
+import reactionTypeFormat from "@/helpers/reactionTypeFormat";
 import { setToast } from "@/redux/slices/toastSlice";
 import { UserReaction } from "@/types/post.types";
-import reactionMap from "@/constants/reactionMap";
-import reactionTypeFormat from "@/helpers/reactionTypeFormat";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import LikeAction from "../svg/post/LikeAction";
+import AngryReaction from "../svg/reactions/Angry";
+import HahaReaction from "../svg/reactions/Haha";
+import LikeReaction from "../svg/reactions/Like";
+import LoveReaction from "../svg/reactions/Love";
 
 const reactionColors = {
   like: "#4D98EF",
@@ -22,11 +22,41 @@ const reactionColors = {
 type ReactionButtonProps = {
   postId: string;
   userReaction?: UserReaction | null;
+  updateUserReaction: (newReaction: UserReaction) => void;
 };
 
-const ReactionButton = ({ postId, userReaction }: ReactionButtonProps) => {
+const ReactionButton = ({
+  postId,
+  userReaction,
+  updateUserReaction,
+}: ReactionButtonProps) => {
   const [showReactions, setShowReactions] = useState(false);
   const dispatch = useDispatch();
+
+  const handleClickReaction = async () => {
+    if (!userReaction) {
+      handleReaction(ReactionType.LIKE);
+      return;
+    }
+
+    const response = await fetchApi(
+      `/api/posts/${postId}/reactions`,
+      "PUT",
+      dispatch,
+      {
+        // remove reaction
+        type: userReaction.type,
+      }
+    );
+
+    if (response) {
+      updateUserReaction(userReaction);
+    } else {
+      dispatch(
+        setToast({ message: "Failed to remove reaction", type: "error" })
+      );
+    }
+  };
 
   const handleReaction = async (reactionType: ReactionType) => {
     const response = await fetchApi(
@@ -39,25 +69,26 @@ const ReactionButton = ({ postId, userReaction }: ReactionButtonProps) => {
     );
 
     if (response) {
-      dispatch(
-        setToast({ message: "Create Post Successfully", type: "success" })
-      );
+      updateUserReaction({ type: reactionType });
     } else {
-      dispatch(setToast({ message: "Failed to create post", type: "error" }));
+      dispatch(
+        setToast({ message: "Failed to react this post", type: "error" })
+      );
     }
+    setShowReactions(false);
   };
 
   const _renderReaction = () => {
     if (userReaction) {
       const Reaction = reactionMap[userReaction?.type] || null;
       if (!Reaction) return null;
-      console.log(`[${reactionColors[userReaction.type]}]`);
       return (
         <>
           <Reaction />
           <span
             style={{ color: reactionColors[userReaction.type] }}
-            className={`ml-2 font-bold`}>
+            className={`ml-2 font-bold`}
+          >
             {reactionTypeFormat(userReaction.type)}
           </span>
         </>
@@ -67,18 +98,24 @@ const ReactionButton = ({ postId, userReaction }: ReactionButtonProps) => {
 
   return (
     <div
-      className="rounded-lg p-3 relative flex flex-1 items-center justify-center cursor-pointer hover:bg-light-grey"
+      className="relative flex-1"
       onMouseEnter={() => setShowReactions(true)}
       onMouseLeave={() => setShowReactions(false)}
-      onClick={() => handleReaction(ReactionType.LIKE)}>
-      {userReaction ? (
-        _renderReaction()
-      ) : (
-        <>
-          <LikeAction />
-          <span className="ml-2 ">Like</span>
-        </>
-      )}
+    >
+      <div
+        className="flex-1 rounded-lg p-3 relative flex items-center justify-center cursor-pointer hover:bg-light-grey"
+        onClick={() => handleClickReaction()}
+      >
+        {userReaction ? (
+          _renderReaction()
+        ) : (
+          <>
+            <LikeAction />
+            <span className="ml-2 ">Like</span>
+          </>
+        )}
+      </div>
+
       {/* Reaction Popup */}
       {showReactions && (
         <div
@@ -87,30 +124,31 @@ const ReactionButton = ({ postId, userReaction }: ReactionButtonProps) => {
             showReactions
               ? "translate-y-0 opacity-100"
               : "translate-y-4 opacity-0"
-          }`}>
+          }`}
+        >
           <LikeReaction
             width={48}
             height={48}
             onClick={() => handleReaction(ReactionType.LIKE)}
-            className="hover:scale-110 transition-transform duration-150"
+            className="hover:scale-110 transition-transform duration-150 cursor-pointer"
           />
           <LoveReaction
             width={48}
             height={48}
             onClick={() => handleReaction(ReactionType.LOVE)}
-            className="hover:scale-110 transition-transform duration-150"
+            className="hover:scale-110 transition-transform duration-150 cursor-pointer"
           />
           <HahaReaction
             width={48}
             height={48}
             onClick={() => handleReaction(ReactionType.HAHA)}
-            className="hover:scale-110 transition-transform duration-150"
+            className="hover:scale-110 transition-transform duration-150 cursor-pointer"
           />
           <AngryReaction
             width={48}
             height={48}
             onClick={() => handleReaction(ReactionType.ANGRY)}
-            className="hover:scale-110 transition-transform duration-150"
+            className="hover:scale-110 transition-transform duration-150 cursor-pointer"
           />
         </div>
       )}
