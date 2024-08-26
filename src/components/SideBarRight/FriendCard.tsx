@@ -1,4 +1,4 @@
-import Avatar from "../user/Avatar";
+import Avatar from "@/components/user/Avatar";
 
 interface FriendCard {
   name: string;

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import LikeAction from "../svg/post/LikeAction";
-import AngryReaction from "../svg/reactions/Angry";
-import HahaReaction from "../svg/reactions/Haha";
-import LikeReaction from "../svg/reactions/Like";
-import LoveReaction from "../svg/reactions/Love";
+import LikeAction from "@/components/svg/post/LikeAction";
+import AngryReaction from "@/components/svg/reactions/Angry";
+import HahaReaction from "@/components/svg/reactions/Haha";
+import LikeReaction from "@/components/svg/reactions/Like";
+import LoveReaction from "@/components/svg/reactions/Love";
 import { ReactionType } from "@/enums/post.enums";
 import { fetchApi } from "@/helpers/fetchApi";
 import { useDispatch } from "react-redux";

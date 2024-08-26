@@ -1,6 +1,6 @@
-import NotificationIcon from "../svg/side-bar-icons/NotificationIcon";
-import Avatar from "../user/Avatar";
-import FriendCard from "./FriendCard";
+import NotificationIcon from "@/components/svg/side-bar-icons/NotificationIcon";
+import Avatar from "@/components/user/Avatar";
+import FriendCard from "@/components/SideBarRight/FriendCard";
 
 const SideBarRight = () => {
   return (
