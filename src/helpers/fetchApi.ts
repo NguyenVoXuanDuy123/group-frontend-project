@@ -1,5 +1,5 @@
 import EnvVars from "@/constants/EnvVars";
-import { setModalMessage } from "@/redux/slices/errorModalSlice";
+import { setToast } from "@/redux/slices/toastSlice";
 import { ErrorType } from "@/types/api.types";
 import { Dispatch } from "@reduxjs/toolkit";
 
@@ -40,7 +40,7 @@ export const fetchApi = async <
     //dispatch the error message, global modal will show the error message
 
     dispatch(
-      setModalMessage({
+      setToast({
         message: (error as ErrorType).message || "Network error occurred",
         type: "error",
       })
