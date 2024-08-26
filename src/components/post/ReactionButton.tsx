@@ -29,6 +29,7 @@ const ReactionButton = ({ postId, userReaction }: ReactionButtonProps) => {
   const dispatch = useDispatch();
 
   const handleReaction = async (reactionType: ReactionType) => {
+    console.log(reactionType);
     const response = await fetchApi(
       `/api/posts/${postId}/reactions`,
       "PUT",
@@ -51,7 +52,6 @@ const ReactionButton = ({ postId, userReaction }: ReactionButtonProps) => {
     if (userReaction) {
       const Reaction = reactionMap[userReaction?.type] || null;
       if (!Reaction) return null;
-      console.log(`[${reactionColors[userReaction.type]}]`);
       return (
         <>
           <Reaction />
@@ -69,14 +69,17 @@ const ReactionButton = ({ postId, userReaction }: ReactionButtonProps) => {
     <div
       className="rounded-lg p-3 relative flex flex-1 items-center justify-center cursor-pointer hover:bg-light-grey"
       onMouseEnter={() => setShowReactions(true)}
-      onMouseLeave={() => setShowReactions(false)}
-      onClick={() => handleReaction(ReactionType.LIKE)}>
+      onMouseLeave={() => setShowReactions(false)}>
       {userReaction ? (
         _renderReaction()
       ) : (
         <>
           <LikeAction />
-          <span className="ml-2 ">Like</span>
+          <span
+            onClick={() => handleReaction(ReactionType.LIKE)}
+            className="ml-2 ">
+            Like
+          </span>
         </>
       )}
       {/* Reaction Popup */}
