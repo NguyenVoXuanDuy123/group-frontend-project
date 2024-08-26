@@ -1,6 +1,9 @@
 import { EditProfileModal } from "@/components/Modal/EditProfileModal";
 import WarningUnfriendModal from "@/components/Modal/WarningUnfriendModal";
-import { UserFriendRelation } from "@/enums/user.enums";
+import AddFriend from "@/components/svg/profile-actions/AddFriend";
+import CancelFriendRequest from "@/components/svg/profile-actions/CancelFriendRequest";
+import EditProfile from "@/components/svg/profile-actions/EditProfile";
+import { FriendRequestStatus, UserFriendRelation } from "@/enums/user.enums";
 import { fetchApi } from "@/helpers/fetchApi";
 import { FriendRequest, UserProfile } from "@/types/user.types";
 import { useState } from "react";
