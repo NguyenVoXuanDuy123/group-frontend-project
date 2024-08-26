@@ -7,7 +7,7 @@ const AuthPage = () => {
   const [isLogin, setIsLogin] = useState<boolean>(true);
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex justify-center items-center min-h-screen bg-white">
       <div className="flex w-3/4 h-[600px] border rounded-lg overflow-hidden">
         {/* Left side - Image */}
         <div className="w-1/2 bg-cover bg-center">

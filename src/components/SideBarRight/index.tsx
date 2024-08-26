@@ -1,4 +1,4 @@
-import NotificationIcon from "../svg/side_bar_icons/NotificationIcon";
+import NotificationIcon from "../svg/side-bar-icons/NotificationIcon";
 import Avatar from "../user/Avatar";
 import FriendCard from "./FriendCard";
 

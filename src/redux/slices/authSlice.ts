@@ -3,7 +3,12 @@ import { fetchApi } from "@/helpers/fetchApi";
 
 import { RootState } from "@/redux/store";
 
-import { createSlice, createAsyncThunk, Dispatch } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  Dispatch,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 
 type UserAuth = {
   firstName: string;
@@ -39,6 +44,7 @@ export const introspectUser = createAsyncThunk(
       user: UserAuth;
     }>("/api/auth/introspect", "GET", payload.dispatch);
 
+    console.log(userAuth);
     if (userAuth?.isAuthenticated) {
       return userAuth.user;
     }
@@ -77,9 +83,18 @@ export const authSlice = createSlice({
       state.isAuthenticated = false;
       state.user = null;
     },
+    updateUser: (state, action: PayloadAction<Partial<UserAuth>>) => {
+      if (state.user) {
+        state.user = {
+          ...state.user,
+          ...action.payload,
+        };
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
+
       .addCase(logOut.fulfilled, (state) => {
         state.isAuthenticated = false;
         state.user = null;
@@ -97,6 +112,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, updateUser } = authSlice.actions;
 
 export const selectAuthState = (state: RootState) => state.auth;

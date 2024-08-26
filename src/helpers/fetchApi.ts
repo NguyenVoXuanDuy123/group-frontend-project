@@ -36,6 +36,7 @@ export const fetchApi = async <
   } catch (error) {
     console.error("Error in fetchApi:", error);
     //dispatch the error message, global modal will show the error message
+
     dispatch(
       setModalMessage({
         message: (error as ErrorType).message || "Network error occurred",
@@ -47,4 +48,3 @@ export const fetchApi = async <
     return null;
   }
 };
-

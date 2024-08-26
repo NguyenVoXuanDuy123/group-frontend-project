@@ -1,15 +1,15 @@
 import EnvVars from "@/constants/EnvVars";
 import { setModalMessage } from "@/redux/slices/errorModalSlice";
 import { ErrorType } from "@/types/api.types";
-import { ImageReponse } from "@/types/image.types";
+import { ImageResponse } from "@/types/image.types";
 import { Dispatch } from "@reduxjs/toolkit";
 
 export const uploadImage = async (
   url: string,
-  method:  "POST" | "PUT" | "PATCH" | "DELETE",
+  method: "POST" | "PUT" | "PATCH" | "DELETE",
   dispatch: Dispatch,
   body: FormData
-): Promise<ImageReponse> => {
+): Promise<ImageResponse> => {
   try {
     // Fetch the data from the API
     console.log("body", body.get("image"));
@@ -27,7 +27,7 @@ export const uploadImage = async (
     }
 
     const data = await response.json();
-    return  data.result as ImageReponse;
+    return data.result as ImageResponse;
   } catch (error) {
     console.error("Error in fetchApi:", error);
     //dispatch the error message, global modal will show the error message
@@ -40,9 +40,9 @@ export const uploadImage = async (
 
     // Return null if there is an error, meaning the API request failed
     return {
-        url: "",
-         minetype: "",
-         size: "",
+      url: "",
+      mimetype: "",
+      size: "",
     };
   }
 };

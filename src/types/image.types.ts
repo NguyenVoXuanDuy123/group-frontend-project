@@ -1,5 +1,5 @@
-export type ImageReponse ={
-    "url": string;
-    "size": string;
-    "minetype": string;
-}
+export type ImageResponse = {
+  url: string;
+  size: string;
+  mimetype: string;
+};

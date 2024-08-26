@@ -1,6 +1,7 @@
-import MessageModal from "@/components/MessageModal";
+import MessageModal from "@/components/Modal/MessageModal";
 import { useAuth } from "@/hooks/useAuth";
-import { AuthPage, BaseLayout, Home, NoPage, Profile } from "@/pages";
+import { AuthPage, BaseLayout, Home, NoPage } from "@/pages";
+import ProfileLayout from "@/pages/layout/ProfileLayout";
 import { store } from "@/redux/store";
 import { Provider } from "react-redux";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
@@ -26,9 +27,9 @@ export default function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<BaseLayout />}>
               <Route index element={<Home />} />
-              <Route path="profile" element={<Profile />} />
               <Route path="*" element={<NoPage />} />
             </Route>
+            <Route path="/:username/*" element={<ProfileLayout />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
