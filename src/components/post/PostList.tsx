@@ -2,7 +2,7 @@ import { Post } from "@/types/post.types";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchApi } from "@/helpers/fetchApi";
-import PostCard from ".";
+import PostCard from "@/components/Post";
 
 const PostList = () => {
   const [postsList, setPostsList] = useState<Post[]>([]);

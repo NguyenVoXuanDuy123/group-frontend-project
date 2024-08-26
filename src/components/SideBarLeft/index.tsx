@@ -1,10 +1,10 @@
 import { appName } from "@/constants";
-import Logo from "../svg/Logo";
-import TabItem from "./TabItem";
-import NewsFeedIcon from "../svg/side-bar-icons/NewsFeedIcon";
-import FriendIcon from "../svg/side-bar-icons/FriendIcon";
-import GroupIcon from "../svg/side-bar-icons/GroupIcon";
-import LogOutIcon from "../svg/side-bar-icons/LogOutIcon";
+import Logo from "@/components/svg/Logo";
+import TabItem from "@/components/SideBarLeft/TabItem";
+import NewsFeedIcon from "@/components/svg/side-bar-icons/NewsFeedIcon";
+import FriendIcon from "@/components/svg/side-bar-icons/FriendIcon";
+import GroupIcon from "@/components/svg/side-bar-icons/GroupIcon";
+import LogOutIcon from "@/components/svg/side-bar-icons/LogOutIcon";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { logOut } from "@/redux/slices/authSlice";

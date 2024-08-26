@@ -1,13 +1,15 @@
-const reactionTypeFormat = (reactionType: string) => {
+import { ReactionType } from "@/enums/post.enums";
+
+const reactionTypeFormat = (reactionType: ReactionType) => {
   switch (reactionType) {
-    case "like":
+    case ReactionType.LIKE:
       return "Like";
-    case "love":
+    case ReactionType.LOVE:
       return "Love";
-    case "haha":
+    case ReactionType.HAHA:
       return "Haha";
-    case "wow":
-      return "Wow";
+    case ReactionType.ANGRY:
+      return "Angry";
     default:
       return "Like";
   }

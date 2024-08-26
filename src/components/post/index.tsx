@@ -3,10 +3,10 @@ import getFullName from "@/helpers/getFullName";
 import getThreeMostReactionTypes from "@/helpers/getThreeMostReactionTypes";
 import { timeAgo } from "@/helpers/timeAgo";
 import { Post } from "@/types/post.types";
-import CommentAction from "../svg/post/CommentAction";
-import Avatar from "../user/Avatar";
-import ImageCarousel from "./ImageCarousel";
-import ReactionButton from "./ReactionButton";
+import CommentAction from "@/components/svg/post/CommentAction";
+import Avatar from "@/components/user/Avatar";
+import ImageCarousel from "@/components/Post/ImageCarousel";
+import ReactionButton from "@/components/Post/ReactionButton";
 
 type PostCardProps = {
   post: Post;
