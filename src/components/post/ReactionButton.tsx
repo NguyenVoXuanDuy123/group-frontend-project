@@ -8,12 +8,23 @@ import { ReactionType } from "@/enums/post.enums";
 import { fetchApi } from "@/helpers/fetchApi";
 import { useDispatch } from "react-redux";
 import { setToast } from "@/redux/slices/toastSlice";
+import { UserReaction } from "@/types/post.types";
+import reactionMap from "@/constants/reactionMap";
+import reactionTypeFormat from "@/helpers/reactionTypeFormat";
+
+const reactionColors = {
+  like: "#4D98EF",
+  love: "#F06D6D",
+  haha: "#FCC738",
+  angry: "#E56232",
+};
 
 type ReactionButtonProps = {
   postId: string;
+  userReaction?: UserReaction | null;
 };
 
-const ReactionButton = ({ postId }: ReactionButtonProps) => {
+const ReactionButton = ({ postId, userReaction }: ReactionButtonProps) => {
   const [showReactions, setShowReactions] = useState(false);
   const dispatch = useDispatch();
 
@@ -36,14 +47,40 @@ const ReactionButton = ({ postId }: ReactionButtonProps) => {
     }
   };
 
+  const _renderReaction = () => {
+    if (userReaction) {
+      const Reaction = reactionMap[userReaction?.type] || null;
+      if (!Reaction) return null;
+      console.log(`[${reactionColors[userReaction.type]}]`);
+      return (
+        <>
+          <Reaction />
+          <span
+            style={{ color: reactionColors[userReaction.type] }}
+            className={`ml-2 font-bold`}
+          >
+            {reactionTypeFormat(userReaction.type)}
+          </span>
+        </>
+      );
+    }
+  };
+
   return (
     <div
       className="rounded-lg p-3 relative flex flex-1 items-center justify-center cursor-pointer hover:bg-light-grey"
       onMouseEnter={() => setShowReactions(true)}
       onMouseLeave={() => setShowReactions(false)}
+      onClick={() => handleReaction(ReactionType.LIKE)}
     >
-      <LikeAction onClick={() => handleReaction(ReactionType.LIKE)} />
-      <span className="ml-1">Like</span>
+      {userReaction ? (
+        _renderReaction()
+      ) : (
+        <>
+          <LikeAction />
+          <span className="ml-2 ">Like</span>
+        </>
+      )}
       {/* Reaction Popup */}
       {showReactions && (
         <div

@@ -57,7 +57,7 @@ const PostCard = ({ post }: PostCardProps) => {
 
           {/* Reactions and Comments */}
           <div className="border-top py-2 flex justify-between items-center text-dark-grey">
-            <ReactionButton postId={post.id} />
+            <ReactionButton userReaction={post.userReaction} postId={post.id} />
             <div className="rounded-lg p-3 flex flex-1 items-center justify-center cursor-pointer hover:bg-light-grey">
               <CommentAction />
               <span className="ml-1">Comments</span>
