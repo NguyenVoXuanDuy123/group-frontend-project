@@ -3,7 +3,7 @@ import { useState } from "react";
 import loginPicture from "@/assets/image/AvatarFallback.png";
 import { useNavigate } from "react-router-dom";
 interface AvatarProps {
-  photoURL: string;
+  photoURL?: string;
   size?: number;
   username?: string;
   onClick?: () => void;

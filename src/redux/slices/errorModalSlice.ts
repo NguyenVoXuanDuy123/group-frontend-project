@@ -30,3 +30,4 @@ export const messageSlice = createSlice({
 });
 
 export const { setModalMessage, clearMessage } = messageSlice.actions;
+export default messageSlice.reducer;

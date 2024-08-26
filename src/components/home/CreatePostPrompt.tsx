@@ -7,7 +7,7 @@ const CreatePostPrompt = () => {
       <Avatar />
       <button
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#createPostModal"
         className="flex items-center justify-between ml-4 w-full h-12 rounded-full bg-light-grey p-2.5"
       >
         <span className="pl-2 text-grey text-sm">What's on your mind?</span>

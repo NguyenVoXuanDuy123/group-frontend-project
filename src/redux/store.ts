@@ -1,11 +1,13 @@
-import { authSlice } from "@/redux/slices/authSlice";
-import { messageSlice } from "@/redux/slices/errorModalSlice";
+import  authSlice  from "@/redux/slices/authSlice";
+import  messageSlice  from "@/redux/slices/errorModalSlice";
 import { configureStore } from "@reduxjs/toolkit";
+import toastSlice from "./slices/toastSlice";
 
 export const store = configureStore({
   reducer: {
-    auth: authSlice.reducer,
-    messageModal: messageSlice.reducer,
+    auth: authSlice,
+    messageModal: messageSlice,
+    toast: toastSlice
   },
 });
 

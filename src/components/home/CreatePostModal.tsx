@@ -3,33 +3,62 @@ import Avatar from "../user/Avatar";
 import ImageInput from "./ImageInputField";
 import { fetchApi } from "@/helpers/fetchApi";
 import { useDispatch } from "react-redux";
+import { Post } from "@/types/post.types";
+import { setToast } from "@/redux/slices/toastSlice";
+import * as bootstrap from "bootstrap";
 
 const CreatePostModal = () => {
   const contentInputRef = useRef<HTMLTextAreaElement | null>(null);
   const [images, setImages] = useState<string[]>([]);
   const [privacy, setPrivacy] = useState<"public" | "friend">("public");
+  const modalRef = useRef<HTMLDivElement>(null);
+
   const dispatch = useDispatch();
+
+  // Hide the modal
+  const handleCloseModal = () => {
+    const myModal = new bootstrap.Modal(modalRef.current!);
+    console.log("myModal", myModal);
+    myModal.hide();
+  };
 
   const updateImages = (images: string[]) => {
     setImages(images);
   };
 
-  const submitPost = () => {
+  const submitPost = async () => {
     if (!contentInputRef.current) {
       return;
     }
     const content = contentInputRef.current.value;
-    fetchApi("/api/posts", "POST", dispatch, {
-      content,
-      images,
-      visibilityLevel: privacy,
-    });
+    const res = await fetchApi<{ message: string; result: Post }>(
+      "/api/posts",
+      "POST",
+      dispatch,
+      {
+        content,
+        images,
+        visibilityLevel: privacy,
+      }
+    );
+    if (res) {
+      dispatch(setToast({ message: res.message, type: "success" }));
+      handleCloseModal();
+      setImages([]);
+      contentInputRef.current.value = "";
+    } else {
+      dispatch(setToast({ message: "Failed to create post", type: "error" }));
+    }
   };
 
   return (
-    <div className="modal modal-lg fade" id="exampleModal">
+    <div className="modal modal-lg fade" id="createPostModal" ref={modalRef}>
       <div className="modal-dialog">
         <div className="modal-content bg-white p-4 border-0">
+          <button className="absolute top-4 right-4" data-dismiss="modal">
+            x
+          </button>
+
           <div className="flex items-center">
             <Avatar />
             <div className="ml-3 flex-1">
