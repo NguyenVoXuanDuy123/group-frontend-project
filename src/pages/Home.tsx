@@ -1,5 +1,5 @@
 import CreatePostPrompt from "@/components/home/CreatePostPrompt";
-import PostList from "@/components/Post/PostList";
+import PostList from "@/components/post/PostList";
 
 const Home = () => {
   return (
