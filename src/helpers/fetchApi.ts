@@ -24,8 +24,6 @@ export const fetchApi = async <
       credentials: "include",
     });
 
-    console.log(url);
-
     // If the response is not successful, throw an error
     if (!response.ok) {
       const error = await response.json();
