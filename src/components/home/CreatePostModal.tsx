@@ -8,6 +8,8 @@ import Avatar from "../user/Avatar";
 import ImageInput from "./ImageInput";
 import GlobalIcon from "../svg/GlobalIcon";
 import FriendIcon from "../svg/side-bar-icons/FriendIcon";
+import { PostVisibilityLevel } from "@/enums/post.enums";
+import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 
 type CreatePostModalProps = {
   modalShowing: boolean;
@@ -15,6 +17,10 @@ type CreatePostModalProps = {
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   fullName: string;
   avatar: string;
+
+  // Optional group id to create post in a group
+  // If groupId is provided, the post will be created in the group
+  groupId?: string;
 };
 
 export default function CreatePostModal({
@@ -23,10 +29,13 @@ export default function CreatePostModal({
   setPosts,
   fullName,
   avatar,
+  groupId,
 }: CreatePostModalProps) {
   const contentInputRef = useRef<HTMLTextAreaElement | null>(null);
   const [images, setImages] = useState<string[]>([]);
-  const [privacy, setPrivacy] = useState<"public" | "friend">("public");
+  const [privacy, setPrivacy] = useState<PostVisibilityLevel>(
+    PostVisibilityLevel.PUBLIC
+  );
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const dispatch = useDispatch();
@@ -53,7 +62,8 @@ export default function CreatePostModal({
     const res = await fetchApi<Post>("/api/posts", "POST", dispatch, {
       content,
       images,
-      visibilityLevel: privacy,
+      visibilityLevel: groupId ? PostVisibilityLevel.GROUP : privacy,
+      groupId,
     });
     if (res) {
       setPosts((posts) => [res, ...posts]);
@@ -70,61 +80,63 @@ export default function CreatePostModal({
     }
   };
 
+  console.log(groupId, groupId === undefined);
+
   return (
     <Modal open={modalShowing} hideModal={hideModal}>
       <div className="flex items-center w-[680px] max-w-[680px]">
         <Avatar photoURL={avatar} />
         <div className="ml-3 flex-1">
-          <div className="font-semibold">{fullName}</div>
           <div className="relative inline-block text-left">
-            <button
-              type="button"
-              className="inline-flex justify-center items-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-light-grey rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-              id="privacy-menu"
-              aria-haspopup="true"
-              aria-expanded={isDropdownOpen}
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            >
-              {privacy === "public" ? (
-                <GlobalIcon className="mr-2 h-4 w-4" />
-              ) : (
-                <FriendIcon className="mr-2 h-4 w-4" />
-              )}
-              {privacy === "public" ? "Public" : "Friends"}
-            </button>
-
-            {isDropdownOpen && (
-              <div
-                className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="privacy-menu"
-              >
-                <div className="py-1" role="none">
-                  <button
-                    className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                    role="menuitem"
-                    onClick={() => {
-                      setPrivacy("public");
-                      setIsDropdownOpen(false);
-                    }}
-                  >
+            <div className="font-semibold">{fullName}</div>
+            {groupId === undefined && (
+              <>
+                <button
+                  type="button"
+                  className="inline-flex justify-center items-center w-[60%] px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-light-grey rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                  id="privacy-menu"
+                  aria-haspopup="true"
+                  aria-expanded={isDropdownOpen}
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+                  {privacy === PostVisibilityLevel.PUBLIC ? (
                     <GlobalIcon className="mr-2 h-4 w-4" />
-                    <span>Public</span>
-                  </button>
-                  <button
-                    className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                    role="menuitem"
-                    onClick={() => {
-                      setPrivacy("friend");
-                      setIsDropdownOpen(false);
-                    }}
-                  >
+                  ) : (
                     <FriendIcon className="mr-2 h-4 w-4" />
-                    <span>Friends</span>
-                  </button>
-                </div>
-              </div>
+                  )}
+                  {capitalizeFirstLetter(privacy)}
+                </button>
+
+                {isDropdownOpen && (
+                  <div
+                    className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="privacy-menu">
+                    <div className="py-1" role="none">
+                      <button
+                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                        role="menuitem"
+                        onClick={() => {
+                          setPrivacy(PostVisibilityLevel.PUBLIC);
+                          setIsDropdownOpen(false);
+                        }}>
+                        <GlobalIcon className="mr-2 h-4 w-4" />
+                        <span>Public</span>
+                      </button>
+                      <button
+                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                        role="menuitem"
+                        onClick={() => {
+                          setPrivacy(PostVisibilityLevel.FRIEND);
+                          setIsDropdownOpen(false);
+                        }}>
+                        <FriendIcon className="mr-2 h-4 w-4" />
+                        <span>Friends</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -139,6 +151,9 @@ export default function CreatePostModal({
       <button
         onClick={submitPost}
         className="mt-4 w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-blue-300 disabled:cursor-not-allowed"
+
+        // below is error
+        // disabled={!contentInputRef.current?.value.trim()}
       >
         Post
       </button>

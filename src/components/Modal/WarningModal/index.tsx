@@ -1,12 +1,14 @@
 import Modal from "@/components/Modal";
 
 type WarningUnfriendModalProps = {
+  warningContent: string;
   open: boolean;
   onClose: () => void;
   onConfirm: () => void;
 };
 
-const WarningUnfriendModal = ({
+const WarningModal = ({
+  warningContent,
   open,
   onClose,
   onConfirm,
@@ -17,10 +19,7 @@ const WarningUnfriendModal = ({
         <h2 className="text-xl font-semibold text-gray-800 mb-4">
           Confirm Action
         </h2>
-        <p className="text-gray-600 mb-6">
-          Are you sure you want to unfriend this user? This action cannot be
-          undone.
-        </p>
+        <p className="text-gray-600 mb-6">{warningContent}</p>
         <div className="flex justify-end space-x-4">
           <button
             onClick={onClose}
@@ -38,4 +37,4 @@ const WarningUnfriendModal = ({
   );
 };
 
-export default WarningUnfriendModal;
+export default WarningModal;

@@ -1,4 +1,5 @@
 import { GroupVisibilityLevel } from "@/enums/group.enums";
+import { abbreviateNumber } from "@/helpers/abbreviateNumber";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import { Link } from "react-router-dom";
 
@@ -25,7 +26,8 @@ const ProfileGroupCard = ({
         </Link>
 
         <span className="ml-4   cursor-pointer text-xs text-dark-grey hover:underline">
-          {capitalizeFirstLetter(visibilityLevel)} • {memberCount + " members"}
+          {capitalizeFirstLetter(visibilityLevel)} •{" "}
+          {abbreviateNumber(memberCount) + " members"}
         </span>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { EditProfileModal } from "@/components/Modal/EditProfileModal";
-import WarningUnfriendModal from "@/components/Modal/WarningUnfriendModal";
+import WarningModal from "@/components/Modal/WarningModal";
+
 import AcceptFriendRequestIcon from "@/components/svg/profile-actions/AcceptFriendRequestIcon";
 import AddFriendIcon from "@/components/svg/profile-actions/AddFriendIcon";
 import CancelFriendRequestIcon from "@/components/svg/profile-actions/CancelFriendRequestIcon";
@@ -7,6 +8,7 @@ import EditProfileIcon from "@/components/svg/profile-actions/EditProfileIcon";
 import RemoveFriendIcon from "@/components/svg/profile-actions/RemoveFriendIcon";
 import { FriendRequestStatus, UserFriendRelation } from "@/enums/user.enums";
 import { fetchApi } from "@/helpers/fetchApi";
+import getFullName from "@/helpers/getFullName";
 import { FriendRequest, UserProfile } from "@/types/user.types";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -157,7 +159,8 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
   if (user.userFriendRelation === UserFriendRelation.FRIEND) {
     return (
       <div className="mt-6 flex space-x-4 absolute right-0 bottom-0">
-        <WarningUnfriendModal
+        <WarningModal
+          warningContent={`Are you sure you want to remove ${getFullName(user)} as a friend? This action cannot be undone.`}
           open={warningUnfriendModalOpen}
           onClose={() => setWarningUnfriendModalOpen(false)}
           onConfirm={handleRemoveFriend}

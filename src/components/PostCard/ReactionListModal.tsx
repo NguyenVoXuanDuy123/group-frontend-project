@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Modal from "../Modal";
 import ProfileFriendCard from "../Profile/ProfileFriendCard";
+import { ReactionType } from "@/enums/post.enums";
 
 type ReactionListModalProps = {
   modalShowing: boolean;
@@ -65,45 +66,59 @@ const ReactionListModal = ({
     }
   }, [modalShowing, postId, dispatch]);
 
-  const renderUserList = (users: ReactionUserInfo[]) => (
-    <div className="mt-4 px-2">
-      {users.map((info) => (
-        <ProfileFriendCard
-          key={info.id}
-          avatar={info.user.avatar}
-          fullName={getFullName(info.user)}
-          username={info.user.username}
-        />
-      ))}
-    </div>
-  );
+  const renderUserList = (users: ReactionUserInfo[]) => {
+    if (!users.length)
+      return (
+        <div className="text-center text-dark-grey font-bold mt-4">
+          No users reacted with {activeTab}
+        </div>
+      );
+
+    return (
+      <div className="mt-4 px-2">
+        {users.map((info) => (
+          <ProfileFriendCard
+            key={info.id}
+            avatar={info.user.avatar}
+            fullName={getFullName(info.user)}
+            username={info.user.username}
+          />
+        ))}
+      </div>
+    );
+  };
 
   return (
     <Modal open={modalShowing} hideModal={hideModal}>
-      <div className="p-4 max-h-[500px]">
+      <div className="p-3 max-h-[500px] w-[484px]">
         <div className="border-b border-light-grey">
           <nav className="flex space-x-4">
-            {["like", "love", "haha", "angry"].map((reaction) => (
-              <button
-                key={reaction}
-                onClick={() => setActiveTab(reaction)}
-                className={`px-4 py-2 text-sm ${
-                  activeTab === reaction
-                    ? "border-b-2 border-primary text-primary font-semibold"
-                    : ""
-                }`}
-              >
-                {reaction.charAt(0).toUpperCase() + reaction.slice(1)}
-              </button>
+            {Object.values(ReactionType).map((reaction) => (
+              <>
+                <button
+                  key={reaction}
+                  onClick={() => setActiveTab(reaction)}
+                  className={`px-4 py-2 text-sm ${
+                    activeTab === reaction
+                      ? "border-b-2 border-primary text-primary font-semibold"
+                      : ""
+                  }`}>
+                  {reaction.charAt(0).toUpperCase() + reaction.slice(1)}
+                </button>
+              </>
             ))}
           </nav>
         </div>
         {/* Update the div containing the user list */}
         <div className="mt-4 max-h-[400px] overflow-y-auto">
-          {activeTab === "like" && renderUserList(reactionLikeUserInfos)}
-          {activeTab === "love" && renderUserList(reactionLoveUserInfos)}
-          {activeTab === "haha" && renderUserList(reactionHahaUserInfos)}
-          {activeTab === "angry" && renderUserList(reactionAngryUserInfos)}
+          {activeTab === ReactionType.LIKE &&
+            renderUserList(reactionLikeUserInfos)}
+          {activeTab === ReactionType.LOVE &&
+            renderUserList(reactionLoveUserInfos)}
+          {activeTab === ReactionType.HAHA &&
+            renderUserList(reactionHahaUserInfos)}
+          {activeTab === ReactionType.ANGRY &&
+            renderUserList(reactionAngryUserInfos)}
         </div>
       </div>
     </Modal>

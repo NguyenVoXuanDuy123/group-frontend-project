@@ -1,37 +1,34 @@
-import ProfileHeader from "@/components/ProfileHeader";
+import GroupHeader from "@/components/GroupHeader";
 import Logo from "@/components/svg/Logo";
 import { appName } from "@/constants";
 import { fetchApi } from "@/helpers/fetchApi";
-import { UserProfile } from "@/types/user.types";
+import { Group } from "@/types/group.types";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, Outlet, useParams } from "react-router-dom";
-
-export type ProfileLayoutContextType = {
-  user: UserProfile;
-  setUser: React.Dispatch<React.SetStateAction<UserProfile | null>>;
+export type GroupLayoutContextType = {
+  group: Group;
+  setGroup: React.Dispatch<React.SetStateAction<Group | null>>;
 };
 
-const ProfileLayout = () => {
-  const { username } = useParams();
+const GroupLayout = () => {
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const [user, setUser] = useState<UserProfile | null>(null);
+  const [group, setGroup] = useState<Group | null>(null);
 
   useEffect(() => {
-    if (!username) return;
+    if (!id) return;
     const fetchData = async () => {
-      const user = await fetchApi<UserProfile>(
-        `/api/users/profile/${username}`,
-        "GET",
-        dispatch
-      );
-      setUser(user);
+      const group = await fetchApi<Group>(`/api/groups/${id}`, "GET", dispatch);
+      if (group) {
+        setGroup(group);
+      }
     };
     fetchData();
-  }, [username, dispatch, setUser]);
+  }, [id, dispatch, setGroup]);
 
-  if (!username) return null;
-  if (!user) return null;
+  if (!group) return null;
+
   return (
     <div>
       <div className="bg-white relative">
@@ -44,20 +41,20 @@ const ProfileLayout = () => {
           </div>
         </Link>
         <div className="max-w-[880px] mx-auto px-6">
-          <ProfileHeader user={user} setUser={setUser} />
+          <GroupHeader group={group} setGroup={setGroup} />
         </div>
       </div>
       <div className="max-w-[880px] mx-auto px-6 rounded-lg ">
         <Outlet
           context={{
-            user,
-            setUser,
+            group,
+            setGroup,
           }}
-          key={user.id}
+          key={group.id}
         />
       </div>
     </div>
   );
 };
 
-export default ProfileLayout;
+export default GroupLayout;

@@ -3,6 +3,7 @@ import ProfileActions from "@/components/ProfileHeader/ProfileActions";
 import TabItem from "@/components/ProfileHeader/TabItem";
 import Avatar from "@/components/user/Avatar";
 import { UserFriendRelation } from "@/enums/user.enums";
+import { abbreviateNumber } from "@/helpers/abbreviateNumber";
 import getFullName from "@/helpers/getFullName";
 import { UserProfile } from "@/types/user.types";
 
@@ -40,7 +41,7 @@ const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
             onClick={() => {
               navigate(`/${user.username}/friends`);
             }}>
-            {user.friendCount + " friends "}{" "}
+            {abbreviateNumber(user.friendCount) + " friends "}{" "}
             {user.userFriendRelation !== UserFriendRelation.SELF &&
               "• " + user.mutualFriendCount + " mutual"}
           </span>

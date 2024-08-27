@@ -122,8 +122,7 @@ const ImageInput: React.FC<ImageInputProps> = React.memo(
             <div
               ref={scrollContainerRef}
               className="flex flex-1 overflow-x-hidden space-x-2 scrollbar-hide "
-              style={{ scrollBehavior: "smooth" }}
-            >
+              style={{ scrollBehavior: "smooth" }}>
               {images.map((image, index) => (
                 <div key={index} className="flex-shrink-0 relative ">
                   <img
@@ -136,8 +135,7 @@ const ImageInput: React.FC<ImageInputProps> = React.memo(
                     onClick={(e) => {
                       e.stopPropagation();
                       handleClear(index);
-                    }}
-                  >
+                    }}>
                     <CloseIcon />
                   </button>
                 </div>
@@ -147,8 +145,7 @@ const ImageInput: React.FC<ImageInputProps> = React.memo(
             {images.length > 0 && scrolled && (
               <button
                 className="absolute left-2 z-10 bg-light-grey text-white rounded-full p-2 ml-2 hover:bg-grey"
-                onClick={scrollLeft}
-              >
+                onClick={scrollLeft}>
                 <ChevronLeft />
               </button>
             )}
@@ -156,8 +153,7 @@ const ImageInput: React.FC<ImageInputProps> = React.memo(
             {images.length >= 3 && !scrolled && (
               <button
                 className="absolute right-2 z-10 bg-light-grey text-white rounded-full p-2 ml-2 hover:bg-grey"
-                onClick={scrollRight}
-              >
+                onClick={scrollRight}>
                 <ChevronRight />
               </button>
             )}
@@ -167,8 +163,7 @@ const ImageInput: React.FC<ImageInputProps> = React.memo(
           className="flex flex-col cursor-pointer items-center justify-center h-40 bg-light-grey rounded-lg border-2 border-dashed border-grey"
           onDragOver={handleDragOver}
           onDrop={handleDrop}
-          onClick={handleClick}
-        >
+          onClick={handleClick}>
           <div className="flex flex-col items-center">
             <PlusIcon />
             <span className="my-2 font-bold">Add photos</span>
@@ -178,7 +173,7 @@ const ImageInput: React.FC<ImageInputProps> = React.memo(
           <input
             type="file"
             ref={fileInputRef}
-            accept="image/*,video/*"
+            accept="image/*"
             onChange={handleFileChange}
             className="hidden"
           />

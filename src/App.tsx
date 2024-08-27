@@ -1,5 +1,4 @@
 import { useAuth } from "@/hooks/useAuth";
-import { AuthPage, BaseLayout, Home, NoPage } from "@/pages";
 import ProfileLayout from "@/pages/layout/ProfileLayout";
 import { store } from "@/redux/store";
 import { Provider } from "react-redux";
@@ -10,6 +9,14 @@ import ProfileFriends from "@/pages/ProfilePage/ProfileFriends";
 import ProfileRequests from "@/pages/ProfilePage/ProfileRequests";
 import ProfileGroups from "@/pages/ProfilePage/ProfileGroups";
 import ProfileMyGroups from "@/pages/ProfilePage/ProfileMyGroups";
+import BaseLayout from "@/pages/layout/BaseLayout";
+import Home from "@/pages/Home";
+import NoPage from "@/pages/NoPage";
+import AuthPage from "@/pages/AuthPage";
+import GroupLayout from "@/pages/layout/GroupLayout";
+import GroupPosts from "@/pages/GroupPage/GroupPosts";
+import GroupMembers from "@/pages/GroupPage/GroupMembers";
+import GroupRequests from "@/pages/GroupPage/GroupRequests";
 
 function ProtectedRoute() {
   const { status, isAuthenticated } = useAuth();
@@ -40,6 +47,12 @@ export default function App() {
               <Route path="groups" element={<ProfileGroups />} />
               <Route path="my-groups" element={<ProfileMyGroups />} />
               <Route path="friend-requests" element={<ProfileRequests />} />
+              <Route path="*" element={<NoPage />} />
+            </Route>
+            <Route path="/groups/:id" element={<GroupLayout />}>
+              <Route index element={<GroupPosts />} />
+              <Route path="members" element={<GroupMembers />} />
+              <Route path="requests" element={<GroupRequests />} />
               <Route path="*" element={<NoPage />} />
             </Route>
           </Route>

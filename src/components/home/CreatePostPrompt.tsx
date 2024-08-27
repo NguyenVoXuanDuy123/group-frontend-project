@@ -9,9 +9,13 @@ import getFullName from "@/helpers/getFullName";
 
 type CreatePostPromptProps = {
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+
+  // Optional group id to create post in a group
+  // If groupId is provided, the post will be created in the group
+  groupId?: string;
 };
 
-const CreatePostPrompt = ({ setPosts }: CreatePostPromptProps) => {
+const CreatePostPrompt = ({ setPosts, groupId }: CreatePostPromptProps) => {
   const [modalShowing, setModalShowing] = useState<boolean>(false);
   const user = useSelector((state: RootState) => state.auth.user);
   if (!user) return null;
@@ -38,6 +42,7 @@ const CreatePostPrompt = ({ setPosts }: CreatePostPromptProps) => {
         </button>
       </div>
       <CreatePostModal
+        groupId={groupId}
         fullName={getFullName(user)}
         avatar={user.avatar}
         setPosts={setPosts}
