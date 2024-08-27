@@ -42,8 +42,8 @@ const ProfileLayout = () => {
           <ProfileHeader user={user} setUser={setUser} />
         </div>
       </div>
-      <div className="max-w-[880px] mx-auto px-6 pt-3 rounded-lg mt-3">
-        <Outlet context={user} />
+      <div className="max-w-[880px] mx-auto px-6 rounded-lg ">
+        <Outlet context={user} key={user.id} />
       </div>
     </div>
   );

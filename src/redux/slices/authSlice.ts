@@ -79,10 +79,6 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logout: (state) => {
-      state.isAuthenticated = false;
-      state.user = null;
-    },
     updateUser: (state, action: PayloadAction<Partial<UserAuth>>) => {
       if (state.user) {
         state.user = {
@@ -112,7 +108,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const { logout, updateUser } = authSlice.actions;
+export const { updateUser } = authSlice.actions;
 
 export const selectAuthState = (state: RootState) => state.auth;
 
