@@ -1,6 +1,6 @@
+import ProfileFriendCard from "@/components/Profile/ProfileFriendCard";
 import { fetchApi } from "@/helpers/fetchApi";
 import getFullName from "@/helpers/getFullName";
-import FriendCard from "@/pages/ProfilePage/ProfileFriends/FriendCard";
 import { FriendType, UserProfile } from "@/types/user.types";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -35,7 +35,7 @@ const ProfileFriends = () => {
         {friends.map((friend) => {
           return (
             <div className="flex justify-center sm:justify-start">
-              <FriendCard
+              <ProfileFriendCard
                 name={getFullName(friend)}
                 mutualFriendCount={friend.mutualFriendCount}
                 username={friend.username}

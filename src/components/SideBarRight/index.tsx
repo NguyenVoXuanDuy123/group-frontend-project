@@ -1,13 +1,34 @@
 import NotificationIcon from "@/components/svg/side-bar-icons/NotificationIcon";
 import Avatar from "@/components/user/Avatar";
-import FriendCard from "@/components/SideBarRight/FriendCard";
+import SideBarRightFriendCard from "@/components/SideBarRight/SideBarRightFriendCard";
 import { RootState } from "@/redux/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { FriendType } from "@/types/user.types";
+import { fetchApi } from "@/helpers/fetchApi";
 
 const SideBarRight = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
+  const [friends, setFriends] = useState<FriendType[]>([]);
+
+  useEffect(() => {
+    const fetchFriends = async () => {
+      const response = await fetchApi<FriendType[]>(
+        `/api/users/me/friends?limit=4`,
+        "GET",
+        dispatch
+      );
+      if (response) {
+        setFriends(response);
+      }
+    };
+    fetchFriends();
+  }, [dispatch]);
+
   if (!user) return null;
   const { avatar } = user;
+
   return (
     <div className="w-80 h-screen p-4 sticky top-0 bg-white">
       <div className="flex justify-end">
@@ -18,16 +39,22 @@ const SideBarRight = () => {
       </div>
       <div className="my-4">
         <h2 className="text-lg font-bold">Friends</h2>
-        <FriendCard name="Huong Dat Huy" onclick={() => {}} />
-        <FriendCard name="Nguyen Vo Xuan Duy" onclick={() => {}} />
-        <FriendCard name="Le Nguyen Viet Cuong" onclick={() => {}} />
-        <FriendCard name="Dong Dong" onclick={() => {}} />
+        {friends.map((friend) => {
+          return (
+            <SideBarRightFriendCard
+              key={friend.id}
+              username={friend.username}
+              name={friend.firstName + " " + friend.lastName}
+              avatar={friend.avatar}
+            />
+          );
+        })}
       </div>
       <div className="">
         <h2 className="text-lg font-bold">Groups</h2>
-        <FriendCard name="J2Team Community" onclick={() => {}} />
-        <FriendCard name="RMIT Students" onclick={() => {}} />
-        <FriendCard name="Nhóm Học Tập UEH" onclick={() => {}} />
+        <SideBarRightFriendCard name="J2Team Community" onclick={() => {}} />
+        <SideBarRightFriendCard name="RMIT Students" onclick={() => {}} />
+        <SideBarRightFriendCard name="Nhóm Học Tập UEH" onclick={() => {}} />
       </div>
     </div>
   );

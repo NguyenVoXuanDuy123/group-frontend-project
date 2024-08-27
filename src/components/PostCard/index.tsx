@@ -93,7 +93,9 @@ const PostCard = ({ post }: PostCardProps) => {
               <Link
                 to={`/${post.author.username}`}
                 className="text-black no-underline">
-                <div className="">{getFullName(post.author)}</div>
+                <div className="hover:underline">
+                  {getFullName(post.author)}
+                </div>
               </Link>
               <div className="text-dark-grey text-sm flex  items-center">
                 {timeAgo(post.createdAt)} •{" "}

@@ -11,6 +11,7 @@ import {
 } from "@reduxjs/toolkit";
 
 type UserAuth = {
+  id: string;
   firstName: string;
   lastName: string;
   role: UserRole;
