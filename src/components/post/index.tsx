@@ -81,7 +81,7 @@ const PostCard = ({ post }: PostCardProps) => {
   return (
     <div className="max-w-md mx-auto bg-white rounded-xl overflow-hidden md:max-w-2xl my-4">
       <div className="md:flex flex-1">
-        <div className="px-4 pt-4 flex-1 flex flex-column">
+        <div className="px-4 pt-4 flex-1 flex flex-col">
           {/* Profile Section */}
           <div className="flex items-center mb-2">
             <Avatar photoURL={post.author.avatar} />
