@@ -1,5 +1,5 @@
 import CreatePostPrompt from "@/components/home/CreatePostPrompt";
-import PostList from "@/components/Post/PostList";
+import PostList from "@/components/PostCard/PostList";
 import { fetchApi } from "@/helpers/fetchApi";
 import { Post } from "@/types/post.types";
 import { useEffect, useState } from "react";
