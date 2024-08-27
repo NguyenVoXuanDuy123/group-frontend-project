@@ -72,11 +72,24 @@ const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
           url={`/${user.username}/groups`}
           isActive={location.pathname === `/${user.username}/groups`}
         />
-        <TabItem
-          title="Friend requests"
-          url={`/${user.username}/friend-requests`}
-          isActive={location.pathname === `/${user.username}/friend-requests`}
-        />
+
+        {/* If the user is viewing their own profile, show additional tabs */}
+        {user.userFriendRelation === UserFriendRelation.SELF && (
+          <>
+            <TabItem
+              title="My Groups"
+              url={`/${user.username}/my-groups`}
+              isActive={location.pathname === `/${user.username}/my-groups`}
+            />
+            <TabItem
+              title="Friend requests"
+              url={`/${user.username}/friend-requests`}
+              isActive={
+                location.pathname === `/${user.username}/friend-requests`
+              }
+            />
+          </>
+        )}
       </div>
     </div>
   );
