@@ -4,10 +4,8 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 body {
- overflow: scroll;
+  overflow-y: scroll;
 }
 /* Hide scrollbar but keep layout space */
 .hide-scrollbar {
@@ -28,7 +26,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #C2C2C2;
+  background: #c2c2c2;
   /* Color of the scrollbar thumb */
   border-radius: 8px;
   /* Round the edges of the scrollbar thumb */

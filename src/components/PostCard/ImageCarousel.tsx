@@ -1,134 +1,156 @@
-import React, { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ChevronLeft from "../svg/ChevronLeft";
 import ChevronRight from "../svg/ChevronRight";
-import CloseIcon from "../svg/CloseIcon";
 
-type CarouselProps = {
+interface ImageCarouselProps {
   images: string[];
-};
+}
 
-const ImageCarousel: React.FC<CarouselProps> = ({ images }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isFullScreen, setIsFullScreen] = useState(false);
+export default function ImageCarousel({ images }: ImageCarouselProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [translateX, setTranslateX] = useState(0);
 
-  const handleImageClick = () => {
-    setIsFullScreen(true);
-  };
-
-  const handleCloseFullScreen = () => {
-    setIsFullScreen(false);
-  };
-
-  const handlePrevClick = () => {
-    setActiveIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
-    );
-  };
-
-  const handleNextClick = () => {
-    setActiveIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
-
-  const handleIndicatorClick = (index: number) => {
-    setActiveIndex(index);
-  };
   useEffect(() => {
-    // prevent scrolling when user clicks on the image to view it in full screen
-    if (isFullScreen) {
-      document.body.classList.add("hide-scrollbar");
-    } else {
-      document.body.classList.remove("hide-scrollbar");
-    }
-
-    // Cleanup when the modal is unmounted or when the modal is closed
-    return () => {
-      document.body.classList.remove("hide-scrollbar");
+    const updateDimensions = () => {
+      if (containerRef.current) {
+        const containerWidth = containerRef.current.offsetWidth;
+        setDimensions({
+          width: containerWidth,
+          height: containerWidth, // Making it square
+        });
+      }
     };
-  }, [isFullScreen]);
+
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+
+    return () => {
+      window.removeEventListener("resize", updateDimensions);
+    };
+  }, []);
+
+  const goToPrevious = useCallback(() => {
+    if (images.length > 1 && currentIndex > 0) {
+      setCurrentIndex((prevIndex) => prevIndex - 1);
+    }
+  }, [images.length, currentIndex]);
+
+  const goToNext = useCallback(() => {
+    if (images.length > 1 && currentIndex < images.length - 1) {
+      setCurrentIndex((prevIndex) => prevIndex + 1);
+    }
+  }, [images.length, currentIndex]);
+
+  const handleDragStart = (
+    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
+  ) => {
+    setIsDragging(true);
+    setStartX("touches" in e ? e.touches[0].clientX : e.clientX);
+  };
+
+  const handleDragMove = (
+    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
+  ) => {
+    if (!isDragging) return;
+    const currentX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    const diff = currentX - startX;
+    setTranslateX(diff);
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+    if (Math.abs(translateX) > dimensions.width / 3) {
+      if (translateX > 0) {
+        goToPrevious();
+      } else {
+        goToNext();
+      }
+    }
+    setTranslateX(0);
+  };
+
+  if (images.length === 0) {
+    return (
+      <div className="text-center text-gray-500">No images to display</div>
+    );
+  }
 
   return (
-    <div className="relative w-full overflow-hidden">
-      <div className="relative w-full h-full overflow-hidden rounded-lg">
-        {/* Images Display */}
-        {images.length === 1 ? (
-          <img
-            onClick={handleImageClick}
-            className="w-full h-full object-contain cursor-pointer"
-            src={images[0]}
-            alt={`Image 1`}
-          />
-        ) : (
-          images.map((src, index) => (
+    <div className="relative w-full mx-auto" ref={containerRef}>
+      <div
+        className="overflow-hidden rounded-lg"
+        style={{
+          width: "100%",
+          height: dimensions.height,
+        }}
+      >
+        <div
+          className="w-full h-full flex items-center justify-center"
+          style={{
+            width: `${images.length * 100}%`,
+          }}
+          onMouseDown={handleDragStart}
+          onMouseMove={handleDragMove}
+          onMouseUp={handleDragEnd}
+          onMouseLeave={handleDragEnd}
+          onTouchStart={handleDragStart}
+          onTouchMove={handleDragMove}
+          onTouchEnd={handleDragEnd}
+        >
+          {images.map((src, index) => (
             <div
               key={index}
-              className={`absolute inset-0 transition-opacity duration-1000 cursor-pointer ${
-                index === activeIndex ? "opacity-100" : "opacity-0"
-              }`}>
+              className="bg-light-grey flex justify-center items-center transition-transform duration-300 ease-in-out h-full w-full"
+              style={{
+                transform: `translateX(calc(-${currentIndex * 100}% + ${translateX}px))`,
+              }}
+            >
               <img
-                onClick={handleImageClick}
-                className="w-full h-auto object-contain"
                 src={src}
                 alt={`Image ${index + 1}`}
+                className="max-w-full max-h-full object-contain"
+                draggable="false"
               />
             </div>
-          ))
-        )}
-      </div>
-
-      {/* Indicators */}
-      {images.length > 1 && (
-        <ol className="absolute bottom-4 left-1/2  transform -translate-x-1/2 flex space-x-2">
-          {images.map((_, index) => (
-            <li
-              key={index}
-              className={`h-1 w-8 rounded-full cursor-pointer ${
-                index === activeIndex ? "bg-white" : "bg-black/90"
-              }`}
-              onClick={() => handleIndicatorClick(index)}
-            />
           ))}
-        </ol>
-      )}
-
-      {/* Navigation Buttons */}
-      {activeIndex > 0 && (
-        <button
-          className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-1"
-          onClick={handlePrevClick}
-          aria-label="Previous Slide">
-          <ChevronLeft />
-        </button>
-      )}
-
-      {activeIndex < images.length - 1 && (
-        <button
-          className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-1  "
-          onClick={handleNextClick}
-          aria-label="Next Slide">
-          <ChevronRight />
-        </button>
-      )}
-
-      {/* Full-Screen Modal */}
-      {isFullScreen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
-          onClick={handleCloseFullScreen}>
-          <img
-            src={images[activeIndex]}
-            alt={`Slide ${activeIndex + 1} Full Screen`}
-            className="w-auto h-full max-w-full max-h-full z-[1000]"
-          />
-          <button
-            className="absolute top-4 right-4 bg-white bg-opacity-50 rounded-full p-2"
-            onClick={handleCloseFullScreen}
-            aria-label="Close Full Screen">
-            <CloseIcon color="#000000aa" />
-          </button>
         </div>
+      </div>
+      {images.length > 1 && (
+        <>
+          {currentIndex > 0 && (
+            <button
+              onClick={goToPrevious}
+              className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-opacity"
+              aria-label="Previous image"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+          )}
+          {currentIndex < images.length - 1 && (
+            <button
+              onClick={goToNext}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-opacity"
+              aria-label="Next image"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          )}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+            {images.map((_, index) => (
+              <div
+                key={index}
+                className={`w-2 h-2 rounded-full transition-colors duration-300 ${
+                  index === currentIndex ? "bg-white" : "bg-gray-400"
+                } shadow-md`}
+              />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
-};
-
-export default ImageCarousel;
+}

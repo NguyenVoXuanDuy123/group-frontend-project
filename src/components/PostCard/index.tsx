@@ -8,7 +8,7 @@ import Avatar from "../user/Avatar";
 import ImageCarousel from "./ImageCarousel";
 import ReactionButton from "./ReactionButton";
 import TruncateText from "./TruncateContent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import VisibilityLevelIcon from "@/components/PostCard/VisibilityLevelIcon";
 
@@ -80,6 +80,10 @@ const PostCard = ({ post }: PostCardProps) => {
     }
   };
 
+  useEffect(() => {
+    console.log(post.images);
+  }, []);
+
   return (
     <div className="max-w-md mx-auto bg-white rounded-xl overflow-hidden md:max-w-2xl my-4">
       <div className="md:flex flex-1">
@@ -92,7 +96,8 @@ const PostCard = ({ post }: PostCardProps) => {
             <div className="ml-4">
               <Link
                 to={`/${post.author.username}`}
-                className="text-black no-underline">
+                className="text-black no-underline"
+              >
                 <div className="hover:underline">
                   {getFullName(post.author)}
                 </div>
