@@ -7,6 +7,11 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, Outlet, useParams } from "react-router-dom";
 
+export type ProfileLayoutContextType = {
+  user: UserProfile;
+  setUser: React.Dispatch<React.SetStateAction<UserProfile | null>>;
+};
+
 const ProfileLayout = () => {
   const { username } = useParams();
   const dispatch = useDispatch();
@@ -43,7 +48,13 @@ const ProfileLayout = () => {
         </div>
       </div>
       <div className="max-w-[880px] mx-auto px-6 rounded-lg ">
-        <Outlet context={user} key={user.id} />
+        <Outlet
+          context={{
+            user,
+            setUser,
+          }}
+          key={user.id}
+        />
       </div>
     </div>
   );

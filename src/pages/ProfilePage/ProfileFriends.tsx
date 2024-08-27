@@ -1,7 +1,8 @@
 import ProfileFriendCard from "@/components/Profile/ProfileFriendCard";
 import { fetchApi } from "@/helpers/fetchApi";
 import getFullName from "@/helpers/getFullName";
-import { FriendType, UserProfile } from "@/types/user.types";
+import { ProfileLayoutContextType } from "@/pages/layout/ProfileLayout";
+import { FriendType } from "@/types/user.types";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useOutletContext } from "react-router-dom";
@@ -11,7 +12,7 @@ const ProfileFriends = () => {
   const [friends, setFriends] = useState<FriendType[]>([]);
 
   const dispatch = useDispatch();
-  const user = useOutletContext<UserProfile>();
+  const { user } = useOutletContext<ProfileLayoutContextType>();
 
   useEffect(() => {
     // fetch friends of the profile owner

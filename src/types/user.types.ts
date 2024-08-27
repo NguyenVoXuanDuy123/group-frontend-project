@@ -129,9 +129,9 @@ export type FriendType = {
   mutualFriendCount: number;
 };
 
-export type FriendRequestCard = {
+export type FriendRequestCardType = {
   id: string;
-  senderDetail: UserInformation;
+  senderDetail: UserInformation & { mutualFriendCount: number };
   status: FriendRequestStatus;
   createdAt: string;
 };

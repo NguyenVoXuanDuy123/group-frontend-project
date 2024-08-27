@@ -1,10 +1,10 @@
 import ProfileGroupCard from "@/components/Profile/ProfileGroupCard";
 import { GroupRole, GroupStatus } from "@/enums/group.enums";
 import { fetchApi } from "@/helpers/fetchApi";
+import { ProfileLayoutContextType } from "@/pages/layout/ProfileLayout";
 import { setToast } from "@/redux/slices/toastSlice";
 import { RootState } from "@/redux/store";
 import { GroupCard } from "@/types/group.types";
-import { UserProfile } from "@/types/user.types";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useOutletContext } from "react-router-dom";
@@ -15,7 +15,7 @@ const ProfileMyGroups = () => {
     GroupStatus.APPROVED
   );
   const dispatch = useDispatch();
-  const user = useOutletContext<UserProfile>();
+  const { user } = useOutletContext<ProfileLayoutContextType>();
   const { username } = useSelector(
     (state: RootState) => state.auth.user || { username: "" }
   );
@@ -50,10 +50,15 @@ const ProfileMyGroups = () => {
   }, [dispatch, groupStatus, user.id, user.username, username]);
 
   // only show groups if the user is viewing their own profile
-  if (user.username !== username) return <h1>Forbidden</h1>;
+  if (user.username !== username)
+    return (
+      <p className="text-gray-500 text-center mt-4">
+        You can not view groups of other users
+      </p>
+    );
   return (
     <div className="flex-1 flex flex-col bg-white rounded-xl p-4 mt-4">
-      <h2 className="text-lg font-bold text-gray-900">Groups</h2>
+      <h2 className="text-lg font-bold text-gray-900">My Groups</h2>
       <div className="flex space-x-4 mt-1">
         <button
           onClick={() => setGroupStatus(GroupStatus.APPROVED)}

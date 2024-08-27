@@ -1,17 +1,20 @@
-import ProfileFriendCard from "@/components/Profile/ProfileFriendCard";
+import FriendRequestCard from "@/components/Profile/FriendRequestCard";
 import { fetchApi } from "@/helpers/fetchApi";
 import getFullName from "@/helpers/getFullName";
+import { ProfileLayoutContextType } from "@/pages/layout/ProfileLayout";
 import { setToast } from "@/redux/slices/toastSlice";
 import { RootState } from "@/redux/store";
-import { FriendRequestCard, UserProfile } from "@/types/user.types";
+import { FriendRequestCardType } from "@/types/user.types";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useOutletContext } from "react-router-dom";
 
 const ProfileRequests = () => {
-  const [friendRequests, setFriendRequests] = useState<FriendRequestCard[]>([]);
+  const [friendRequests, setFriendRequests] = useState<FriendRequestCardType[]>(
+    []
+  );
   const dispatch = useDispatch();
-  const user = useOutletContext<UserProfile>();
+  const { user, setUser } = useOutletContext<ProfileLayoutContextType>();
   const { username } = useSelector(
     (state: RootState) => state.auth.user || { username: "" }
   );
@@ -28,7 +31,7 @@ const ProfileRequests = () => {
     }
     // fetch friend requests of the profile owner
     const fetchFriendRequests = async () => {
-      const friendRequests = await fetchApi<FriendRequestCard[]>(
+      const friendRequests = await fetchApi<FriendRequestCardType[]>(
         `/api/users/me/friends/pending-requests`,
         "GET",
         dispatch
@@ -39,20 +42,29 @@ const ProfileRequests = () => {
     };
     fetchFriendRequests();
   }, [dispatch, user.id, user.username, username]);
-
+  if (user.username !== username)
+    return (
+      <p className="text-gray-500 text-center mt-4">
+        You can not view friend requests of other users
+      </p>
+    );
   return (
     <div className="bg-white rounded-xl p-4 mt-4">
-      <h2 className="text-lg font-bold text-gray-900">Friends</h2>
+      <h2 className="text-lg font-bold text-gray-900">Friend Requests</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2  mt-1">
         {friendRequests.map((friendRequest) => {
           const sender = friendRequest.senderDetail;
           return (
             <div className="flex justify-center sm:justify-start">
-              <ProfileFriendCard
+              <FriendRequestCard
+                user={user}
                 fullName={getFullName(sender)}
-                mutualFriendCount={5}
+                mutualFriendCount={sender.mutualFriendCount}
                 username={sender.username}
                 avatar={sender.avatar}
+                setUser={setUser}
+                friendRequest={friendRequest}
+                setFriendRequests={setFriendRequests}
               />
             </div>
           );

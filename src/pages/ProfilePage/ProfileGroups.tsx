@@ -1,7 +1,7 @@
 import ProfileGroupCard from "@/components/Profile/ProfileGroupCard";
 import { fetchApi } from "@/helpers/fetchApi";
+import { ProfileLayoutContextType } from "@/pages/layout/ProfileLayout";
 import { GroupCard } from "@/types/group.types";
-import { UserProfile } from "@/types/user.types";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useOutletContext } from "react-router-dom";
@@ -10,7 +10,7 @@ const ProfileGroups = () => {
   // list of groups of the profile owner
   const [groups, setGroups] = useState<GroupCard[]>([]);
   const dispatch = useDispatch();
-  const user = useOutletContext<UserProfile>();
+  const { user } = useOutletContext<ProfileLayoutContextType>();
   useEffect(() => {
     // fetch groups of the profile owner
     const fetchGroups = async () => {

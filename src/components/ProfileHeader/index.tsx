@@ -40,9 +40,9 @@ const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
             onClick={() => {
               navigate(`/${user.username}/friends`);
             }}>
-            {user.friendCount + " friends "}•{" "}
+            {user.friendCount + " friends "}{" "}
             {user.userFriendRelation !== UserFriendRelation.SELF &&
-              user.mutualFriendCount + " mutual"}
+              "• " + user.mutualFriendCount + " mutual"}
           </span>
           {/* Bio */}
           <p className="mt-2 text-dark-grey m-0 w-[390px] break-words">
