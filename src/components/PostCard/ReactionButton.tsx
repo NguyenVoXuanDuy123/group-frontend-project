@@ -117,9 +117,11 @@ const ReactionButton = ({
         <div
           className={`absolute bottom-full left-0 bg-white border border-gray-200 rounded-lg p-2 flex space-x-2
           transform transition-transform duration-300 ease-in-out ${
+            //  z-40 is used to make sure the popup is on top of other elements
+            // -z-40 is used to make sure when the popup is hidden, it's not clickable or hoverable
             showReactions
-              ? "translate-y-0 opacity-100"
-              : "translate-y-4 opacity-0"
+              ? "translate-y-0 opacity-100 z-40"
+              : "translate-y-4 opacity-0 -z-40"
           }`}>
           <LikeReaction
             width={48}
