@@ -24,7 +24,7 @@ const ProfileMyGroups = () => {
     if (user.username !== username) {
       dispatch(
         setToast({
-          message: "You can only view your own groups",
+          message: "You can not view groups of other users",
           type: "error",
         })
       );
