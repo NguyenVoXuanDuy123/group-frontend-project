@@ -31,12 +31,12 @@ const ProfileFriends = () => {
   return (
     <div className="bg-white rounded-xl p-4 mt-4">
       <h2 className="text-lg font-bold text-gray-900">Friends</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2  ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2  mt-1">
         {friends.map((friend) => {
           return (
             <div className="flex justify-center sm:justify-start">
               <ProfileFriendCard
-                name={getFullName(friend)}
+                fullName={getFullName(friend)}
                 mutualFriendCount={friend.mutualFriendCount}
                 username={friend.username}
                 avatar={friend.avatar}

@@ -9,6 +9,7 @@ import ProfilePosts from "@/pages/ProfilePage/ProfilePosts";
 import ProfileFriends from "@/pages/ProfilePage/ProfileFriends";
 import ProfileRequests from "@/pages/ProfilePage/ProfileRequests";
 import ProfileGroups from "@/pages/ProfilePage/ProfileGroups";
+import ProfileMyGroups from "@/pages/ProfilePage/ProfileMyGroups";
 
 function ProtectedRoute() {
   const { status, isAuthenticated } = useAuth();
@@ -37,6 +38,7 @@ export default function App() {
               <Route index element={<ProfilePosts />} />
               <Route path="friends" element={<ProfileFriends />} />
               <Route path="groups" element={<ProfileGroups />} />
+              <Route path="my-groups" element={<ProfileMyGroups />} />
               <Route path="friend-requests" element={<ProfileRequests />} />
               <Route path="*" element={<NoPage />} />
             </Route>

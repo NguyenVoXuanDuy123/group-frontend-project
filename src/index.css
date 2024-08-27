@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 body {
-  overflow-y: scroll;
+ overflow-y: scroll;
 }
 /* Hide scrollbar but keep layout space */
 .hide-scrollbar {

@@ -128,3 +128,10 @@ export type FriendType = {
    */
   mutualFriendCount: number;
 };
+
+export type FriendRequestCard = {
+  id: string;
+  senderDetail: UserInformation;
+  status: FriendRequestStatus;
+  createdAt: string;
+};
