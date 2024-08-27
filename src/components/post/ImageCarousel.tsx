@@ -37,7 +37,7 @@ const ImageCarousel: React.FC<CarouselProps> = ({ images }) => {
     <div className="relative w-full overflow-hidden">
       <div className="relative w-full h-full overflow-hidden rounded-lg">
         {/* Images Display */}
-        {images.length == 1 ? (
+        {images.length === 1 ? (
           <img
             onClick={handleImageClick}
             className="w-full h-full object-contain cursor-pointer"
@@ -50,8 +50,7 @@ const ImageCarousel: React.FC<CarouselProps> = ({ images }) => {
               key={index}
               className={`absolute inset-0 transition-opacity duration-1000 cursor-pointer ${
                 index === activeIndex ? "opacity-100" : "opacity-0"
-              }`}
-            >
+              }`}>
               <img
                 onClick={handleImageClick}
                 className="w-full h-auto object-contain"
@@ -83,8 +82,7 @@ const ImageCarousel: React.FC<CarouselProps> = ({ images }) => {
         <button
           className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-1"
           onClick={handlePrevClick}
-          aria-label="Previous Slide"
-        >
+          aria-label="Previous Slide">
           <ChevronLeft />
         </button>
       )}
@@ -93,25 +91,25 @@ const ImageCarousel: React.FC<CarouselProps> = ({ images }) => {
         <button
           className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-1  "
           onClick={handleNextClick}
-          aria-label="Next Slide"
-        >
+          aria-label="Next Slide">
           <ChevronRight />
         </button>
       )}
 
       {/* Full-Screen Modal */}
       {isFullScreen && (
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+        <div
+          className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
+          onClick={handleCloseFullScreen}>
           <img
             src={images[activeIndex]}
             alt={`Slide ${activeIndex + 1} Full Screen`}
-            className="w-auto h-full max-w-full max-h-full"
+            className="w-auto h-full max-w-full max-h-full z-[1000]"
           />
           <button
             className="absolute top-4 right-4 bg-white bg-opacity-50 rounded-full p-2"
             onClick={handleCloseFullScreen}
-            aria-label="Close Full Screen"
-          >
+            aria-label="Close Full Screen">
             <CloseIcon color="#000000aa" />
           </button>
         </div>

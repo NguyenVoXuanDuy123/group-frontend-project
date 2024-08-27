@@ -1,4 +1,3 @@
-// src/hooks/useAuth.ts
 import { introspectUser } from "@/redux/slices/authSlice";
 import { AppDispatch, RootState } from "@/redux/store";
 import { useEffect } from "react";

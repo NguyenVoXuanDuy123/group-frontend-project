@@ -45,7 +45,7 @@ export const EditProfileModal = ({
     if (response?.status === "success") {
       const newUser: UserProfile = { ...user, firstName, lastName, bio };
       setUser(newUser);
-      dispatch(updateUser(user));
+      dispatch(updateUser({ firstName, lastName }));
     }
   };
 

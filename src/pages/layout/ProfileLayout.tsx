@@ -26,7 +26,7 @@ const ProfileLayout = () => {
   if (!username) return null;
   if (!user) return null;
   return (
-    <div>
+    <div className="">
       <div className="bg-white">
         <div className="max-w-[880px] mx-auto px-6">
           <ProfileHeader user={user} setUser={setUser} />

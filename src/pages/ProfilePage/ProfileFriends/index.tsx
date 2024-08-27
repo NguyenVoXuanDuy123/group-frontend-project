@@ -17,7 +17,7 @@ const ProfileFriends = () => {
     // fetch friends of the profile owner
     const fetchFriends = async () => {
       const response = await fetchApi<FriendType[]>(
-        `/api/users/${user.id}/friends`,
+        `/api/users/${user.id}/friends?limit=50`,
         "GET",
         dispatch
       );
@@ -28,19 +28,26 @@ const ProfileFriends = () => {
     fetchFriends();
   }, [dispatch, user.id]);
 
-  console.log(friends);
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 bg-white p-4 rounded-xl ">
-      {friends.map((friend) => (
-        <div key={friend.id} className="flex justify-center sm:justify-start">
-          <FriendCard
-            name={getFullName(friend)}
-            mutualFriendCount={friend.mutualFriendCount}
-            username={friend.username}
-            avatar={friend.avatar}
-          />
-        </div>
-      ))}
+    <div className="bg-white rounded-xl p-4">
+      <h2 className="text-lg font-bold text-gray-900">Friends</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2  ">
+        {friends.map((friend) => {
+          return (
+            <div className="flex justify-center sm:justify-start">
+              <FriendCard
+                name={getFullName(friend)}
+                mutualFriendCount={friend.mutualFriendCount}
+                username={friend.username}
+                avatar={friend.avatar}
+              />
+            </div>
+          );
+        })}
+      </div>
+      {friends.length === 0 && (
+        <p className="text-gray-500 text-center mt-4">No friends to show</p>
+      )}
     </div>
   );
 };

@@ -11,12 +11,16 @@ type CreatePostModalProps = {
   modalShowing: boolean;
   hideModal: () => void;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  fullName: string;
+  avatar: string;
 };
 
 const CreatePostModal = ({
   modalShowing,
   hideModal,
   setPosts,
+  fullName,
+  avatar,
 }: CreatePostModalProps) => {
   const contentInputRef = useRef<HTMLTextAreaElement | null>(null);
   const [images, setImages] = useState<string[]>([]);
@@ -56,14 +60,13 @@ const CreatePostModal = ({
   return (
     <Modal open={modalShowing} hideModal={hideModal}>
       <div className="flex items-center w-[744px]">
-        <Avatar />
+        <Avatar photoURL={avatar} />
         <div className="ml-3 flex-1">
-          <div className="font-semibold">Huong Dat Huy</div>
+          <div className="font-semibold">{fullName}</div>
           <select
             value={privacy}
             onChange={(e) => setPrivacy(e.target.value as "public" | "friend")}
-            className="text-sm border border-gray-300 rounded px-2 py-1"
-          >
+            className="text-sm border border-gray-300 rounded px-2 py-1">
             <option value="public">Public</option>
             <option value="friend">Friend</option>
           </select>
@@ -72,14 +75,13 @@ const CreatePostModal = ({
       <textarea
         ref={contentInputRef}
         className="w-full mt-3 p-2 border border-gray-300 rounded focus:outline-none resize-none"
-        placeholder="What's on your mind, Huy?"
+        placeholder={`What's on your mind, ${fullName}?`}
         rows={5}
       />
       <ImageInput images={images} updateImages={updateImages} />
       <button
         onClick={submitPost}
-        className="mt-4 w-full bg-blue-500 text-white py-2 rounded disabled:bg-blue-300"
-      >
+        className="mt-4 w-full bg-blue-500 text-white py-2 rounded disabled:bg-blue-300">
         Post
       </button>
     </Modal>

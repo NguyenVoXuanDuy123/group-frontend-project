@@ -9,6 +9,7 @@ import ImageCarousel from "./ImageCarousel";
 import ReactionButton from "./ReactionButton";
 import TruncateText from "./TruncateContent";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 type PostCardProps = {
   post: Post;
@@ -84,9 +85,15 @@ const PostCard = ({ post }: PostCardProps) => {
         <div className="px-4 pt-4 flex-1 flex flex-col">
           {/* Profile Section */}
           <div className="flex items-center mb-2">
-            <Avatar photoURL={post.author.avatar} />
+            <Link to={`/${post.author.username}`}>
+              <Avatar photoURL={post.author.avatar} />
+            </Link>
             <div className="ml-4">
-              <div className="">{getFullName(post.author)}</div>
+              <Link
+                to={`/${post.author.username}`}
+                className="text-black no-underline">
+                <div className="">{getFullName(post.author)}</div>
+              </Link>
               <div className="text-dark-grey text-sm">
                 {timeAgo(post.createdAt)}
               </div>

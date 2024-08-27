@@ -10,7 +10,7 @@ const FriendCard = ({ name, onclick }: FriendCard) => {
     <div
       onClick={onclick}
       className=" items-center w-full rounded-lg flex mb-3">
-      <Avatar />
+      <Avatar photoURL="" />
       <span className="ml-4 font-medium">{name}</span>
     </div>
   );

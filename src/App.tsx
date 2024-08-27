@@ -43,9 +43,7 @@ export default function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-
-      {/* Global Modals, will trigger from anywhere when dispatch action */}
-      {/* <MessageModal /> */}
+      {/*Global Toast, can be used anywhere in the app*/}
       <Toast />
     </Provider>
   );

@@ -59,7 +59,6 @@ const ReactionButton = ({
   };
 
   const handleReaction = async (reactionType: ReactionType) => {
-    console.log(reactionType);
     const response = await fetchApi(
       `/api/posts/${postId}/reactions`,
       "PUT",
@@ -113,9 +112,8 @@ const ReactionButton = ({
           </>
         )}
       </div>
-
       {/* Reaction Popup */}
-      {showReactions && (
+      {
         <div
           className={`absolute bottom-full left-0 bg-white border border-gray-200 rounded-lg p-2 flex space-x-2
           transform transition-transform duration-300 ease-in-out ${
@@ -148,7 +146,7 @@ const ReactionButton = ({
             className="hover:scale-110 transition-transform duration-150 cursor-pointer"
           />
         </div>
-      )}
+      }
     </div>
   );
 };

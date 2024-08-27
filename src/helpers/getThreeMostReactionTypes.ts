@@ -1,7 +1,7 @@
 import { ReactionCounter } from "@/types/post.types";
 
-const getThreeMostReactionTypes = (reactionSumamry: ReactionCounter[]) => {
-  const filteredReactions = reactionSumamry.filter(
+const getThreeMostReactionTypes = (reactionSummary: ReactionCounter[]) => {
+  const filteredReactions = reactionSummary.filter(
     (reaction) => reaction.count > 0
   );
   const sortedReactions = filteredReactions.sort((a, b) => b.count - a.count);
