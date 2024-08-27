@@ -36,6 +36,16 @@ const CreatePostModal = ({
     if (!contentInputRef.current) {
       return;
     }
+    if (!contentInputRef.current.value.trim()) {
+      dispatch(
+        setToast({
+          message: "Please enter some content 🥺🥺🥺",
+          type: "error",
+        })
+      );
+      return;
+    }
+
     const content = contentInputRef.current.value;
     const res = await fetchApi<Post>("/api/posts", "POST", dispatch, {
       content,
