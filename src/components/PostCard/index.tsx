@@ -8,9 +8,10 @@ import Avatar from "../user/Avatar";
 import ImageCarousel from "./ImageCarousel";
 import ReactionButton from "./ReactionButton";
 import TruncateText from "./TruncateContent";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import VisibilityLevelIcon from "@/components/PostCard/VisibilityLevelIcon";
+import ReactionListModal from "./ReactionListModal";
 
 type PostCardProps = {
   post: Post;
@@ -26,6 +27,17 @@ const PostCard = ({ post }: PostCardProps) => {
   const [reactionSummary, setReactionSummary] = useState<ReactionCounter[]>(
     post.reactionSummary
   );
+
+  const [reactionModalShowing, setReactionModalShowing] =
+    useState<boolean>(false);
+
+  const hideReactionModal = () => {
+    setReactionModalShowing(false);
+  };
+
+  const showReactionModal = () => {
+    setReactionModalShowing(true);
+  };
 
   const updateUserReaction = (newReaction: UserReaction) => {
     if (!userReaction) {
@@ -80,10 +92,6 @@ const PostCard = ({ post }: PostCardProps) => {
     }
   };
 
-  useEffect(() => {
-    console.log(post.images);
-  }, []);
-
   return (
     <div className="max-w-md mx-auto bg-white rounded-xl overflow-hidden md:max-w-2xl my-4">
       <div className="md:flex flex-1">
@@ -132,9 +140,17 @@ const PostCard = ({ post }: PostCardProps) => {
                   )}
                 </div>
               )}
-              <span className="leading-6">
+              <span
+                className="leading-6 hover:underline cursor-pointer"
+                onClick={showReactionModal}
+              >
                 {reactionCount} {reactionCount > 0 ? "Reactions" : "Reaction"}
               </span>
+              <ReactionListModal
+                hideModal={hideReactionModal}
+                modalShowing={reactionModalShowing}
+                postId={post.id}
+              />
             </div>
             <div className="flex items-center">
               <span>

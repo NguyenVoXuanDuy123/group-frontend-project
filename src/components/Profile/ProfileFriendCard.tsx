@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 type FriendCardProps = {
   username?: string;
   fullName: string;
-  mutualFriendCount: number;
+  mutualFriendCount?: number;
   avatar: string;
 };
 
@@ -22,18 +22,21 @@ const ProfileFriendCard = ({
 
       <div className="flex flex-col">
         <Link to={`/${username}`} className="text-black no-underline h-[16px] ">
-          <span className="cursor-pointer  ml-4 font-semibold hover:underline">
+          <span className="cursor-pointer ml-4 font-semibold hover:underline">
             {fullName}
           </span>
         </Link>
 
-        <Link
-          to={`/${username}/friends`}
-          className="text-black no-underline h-[16px] ">
-          <span className="ml-4   cursor-pointer text-xs text-dark-grey hover:underline">
-            {mutualFriendCount + " mutual friends"}
-          </span>
-        </Link>
+        {mutualFriendCount && (
+          <Link
+            to={`/${username}/friends`}
+            className="text-black no-underline h-[16px] "
+          >
+            <span className="ml-4 cursor-pointer text-xs text-dark-grey hover:underline">
+              {mutualFriendCount + " mutual friends"}
+            </span>
+          </Link>
+        )}
       </div>
     </div>
   );

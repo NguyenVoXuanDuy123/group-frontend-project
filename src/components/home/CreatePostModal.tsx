@@ -139,7 +139,6 @@ export default function CreatePostModal({
       <button
         onClick={submitPost}
         className="mt-4 w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-blue-300 disabled:cursor-not-allowed"
-        disabled={!contentInputRef.current?.value.trim()}
       >
         Post
       </button>

@@ -42,7 +42,7 @@ const Toast: React.FC = () => {
 
   return (
     <div
-      className={`fixed z-[2000] bottom-4 right-4 w-[320px] bg-white shadow-lg rounded-md overflow-hidden border border-grey  ${isVisible ? "animate-slideUp" : "animate-slideDown"}`}
+      className={`fixed z-[2000] bottom-4 right-4 w-[360px] bg-white shadow-lg rounded-md overflow-hidden border border-grey  ${isVisible ? "animate-slideUp" : "animate-slideDown"}`}
     >
       <div className="p-4 flex items-center justify-between">
         <div className="flex items-center">

@@ -87,7 +87,8 @@ const ReactionButton = ({
           <Reaction />
           <span
             style={{ color: reactionColors[userReaction.type] }}
-            className={`ml-2 font-bold`}>
+            className={`ml-2 font-bold`}
+          >
             {reactionTypeFormat(userReaction.type)}
           </span>
         </>
@@ -99,10 +100,12 @@ const ReactionButton = ({
     <div
       className="relative flex-1"
       onMouseEnter={() => setShowReactions(true)}
-      onMouseLeave={() => setShowReactions(false)}>
+      onMouseLeave={() => setShowReactions(false)}
+    >
       <div
         className="flex-1 rounded-lg p-3 relative flex items-center justify-center cursor-pointer hover:bg-light-grey"
-        onClick={() => handleClickReaction()}>
+        onClick={() => handleClickReaction()}
+      >
         {userReaction ? (
           _renderReaction()
         ) : (
@@ -121,8 +124,9 @@ const ReactionButton = ({
             // -z-40 is used to make sure when the popup is hidden, it's not clickable or hoverable
             showReactions
               ? "translate-y-0 opacity-100 z-40"
-              : "translate-y-4 opacity-0 -z-40"
-          }`}>
+              : "translate-y-4 -z-40"
+          }`}
+        >
           <LikeReaction
             width={48}
             height={48}
