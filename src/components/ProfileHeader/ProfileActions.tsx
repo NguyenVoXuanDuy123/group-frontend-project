@@ -142,7 +142,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
         />
         <button
           onClick={() => setEditProfileModalOpen(true)}
-          className="bg-gray-700 hover:bg-gray-800 text-white font-semibold 
+          className="bg-gray-700 hover:bg-gray-800 text-white font-semibold  h-10
           py-2 px-4 rounded flex justify-center items-center">
           <div className="mb-1   mr-1">
             <EditProfileIcon />
@@ -166,7 +166,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
         <button
           disabled={isLoading}
           onClick={() => setWarningUnfriendModalOpen(true)}
-          className="bg-red-600 hover:bg-red-700 text-white font-semibold 
+          className="bg-red-600 hover:bg-red-700 text-white font-semibold h-10
           py-2 px-4 rounded flex justify-center items-center">
           <div className="mb-[2px] mr-1">
             <RemoveFriendIcon color="white" />
@@ -184,7 +184,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
         <button
           disabled={isLoading}
           onClick={handleAddFriend}
-          className="bg-primary text-white font-semibold py-2 px-4 rounded flex items-center justify-center">
+          className="bg-primary text-white font-semibold py-2 px-4 rounded flex h-10 items-center justify-center">
           <div className="mb-[2px] mr-1">
             <AddFriendIcon />
           </div>
@@ -201,7 +201,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
         <button
           disabled={isLoading}
           onClick={handleCancelRequest}
-          className="flex flex-row bg-grey/50 hover:bg-grey/80 text-black font-semibold py-2 px-4 rounded">
+          className="flex flex-row bg-grey/50 hover:bg-grey/80 text-black font-semibold h-10 py-2 px-4 rounded">
           <div className="mr-1 mt-[1px]">
             <CancelFriendRequestIcon />
           </div>
@@ -218,7 +218,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
         <button
           onClick={handleAcceptRequest}
           disabled={isLoading}
-          className="bg-primary  text-white font-semibold py-2 px-4 rounded flex justify-center items-center">
+          className="bg-primary  text-white font-semibold py-2 px-4 rounded flex h-10 justify-center items-center">
           <div className="mb-[2px] mr-1">
             <AcceptFriendRequestIcon />
           </div>
@@ -227,7 +227,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
         <button
           onClick={handleDeclineRequest}
           disabled={isLoading}
-          className="bg-grey/50 hover:bg-grey/80 text-black font-semibold py-2 px-4 rounded flex">
+          className="bg-grey/50 hover:bg-grey/80 text-black font-semibold py-2 px-4 h-10 rounded flex">
           <div className="mt-[1px] mr-1">
             <RemoveFriendIcon color="black" />
           </div>

@@ -1,202 +1,46 @@
+import { fetchApi } from "@/helpers/fetchApi";
+import getFullName from "@/helpers/getFullName";
 import FriendCard from "@/pages/ProfilePage/ProfileFriends/FriendCard";
+import { FriendType, UserProfile } from "@/types/user.types";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useOutletContext } from "react-router-dom";
 
 const ProfileFriends = () => {
-  return (
-    <div className="bg-white pt-2 px-3 rounded-xl">
-      <h2 className="text-lg font-bold">Friends</h2>
+  // list of friends of profile owner
+  const [friends, setFriends] = useState<FriendType[]>([]);
 
-      <div className="flex space-x-4">
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-      </div>
-      <div className="flex space-x-4">
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-      </div>
-      <div className="flex space-x-4">
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-      </div>
-      <div className="flex space-x-4">
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-      </div>
-      <div className="flex space-x-4">
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-      </div>
-      <div className="flex space-x-4">
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-      </div>
-      <div className="flex space-x-4">
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-      </div>
-      <div className="flex space-x-4">
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-      </div>
-      <div className="flex space-x-4">
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-      </div>
-      <div className="flex space-x-4">
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-      </div>
-      <div className="flex space-x-4">
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-      </div>
-      <div className="flex space-x-4">
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-      </div>
-      <div className="flex space-x-4">
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-      </div>
-      <div className="flex space-x-4">
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-      </div>
-      <div className="flex space-x-4">
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-      </div>
-      <div className="flex space-x-4">
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-        <FriendCard
-          mutualFriendCount={3}
-          name="Huong Dat Huy"
-          username="LelaOrn731"
-        />
-      </div>
+  const dispatch = useDispatch();
+  const user = useOutletContext<UserProfile>();
+
+  useEffect(() => {
+    // fetch friends of the profile owner
+    const fetchFriends = async () => {
+      const response = await fetchApi<FriendType[]>(
+        `/api/users/${user.id}/friends`,
+        "GET",
+        dispatch
+      );
+      if (response) {
+        setFriends(response);
+      }
+    };
+    fetchFriends();
+  }, [dispatch, user.id]);
+
+  console.log(friends);
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 bg-white p-4 rounded-xl ">
+      {friends.map((friend) => (
+        <div key={friend.id} className="flex justify-center sm:justify-start">
+          <FriendCard
+            name={getFullName(friend)}
+            mutualFriendCount={friend.mutualFriendCount}
+            username={friend.username}
+            avatar={friend.avatar}
+          />
+        </div>
+      ))}
     </div>
   );
 };

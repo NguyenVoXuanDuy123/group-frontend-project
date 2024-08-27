@@ -33,7 +33,7 @@ const ProfileLayout = () => {
         </div>
       </div>
       <div className="max-w-[880px] mx-auto px-6 pt-3 rounded-lg mt-3">
-        <Outlet />
+        <Outlet context={user} />
       </div>
     </div>
   );

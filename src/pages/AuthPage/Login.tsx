@@ -1,6 +1,6 @@
 import { fetchApi } from "@/helpers/fetchApi";
 import { introspectUser } from "@/redux/slices/authSlice";
-import { setModalMessage } from "@/redux/slices/errorModalSlice";
+import { setToast } from "@/redux/slices/toastSlice";
 import { AppDispatch } from "@/redux/store";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -19,7 +19,7 @@ const Login = ({ setIsLogin }: LoginProps) => {
     event.preventDefault();
     if (!username || !password) {
       dispatch(
-        setModalMessage({
+        setToast({
           message: "Please fill in all fields",
           type: "error",
         })
@@ -72,14 +72,12 @@ const Login = ({ setIsLogin }: LoginProps) => {
             <button
               disabled={isLoading}
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-            >
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
               Login
             </button>
             <button
               onClick={() => setIsLogin(false)}
-              className="text-blue-500 hover:underline"
-            >
+              className="text-blue-500 hover:underline">
               Register
             </button>
           </div>

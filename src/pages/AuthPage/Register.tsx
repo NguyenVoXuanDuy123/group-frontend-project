@@ -1,5 +1,5 @@
 import EnvVars from "@/constants/EnvVars";
-import { setModalMessage } from "@/redux/slices/errorModalSlice";
+import { setToast } from "@/redux/slices/toastSlice";
 import { AppDispatch } from "@/redux/store";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -19,7 +19,7 @@ const Register = ({ setIsLogin }: RegisterProps) => {
     event.preventDefault();
     if (!firstName || !lastName || !username || !password || !confirmPassword) {
       dispatch(
-        setModalMessage({
+        setToast({
           message: "Please fill in all fields",
           type: "error",
         })
@@ -29,7 +29,7 @@ const Register = ({ setIsLogin }: RegisterProps) => {
 
     if (password !== confirmPassword) {
       dispatch(
-        setModalMessage({
+        setToast({
           message: "Passwords do not match",
           type: "error",
         })
@@ -54,7 +54,7 @@ const Register = ({ setIsLogin }: RegisterProps) => {
       if (!response.ok) {
         const error = await response.json();
         dispatch(
-          setModalMessage({
+          setToast({
             message: error.message,
             type: "error",
           })
@@ -62,7 +62,7 @@ const Register = ({ setIsLogin }: RegisterProps) => {
         return;
       }
       dispatch(
-        setModalMessage({
+        setToast({
           message: "Account created successfully",
           type: "success",
         })
@@ -72,7 +72,7 @@ const Register = ({ setIsLogin }: RegisterProps) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       dispatch(
-        setModalMessage({
+        setToast({
           message: "An error occurred, please refresh and try again",
           type: "error",
         })
@@ -148,15 +148,13 @@ const Register = ({ setIsLogin }: RegisterProps) => {
           <div className="flex items-center justify-between">
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-            >
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
               Create new account
             </button>
 
             <button
               onClick={() => setIsLogin(true)}
-              className="text-blue-500 hover:underline"
-            >
+              className="text-blue-500 hover:underline">
               Login
             </button>
           </div>

@@ -26,7 +26,12 @@ const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
 
         {/* Profile Image */}
 
-        <Avatar photoURL={user.avatar} size={168} />
+        <Avatar
+          photoURL={user.avatar}
+          size={168}
+          //add key to Avatar component to force re-render (to update the image)
+          key={user.avatar}
+        />
 
         {/* Profile Details */}
         <div className="ml-6">

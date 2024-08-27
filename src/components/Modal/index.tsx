@@ -17,7 +17,7 @@ const Modal = ({ open, hideModal, children }: Props) => {
       {/* Modal */}
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`bg-white rounded-xl shadow p-6  transition-transform duration-300 w-fit mx-auto my-8 ${open ? "scale-100" : "scale-95"}`}>
+        className={`bg-white rounded-xl shadow p-6 transition-transform duration-300 w-fit mx-auto my-8 ${open ? "scale-100" : "scale-95"}`}>
         <button
           onClick={hideModal}
           className="absolute top-2 right-2 p-1 rounded-lg text-gray-400 bg-white hover:bg-gray-50 hover:text-gray-600">

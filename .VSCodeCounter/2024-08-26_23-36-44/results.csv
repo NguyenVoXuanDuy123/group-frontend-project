@@ -1,0 +1,89 @@
+"filename", "language", "TypeScript", "TypeScript JSX", "CSS", "comment", "blank", "total"
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\App.tsx", "TypeScript JSX", 0, 45, 0, 2, 6, 53
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\Modal\EditProfileModal\index.tsx", "TypeScript JSX", 0, 132, 0, 4, 12, 148
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\Modal\MessageModal\index.tsx", "TypeScript JSX", 0, 97, 0, 0, 10, 107
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\Modal\UploadAvatarModal\index.tsx", "TypeScript JSX", 0, 100, 0, 4, 10, 114
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\Modal\WarningUnfriendModal\index.tsx", "TypeScript JSX", 0, 38, 0, 0, 4, 42
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\Modal\index.tsx", "TypeScript JSX", 0, 27, 0, 2, 5, 34
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\Post\ImageCarousel.tsx", "TypeScript JSX", 0, 106, 0, 4, 14, 124
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\Post\PostList.tsx", "TypeScript JSX", 0, 9, 0, 0, 4, 13
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\Post\ReactionButton.tsx", "TypeScript JSX", 0, 142, 0, 2, 13, 157
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\Post\TruncateContent.tsx", "TypeScript JSX", 0, 29, 0, 0, 7, 36
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\Post\index.tsx", "TypeScript JSX", 0, 133, 0, 6, 10, 149
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\ProfileHeader\ProfileActions.tsx", "TypeScript JSX", 0, 218, 0, 5, 19, 242
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\ProfileHeader\TabItem.tsx", "TypeScript JSX", 0, 24, 0, 0, 4, 28
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\ProfileHeader\index.tsx", "TypeScript JSX", 0, 66, 0, 10, 12, 88
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\SideBarLeft\TabItem.tsx", "TypeScript JSX", 0, 23, 0, 0, 4, 27
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\SideBarLeft\index.tsx", "TypeScript JSX", 0, 50, 0, 0, 4, 54
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\SideBarRight\FriendCard.tsx", "TypeScript JSX", 0, 16, 0, 0, 4, 20
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\SideBarRight\index.tsx", "TypeScript JSX", 0, 29, 0, 0, 3, 32
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\Toast.tsx", "TypeScript JSX", 0, 61, 0, 4, 9, 74
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\common\Tooltip.tsx", "TypeScript JSX", 0, 20, 0, 0, 5, 25
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\home\CreatePostModal.tsx", "TypeScript JSX", 0, 80, 0, 0, 10, 90
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\home\CreatePostPrompt.tsx", "TypeScript JSX", 0, 39, 0, 0, 7, 46
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\home\ImageInput.tsx", "TypeScript JSX", 0, 170, 0, 0, 19, 189
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\CheckIcon.tsx", "TypeScript JSX", 0, 13, 0, 0, 1, 14
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\ChevronLeft.tsx", "TypeScript JSX", 0, 20, 0, 0, 1, 21
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\ChevronRight.tsx", "TypeScript JSX", 0, 19, 0, 0, 1, 20
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\CloseIcon.tsx", "TypeScript JSX", 0, 18, 0, 0, 1, 19
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\Logo.tsx", "TypeScript JSX", 0, 25, 0, 0, 1, 26
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\PlusIcon.tsx", "TypeScript JSX", 0, 19, 0, 0, 1, 20
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\post\CommentAction.tsx", "TypeScript JSX", 0, 16, 0, 0, 2, 18
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\post\ImageAdd.tsx", "TypeScript JSX", 0, 16, 0, 0, 1, 17
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\post\LikeAction.tsx", "TypeScript JSX", 0, 16, 0, 0, 1, 17
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\profile-actions\AcceptFriendRequestIcon.tsx", "TypeScript JSX", 0, 19, 0, 0, 1, 20
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\profile-actions\AddFriendIcon.tsx", "TypeScript JSX", 0, 18, 0, 0, 1, 19
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\profile-actions\CancelFriendRequestIcon.tsx", "TypeScript JSX", 0, 18, 0, 0, 1, 19
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\profile-actions\EditProfileIcon.tsx", "TypeScript JSX", 0, 13, 0, 0, 1, 14
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\profile-actions\RemoveFriendIcon.tsx", "TypeScript JSX", 0, 17, 0, 0, 1, 18
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\reactions\Angry.tsx", "TypeScript JSX", 0, 19, 0, 0, 1, 20
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\reactions\Haha.tsx", "TypeScript JSX", 0, 19, 0, 0, 1, 20
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\reactions\Like.tsx", "TypeScript JSX", 0, 24, 0, 0, 1, 25
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\reactions\Love.tsx", "TypeScript JSX", 0, 18, 0, 0, 1, 19
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\side-bar-icons\FriendIcon.tsx", "TypeScript JSX", 0, 13, 0, 0, 1, 14
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\side-bar-icons\GroupIcon.tsx", "TypeScript JSX", 0, 13, 0, 0, 1, 14
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\side-bar-icons\LogOutIcon.tsx", "TypeScript JSX", 0, 13, 0, 0, 1, 14
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\side-bar-icons\NewsFeedIcon.tsx", "TypeScript JSX", 0, 13, 0, 0, 1, 14
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\svg\side-bar-icons\NotificationIcon.tsx", "TypeScript JSX", 0, 19, 0, 0, 1, 20
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\components\user\Avatar.tsx", "TypeScript JSX", 0, 41, 0, 3, 3, 47
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\config\index.ts", "TypeScript", 1, 0, 0, 0, 1, 2
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\constants\EnvVars.ts", "TypeScript", 3, 0, 0, 3, 2, 8
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\constants\index.ts", "TypeScript", 2, 0, 0, 0, 0, 2
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\constants\reactionMap.ts", "TypeScript", 11, 0, 0, 0, 3, 14
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\enums\group.enums.ts", "TypeScript", 25, 0, 0, 1, 5, 31
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\enums\post.enums.ts", "TypeScript", 15, 0, 0, 0, 3, 18
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\enums\user.enums.ts", "TypeScript", 21, 0, 0, 2, 5, 28
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\helpers\fetchApi.ts", "TypeScript", 40, 0, 0, 4, 7, 51
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\helpers\getFullName.ts", "TypeScript", 8, 0, 0, 0, 3, 11
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\helpers\getThreeMostReactionTypes.ts", "TypeScript", 9, 0, 0, 0, 3, 12
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\helpers\reactionTypeFormat.ts", "TypeScript", 16, 0, 0, 0, 3, 19
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\helpers\timeAgo.ts", "TypeScript", 20, 0, 0, 1, 2, 23
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\helpers\uploadImage.ts", "TypeScript", 38, 0, 0, 4, 6, 48
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\hooks\index.ts", "TypeScript", 0, 0, 0, 0, 1, 1
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\hooks\useAuth.ts", "TypeScript", 16, 0, 0, 1, 4, 21
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\index.css", "CSS", 0, 0, 13, 1, 4, 18
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\main.tsx", "TypeScript JSX", 0, 11, 0, 0, 2, 13
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\pages\AuthPage\Login.tsx", "TypeScript JSX", 0, 85, 0, 0, 8, 93
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\pages\AuthPage\Register.tsx", "TypeScript JSX", 0, 160, 0, 1, 9, 170
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\pages\AuthPage\index.tsx", "TypeScript JSX", 0, 22, 0, 2, 4, 28
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\pages\Home.tsx", "TypeScript JSX", 0, 30, 0, 1, 4, 35
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\pages\NoPage.tsx", "TypeScript JSX", 0, 5, 0, 0, 3, 8
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\pages\ProfilePage\ProfileFriends\FriendCard.tsx", "TypeScript JSX", 0, 37, 0, 0, 6, 43
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\pages\ProfilePage\ProfileFriends\index.tsx", "TypeScript JSX", 0, 41, 0, 2, 6, 49
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\pages\ProfilePage\ProfileGroups.tsx", "TypeScript JSX", 0, 5, 0, 0, 3, 8
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\pages\ProfilePage\ProfilePosts.tsx", "TypeScript JSX", 0, 5, 0, 0, 3, 8
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\pages\ProfilePage\ProfileRequests.tsx", "TypeScript JSX", 0, 4, 0, 0, 2, 6
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\pages\index.tsx", "TypeScript JSX", 0, 5, 0, 0, 2, 7
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\pages\layout\BaseLayout.tsx", "TypeScript JSX", 0, 15, 0, 0, 4, 19
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\pages\layout\ProfileLayout.tsx", "TypeScript JSX", 0, 38, 0, 0, 5, 43
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\redux\slices\authSlice.ts", "TypeScript", 102, 0, 0, 0, 17, 119
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\redux\slices\errorModalSlice.ts", "TypeScript", 28, 0, 0, 1, 6, 35
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\redux\slices\newsfeedSlice.ts", "TypeScript", 22, 0, 0, 0, 6, 28
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\redux\slices\toastSlice.ts", "TypeScript", 26, 0, 0, 0, 8, 34
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\redux\store.ts", "TypeScript", 15, 0, 0, 0, 3, 18
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\types\api.types.ts", "TypeScript", 4, 0, 0, 0, 1, 5
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\types\image.types.ts", "TypeScript", 5, 0, 0, 0, 1, 6
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\types\post.types.ts", "TypeScript", 34, 0, 0, 58, 6, 98
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\types\user.types.ts", "TypeScript", 41, 0, 0, 83, 7, 131
+"c:\Serious Project\Full Stack Development\social-media\group-frontend-project\src\vite-env.d.ts", "TypeScript", 0, 0, 0, 1, 1, 2
+"Total", "-", 502, 2556, 13, 212, 391, 3674

@@ -2,7 +2,7 @@ import Modal from "@/components/Modal";
 import { fetchApi } from "@/helpers/fetchApi";
 import { updateUser } from "@/redux/slices/authSlice";
 import { UserProfile } from "@/types/user.types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 type EditProfileModalProps = {
@@ -46,9 +46,16 @@ export const EditProfileModal = ({
       const newUser: UserProfile = { ...user, firstName, lastName, bio };
       setUser(newUser);
       dispatch(updateUser(user));
-      handleClose();
     }
   };
+
+  // This is necessary because we can't use the user state directly in the form
+  // because setUser don't update the user state immediately when we call it
+  // so we use useEffect to reset the form when the user state changes
+  useEffect(() => {
+    handleClose();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   const handleClose = () => {
     onClose();

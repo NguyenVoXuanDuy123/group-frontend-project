@@ -1,10 +1,10 @@
 import { uploadImage } from "@/helpers/uploadImage";
-import { setModalMessage } from "@/redux/slices/errorModalSlice";
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import PlusIcon from "../svg/PlusIcon";
 import ChevronLeft from "../svg/ChevronLeft";
 import ChevronRight from "../svg/ChevronRight";
+import { setToast } from "@/redux/slices/toastSlice";
 
 interface ImageInputProps {
   images: string[];
@@ -47,7 +47,7 @@ const ImageInput: React.FC<ImageInputProps> = ({
   ) => {
     if (images.length == 5) {
       dispatch(
-        setModalMessage({
+        setToast({
           type: "error",
           message: "You can only upload 5 images at a time",
         })
@@ -80,7 +80,7 @@ const ImageInput: React.FC<ImageInputProps> = ({
 
     if (images.length == 5) {
       dispatch(
-        setModalMessage({
+        setToast({
           type: "error",
           message: "You can only upload 5 images at a time",
         })
@@ -102,7 +102,7 @@ const ImageInput: React.FC<ImageInputProps> = ({
   const handleClick = () => {
     if (images.length == 5) {
       dispatch(
-        setModalMessage({
+        setToast({
           type: "error",
           message: "You can only upload 5 images at a time",
         })
@@ -123,8 +123,7 @@ const ImageInput: React.FC<ImageInputProps> = ({
           {images.length > 0 && scrolled && (
             <button
               className="absolute left-0 z-10 bg-light-grey text-white rounded-full p-2 ml-2 hover:bg-grey"
-              onClick={scrollLeft}
-            >
+              onClick={scrollLeft}>
               <ChevronLeft />
             </button>
           )}
@@ -132,8 +131,7 @@ const ImageInput: React.FC<ImageInputProps> = ({
           <div
             ref={scrollContainerRef}
             className="flex overflow-x-hidden space-x-2 scrollbar-hide w-full"
-            style={{ scrollBehavior: "smooth" }}
-          >
+            style={{ scrollBehavior: "smooth" }}>
             {images.map((image, index) => (
               <div key={index} className="flex-shrink-0 relative ">
                 <img
@@ -143,8 +141,7 @@ const ImageInput: React.FC<ImageInputProps> = ({
                 />
                 <button
                   className="absolute top-2 right-2"
-                  onClick={() => handleClear(index)}
-                >
+                  onClick={() => handleClear(index)}>
                   x
                 </button>
               </div>
@@ -154,8 +151,7 @@ const ImageInput: React.FC<ImageInputProps> = ({
           {images.length > 4 && !scrolled && (
             <button
               className="absolute left-0 z-10 bg-light-grey text-white rounded-full p-2 ml-2 hover:bg-grey"
-              onClick={scrollRight}
-            >
+              onClick={scrollRight}>
               <ChevronRight />
             </button>
           )}
@@ -165,8 +161,7 @@ const ImageInput: React.FC<ImageInputProps> = ({
         className="flex flex-col cursor-pointer items-center justify-center h-40 bg-light-grey rounded-lg border-2 border-dashed border-grey"
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        onClick={handleClick}
-      >
+        onClick={handleClick}>
         <div className="flex flex-col items-center">
           <PlusIcon />
           <span className="my-2 font-bold">Add photos</span>
