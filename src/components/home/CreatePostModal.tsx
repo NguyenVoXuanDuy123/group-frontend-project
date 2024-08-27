@@ -66,9 +66,15 @@ const CreatePostModal = ({
           <select
             value={privacy}
             onChange={(e) => setPrivacy(e.target.value as "public" | "friend")}
-            className="text-sm border border-gray-300 rounded px-2 py-1">
-            <option value="public">Public</option>
-            <option value="friend">Friend</option>
+            className="text-sm border border-gray-300 rounded p-1 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm">
+            <option value="public" className="text-gray-900 font-semibold">
+              🌍 Public
+            </option>
+            <option
+              value="friend"
+              className="text-gray-900 font-semibold flex ">
+              👥 Friends
+            </option>
           </select>
         </div>
       </div>

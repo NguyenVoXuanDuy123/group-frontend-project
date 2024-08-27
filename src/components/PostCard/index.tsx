@@ -10,6 +10,7 @@ import ReactionButton from "./ReactionButton";
 import TruncateText from "./TruncateContent";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import VisibilityLevelIcon from "@/components/PostCard/VisibilityLevelIcon";
 
 type PostCardProps = {
   post: Post;
@@ -94,8 +95,9 @@ const PostCard = ({ post }: PostCardProps) => {
                 className="text-black no-underline">
                 <div className="">{getFullName(post.author)}</div>
               </Link>
-              <div className="text-dark-grey text-sm">
-                {timeAgo(post.createdAt)}
+              <div className="text-dark-grey text-sm flex  items-center">
+                {timeAgo(post.createdAt)} •{" "}
+                <VisibilityLevelIcon visibilityLevel={post.visibilityLevel} />
               </div>
             </div>
           </div>
@@ -109,13 +111,14 @@ const PostCard = ({ post }: PostCardProps) => {
             <div className=" flex items-center">
               {reactionCount > 0 && (
                 <div className="ml-2 mr-2 flex items-center">
+                  {/* get the three most reacted types to display */}
                   {getThreeMostReactionTypes(reactionSummary).map(
                     (reactionType) => {
-                      const Component = reactionMap[reactionType];
+                      const ReactionComponent = reactionMap[reactionType];
                       return (
-                        <Component
+                        <ReactionComponent
                           key={`${post.id}-${reactionType}`}
-                          className={` ml-[-8px]`}
+                          className={`ml-[-8px]`}
                         />
                       );
                     }
