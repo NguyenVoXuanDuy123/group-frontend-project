@@ -4,14 +4,40 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  /* Chrome, Safari and Opera */
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
+/* Hide scrollbar but keep layout space */
+.hide-scrollbar {
+  overflow: hidden;
+  padding-right: 12px;
+  /* Adjust based on scrollbar width */
+}
 
-  .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
+/* For WebKit browsers */
+::-webkit-scrollbar {
+  width: 12px;
+  /* Adjust width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  /* Background of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C2C2C2;
+  /* Color of the scrollbar thumb */
+  border-radius: 8px;
+  /* Round the edges of the scrollbar thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #888;
+  /* Color of the scrollbar thumb on hover */
+}
+
+/* For Firefox */
+.scrollable-element {
+  scrollbar-width: thin;
+  /* Set scrollbar width */
+  scrollbar-color: #888 #f1f1f1;
+  /* Thumb and track color */
 }

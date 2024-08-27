@@ -1,5 +1,5 @@
+import React, { useEffect } from "react"; // Import useEffect from React
 import CloseIcon from "@/components/svg/CloseIcon";
-import React from "react";
 
 type Props = {
   open: boolean;
@@ -8,11 +8,25 @@ type Props = {
 };
 
 const Modal = ({ open, hideModal, children }: Props) => {
+  useEffect(() => {
+    // Prevent scrolling when the modal is open
+    if (open) {
+      document.body.classList.add("hide-scrollbar");
+    } else {
+      document.body.classList.remove("hide-scrollbar");
+    }
+
+    // Cleanup when the modal is unmounted or when the modal is closed
+    return () => {
+      document.body.classList.remove("hide-scrollbar");
+    };
+  }, [open]);
+
   return (
     // Backdrop
     <div
       onClick={hideModal}
-      className={`fixed z-[1000] inset-0 no-scrollbar overflow-y-auto no-scrollbar transition-opacity duration-300 ${open ? "opacity-100 pointer-events-auto bg-black/20" : "opacity-0 pointer-events-none"}`}
+      className={`fixed z-[1000] inset-0 no-scrollbar overflow-y-auto transition-opacity duration-300 ${open ? "opacity-100 pointer-events-auto bg-black/20" : "opacity-0 pointer-events-none"}`}
       aria-hidden={!open}>
       {/* Modal */}
       <div

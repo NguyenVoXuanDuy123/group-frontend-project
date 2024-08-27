@@ -25,7 +25,6 @@ const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
         {/* <UploadAvatarModal open={open} onClose={() => setOpen(false)} /> */}
 
         {/* Profile Image */}
-
         <Avatar
           photoURL={user.avatar}
           size={168}
@@ -40,8 +39,7 @@ const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
             className="text-dark-grey font-semibold cursor-pointer hover:underline"
             onClick={() => {
               navigate(`/${user.username}/friends`);
-            }}
-          >
+            }}>
             {user.friendCount + " friends "}•{" "}
             {user.userFriendRelation !== UserFriendRelation.SELF &&
               user.mutualFriendCount + " mutual"}

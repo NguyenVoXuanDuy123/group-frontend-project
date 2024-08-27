@@ -39,7 +39,7 @@ const SideBarRight = () => {
         <Avatar photoURL={avatar} />
       </div>
       <div className="my-4">
-        <h2 className="text-lg font-bold">Friends</h2>
+        <h2 className="text-lg font-bold mb-1">Friends</h2>
         {friends.map((friend) => {
           return (
             <SideBarRightFriendCard

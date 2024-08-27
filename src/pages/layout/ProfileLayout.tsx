@@ -1,9 +1,11 @@
 import ProfileHeader from "@/components/ProfileHeader";
+import Logo from "@/components/svg/Logo";
+import { appName } from "@/constants";
 import { fetchApi } from "@/helpers/fetchApi";
 import { UserProfile } from "@/types/user.types";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Outlet, useParams } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 
 const ProfileLayout = () => {
   const { username } = useParams();
@@ -27,7 +29,15 @@ const ProfileLayout = () => {
   if (!user) return null;
   return (
     <div className="">
-      <div className="bg-white">
+      <div className="bg-white relative">
+        <Link to={`/`}>
+          <div className="flex items-center justify-center absolute left-10 top-7 mb-10 cursor-pointer">
+            <Logo width={70} height={70} />
+            <h1 className="text-[30px] font-bold ml-3 text-primary">
+              {appName}
+            </h1>
+          </div>
+        </Link>
         <div className="max-w-[880px] mx-auto px-6">
           <ProfileHeader user={user} setUser={setUser} />
         </div>

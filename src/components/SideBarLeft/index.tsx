@@ -18,9 +18,9 @@ const SideBarLeft = () => {
 
   return (
     <div className="w-80 h-screen p-4 flex flex-col justify-between sticky top-0 bg-white">
-      <div className="flex items-center justify-center w-full mb-10">
-        <Logo width={48} height={48} />
-        <h1 className="text-2xl font-bold ml-5 text-primary">{appName}</h1>
+      <div className="flex items-center mb-10 cursor-pointer ml-9">
+        <Logo width={70} height={70} />
+        <h1 className="text-[30px] font-bold ml-3 text-primary">{appName}</h1>
       </div>
       <div className="flex flex-1 flex-col justify-between">
         <div>

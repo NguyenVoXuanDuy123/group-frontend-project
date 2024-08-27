@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ChevronLeft from "../svg/ChevronLeft";
 import ChevronRight from "../svg/ChevronRight";
 import CloseIcon from "../svg/CloseIcon";
@@ -32,6 +32,19 @@ const ImageCarousel: React.FC<CarouselProps> = ({ images }) => {
   const handleIndicatorClick = (index: number) => {
     setActiveIndex(index);
   };
+  useEffect(() => {
+    // prevent scrolling when user clicks on the image to view it in full screen
+    if (isFullScreen) {
+      document.body.classList.add("hide-scrollbar");
+    } else {
+      document.body.classList.remove("hide-scrollbar");
+    }
+
+    // Cleanup when the modal is unmounted or when the modal is closed
+    return () => {
+      document.body.classList.remove("hide-scrollbar");
+    };
+  }, [isFullScreen]);
 
   return (
     <div className="relative w-full overflow-hidden">
