@@ -14,8 +14,9 @@ const SideBarRight = () => {
 
   useEffect(() => {
     const fetchFriends = async () => {
+      const numberOfFriends = 9;
       const response = await fetchApi<FriendType[]>(
-        `/api/users/me/friends?limit=4`,
+        `/api/users/me/friends?limit=${numberOfFriends}`,
         "GET",
         dispatch
       );
@@ -46,15 +47,10 @@ const SideBarRight = () => {
               username={friend.username}
               name={friend.firstName + " " + friend.lastName}
               avatar={friend.avatar}
+              mutualFriendCount={friend.mutualFriendCount}
             />
           );
         })}
-      </div>
-      <div className="">
-        <h2 className="text-lg font-bold">Groups</h2>
-        <SideBarRightFriendCard name="J2Team Community" onclick={() => {}} />
-        <SideBarRightFriendCard name="RMIT Students" onclick={() => {}} />
-        <SideBarRightFriendCard name="Nhóm Học Tập UEH" onclick={() => {}} />
       </div>
     </div>
   );
