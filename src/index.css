@@ -4,17 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  overflow: scroll;
-}
+
 
 body {
-  overflow: auto;
-  /* or scroll if you want to ensure scrollbars always show */
+ overflow: scroll;
 }
 /* Hide scrollbar but keep layout space */
 .hide-scrollbar {
   overflow: hidden;
+  /* Adjust based on scrollbar width */
+  padding-right: 12px;
 }
 
 /* For WebKit browsers */
