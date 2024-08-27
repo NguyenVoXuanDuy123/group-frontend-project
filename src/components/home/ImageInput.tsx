@@ -1,10 +1,11 @@
-import { uploadImage } from "@/helpers/uploadImage";
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import PlusIcon from "../svg/PlusIcon";
 import ChevronLeft from "../svg/ChevronLeft";
 import ChevronRight from "../svg/ChevronRight";
 import { setToast } from "@/redux/slices/toastSlice";
+import { uploadImage } from "@/helpers/uploadImage";
+import CloseIcon from "../svg/CloseIcon";
 
 interface ImageInputProps {
   images: string[];
@@ -117,21 +118,14 @@ const ImageInput: React.FC<ImageInputProps> = ({
   };
 
   return (
-    <div className="relative mt-4 w-full mx-auto rounded-lg text-dark-grey text-center">
+    <div className="w-[680px] relative mt-4 mx-auto rounded-lg text-dark-grey text-center">
       {images.length > 0 && (
-        <div className="mb-4 relative flex w-full items-center">
-          {images.length > 0 && scrolled && (
-            <button
-              className="absolute left-0 z-10 bg-light-grey text-white rounded-full p-2 ml-2 hover:bg-grey"
-              onClick={scrollLeft}>
-              <ChevronLeft />
-            </button>
-          )}
-
+        <div className="mb-4 relative flex items-center">
           <div
             ref={scrollContainerRef}
-            className="flex overflow-x-hidden space-x-2 scrollbar-hide w-full"
-            style={{ scrollBehavior: "smooth" }}>
+            className="flex flex-1 overflow-x-hidden space-x-2 scrollbar-hide "
+            style={{ scrollBehavior: "smooth" }}
+          >
             {images.map((image, index) => (
               <div key={index} className="flex-shrink-0 relative ">
                 <img
@@ -140,18 +134,32 @@ const ImageInput: React.FC<ImageInputProps> = ({
                   className="w-full h-48 object-cover rounded-lg"
                 />
                 <button
-                  className="absolute top-2 right-2"
-                  onClick={() => handleClear(index)}>
-                  x
+                  className="absolute top-2 right-2 bg-black bg-opacity-50 text-white rounded-full w-6 h-6 flex items-center justify-center"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleClear(index);
+                  }}
+                >
+                  <CloseIcon />
                 </button>
               </div>
             ))}
           </div>
 
-          {images.length > 4 && !scrolled && (
+          {images.length > 0 && scrolled && (
             <button
-              className="absolute left-0 z-10 bg-light-grey text-white rounded-full p-2 ml-2 hover:bg-grey"
-              onClick={scrollRight}>
+              className="absolute left-2 z-10 bg-light-grey text-white rounded-full p-2 ml-2 hover:bg-grey"
+              onClick={scrollLeft}
+            >
+              <ChevronLeft />
+            </button>
+          )}
+
+          {images.length >= 4 && !scrolled && (
+            <button
+              className="absolute right-2 z-10 bg-light-grey text-white rounded-full p-2 ml-2 hover:bg-grey"
+              onClick={scrollRight}
+            >
               <ChevronRight />
             </button>
           )}
@@ -161,7 +169,8 @@ const ImageInput: React.FC<ImageInputProps> = ({
         className="flex flex-col cursor-pointer items-center justify-center h-40 bg-light-grey rounded-lg border-2 border-dashed border-grey"
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        onClick={handleClick}>
+        onClick={handleClick}
+      >
         <div className="flex flex-col items-center">
           <PlusIcon />
           <span className="my-2 font-bold">Add photos</span>
