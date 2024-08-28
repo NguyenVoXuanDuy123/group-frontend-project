@@ -49,7 +49,7 @@ const ProfileGroups = () => {
       </div>
       {groups.length === 0 && !isLoading && (
         <div className="py-10 bg-white rounded-xl mt-4">
-          <p className="text-gray-500 text-center   ">No groups to show</p>
+          <p className="text-gray-500 text-center">No groups to show</p>
         </div>
       )}
     </div>

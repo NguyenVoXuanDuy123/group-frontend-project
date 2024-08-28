@@ -81,8 +81,6 @@ export default function CreatePostModal({
     }
   };
 
-  console.log(groupId, groupId === undefined);
-
   return (
     <Modal open={modalShowing} hideModal={hideModal}>
       <div className="flex items-center w-[680px] max-w-[680px]">
@@ -90,7 +88,8 @@ export default function CreatePostModal({
         <div className="ml-3 flex-1">
           <div className="relative inline-block text-left">
             <div className="font-semibold">{fullName}</div>
-            {groupId === undefined && (
+            {/*  We only show the privacy selector if the post is not in a group */}
+            {!groupId && (
               <>
                 <Popover
                   popoverOpen={popoverOpen}
@@ -98,12 +97,10 @@ export default function CreatePostModal({
                   displayComponent={
                     <button
                       type="button"
-                      className="inline-flex justify-center items-center w-[60%] px-4 py-2 text-sm font-medium
+                      className="inline-flex justify-center items-center px-4 py-2 text-sm font-medium
                        text-gray-700 bg-white border border-light-grey rounded-md hover:bg-gray-50 
                        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary
-                       w-full sm:w-auto"
-                      id="privacy-menu"
-                      aria-haspopup="true">
+                       w-full sm:w-auto">
                       {privacy === PostVisibilityLevel.PUBLIC ? (
                         <GlobalIcon className="mr-2 h-4 w-4" />
                       ) : (
@@ -112,26 +109,22 @@ export default function CreatePostModal({
                       {capitalizeFirstLetter(privacy)}
                     </button>
                   }>
-                  <div
-                    className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="privacy-menu">
+                  <div className="mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1" role="none">
                       <button
                         className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                        role="menuitem"
                         onClick={() => {
                           setPrivacy(PostVisibilityLevel.PUBLIC);
+                          setPopoverOpen(false);
                         }}>
                         <GlobalIcon className="mr-2 h-4 w-4" />
                         <span>Public</span>
                       </button>
                       <button
                         className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                        role="menuitem"
                         onClick={() => {
                           setPrivacy(PostVisibilityLevel.FRIEND);
+                          setPopoverOpen(false);
                         }}>
                         <FriendIcon className="mr-2 h-4 w-4" />
                         <span>Friends</span>

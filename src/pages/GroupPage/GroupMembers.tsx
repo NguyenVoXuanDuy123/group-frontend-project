@@ -2,6 +2,7 @@ import ProfileFriendCard from "@/components/Profile/ProfileFriendCard";
 import { UserGroupRelation } from "@/enums/group.enums";
 import { fetchApi } from "@/helpers/fetchApi";
 import getFullName from "@/helpers/getFullName";
+import GroupAdminActions from "@/pages/GroupPage/GroupAdminActions";
 import { GroupLayoutContextType } from "@/pages/layout/GroupLayout";
 import { UserInformation } from "@/types/user.types";
 import { useEffect, useState } from "react";
@@ -11,8 +12,9 @@ import { useOutletContext } from "react-router-dom";
 const GroupMembers = () => {
   const [members, setMembers] = useState<UserInformation[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
   const dispatch = useDispatch();
-  const { group } = useOutletContext<GroupLayoutContextType>();
+  const { group, setGroup } = useOutletContext<GroupLayoutContextType>();
   const { admin } = group;
   useEffect(() => {
     // fetch members of the group
@@ -42,17 +44,25 @@ const GroupMembers = () => {
       </div>
       <h2 className="text-lg font-bold text-gray-900">Members</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2  mt-1">
-        {members.map((friend) => {
+        {members.map((member) => {
           return (
             <div
-              className="flex justify-center sm:justify-start"
-              key={`group-member-${friend.id}`}>
+              className="flex justify-center sm:justify-start relative"
+              key={`group-member-${member.id}`}>
               <ProfileFriendCard
-                fullName={getFullName(friend)}
-                mutualFriendCount={friend.mutualFriendCount}
-                username={friend.username}
-                avatar={friend.avatar}
+                fullName={getFullName(member)}
+                mutualFriendCount={member.mutualFriendCount}
+                username={member.username}
+                avatar={member.avatar}
               />
+              <div className="absolute right-6 bottom-[40%] z-50 ">
+                <GroupAdminActions
+                  group={group}
+                  setMembers={setMembers}
+                  userId={member.id}
+                  setGroup={setGroup}
+                />
+              </div>
             </div>
           );
         })}

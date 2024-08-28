@@ -51,7 +51,7 @@ const ProfileFriends = () => {
       </div>
       {friends.length === 0 && !isLoading && (
         <div className="py-10 bg-white rounded-xl mt-4">
-          <p className="text-gray-500 text-center   ">No friends to show</p>
+          <p className="text-gray-500 text-center">No friends to show</p>
         </div>
       )}
     </div>

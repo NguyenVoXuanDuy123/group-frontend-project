@@ -16,16 +16,19 @@ const Popover = ({
   const popoverRef = useRef<HTMLDivElement>(null);
   const displayComponentRef = useRef<HTMLDivElement>(null);
 
-  const handleClickOutside = useCallback((event: MouseEvent) => {
-    if (
-      popoverRef.current &&
-      !popoverRef.current.contains(event.target as Node) &&
-      displayComponentRef.current &&
-      !displayComponentRef.current.contains(event.target as Node)
-    ) {
-      setPopoverOpen(false);
-    }
-  }, []);
+  const handleClickOutside = useCallback(
+    (event: MouseEvent) => {
+      if (
+        popoverRef.current &&
+        !popoverRef.current.contains(event.target as Node) &&
+        displayComponentRef.current &&
+        !displayComponentRef.current.contains(event.target as Node)
+      ) {
+        setPopoverOpen(false);
+      }
+    },
+    [setPopoverOpen]
+  );
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -38,11 +41,14 @@ const Popover = ({
 
   return (
     <div className="relative inline-block text-left">
-      <div onClick={togglePopover} ref={displayComponentRef}>
+      <div
+        onClick={togglePopover}
+        ref={displayComponentRef}
+        className="cursor-pointer">
         {displayComponent}
       </div>
       {popoverOpen && (
-        <div ref={popoverRef} className="absolute right-0">
+        <div ref={popoverRef} className="absolute right-0 ">
           {children}
         </div>
       )}
