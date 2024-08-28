@@ -2,29 +2,30 @@ import ProfileFriendCard from "@/components/Profile/ProfileFriendCard";
 import { fetchApi } from "@/helpers/fetchApi";
 import getFullName from "@/helpers/getFullName";
 import { ProfileLayoutContextType } from "@/pages/layout/ProfileLayout";
-import { FriendType } from "@/types/user.types";
+import { UserInformation } from "@/types/user.types";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useOutletContext } from "react-router-dom";
 
 const ProfileFriends = () => {
   // list of friends of profile owner
-  const [friends, setFriends] = useState<FriendType[]>([]);
-
+  const [friends, setFriends] = useState<UserInformation[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const dispatch = useDispatch();
   const { user } = useOutletContext<ProfileLayoutContextType>();
 
   useEffect(() => {
     // fetch friends of the profile owner
     const fetchFriends = async () => {
-      const response = await fetchApi<FriendType[]>(
+      const friends = await fetchApi<UserInformation[]>(
         `/api/users/${user.id}/friends?limit=50`,
         "GET",
         dispatch
       );
-      if (response) {
-        setFriends(response);
+      if (friends) {
+        setFriends(friends);
       }
+      setIsLoading(false);
     };
     fetchFriends();
   }, [dispatch, user.id]);
@@ -35,7 +36,9 @@ const ProfileFriends = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2  mt-1">
         {friends.map((friend) => {
           return (
-            <div className="flex justify-center sm:justify-start">
+            <div
+              key={`friend-${friend.id}`}
+              className="flex justify-center sm:justify-start">
               <ProfileFriendCard
                 fullName={getFullName(friend)}
                 mutualFriendCount={friend.mutualFriendCount}
@@ -46,8 +49,10 @@ const ProfileFriends = () => {
           );
         })}
       </div>
-      {friends.length === 0 && (
-        <p className="text-gray-500 text-center mt-4">No friends to show</p>
+      {friends.length === 0 && !isLoading && (
+        <div className="py-10 bg-white rounded-xl mt-4">
+          <p className="text-gray-500 text-center   ">No friends to show</p>
+        </div>
       )}
     </div>
   );

@@ -3,19 +3,19 @@ import SideBarRightFriendCard from "@/components/SideBarRight/SideBarRightFriend
 import { RootState } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { FriendType } from "@/types/user.types";
 import { fetchApi } from "@/helpers/fetchApi";
 import AvatarWithPopover from "@/components/SideBarRight/AvatarWithPopover";
+import { UserInformation } from "@/types/user.types";
 
 const SideBarRight = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
-  const [friends, setFriends] = useState<FriendType[]>([]);
+  const [friends, setFriends] = useState<UserInformation[]>([]);
 
   useEffect(() => {
     const fetchFriends = async () => {
       const numberOfFriends = 9;
-      const response = await fetchApi<FriendType[]>(
+      const response = await fetchApi<UserInformation[]>(
         `/api/users/me/friends?limit=${numberOfFriends}`,
         "GET",
         dispatch

@@ -1,5 +1,5 @@
 import { EditGroupModal } from "@/components/GroupHeader/EditGroupModal";
-import WarningModal from "@/components/Modal/WarningModal";
+import WarningModal from "@/components/Modal/WarningUnfriendModal";
 import AddFriendIcon from "@/components/svg/profile-actions/AddFriendIcon";
 import CancelFriendRequestIcon from "@/components/svg/profile-actions/CancelFriendRequestIcon";
 import EditProfileIcon from "@/components/svg/profile-actions/EditProfileIcon";

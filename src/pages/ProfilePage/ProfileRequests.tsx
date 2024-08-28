@@ -15,6 +15,7 @@ const ProfileRequests = () => {
   );
   const dispatch = useDispatch();
   const { user, setUser } = useOutletContext<ProfileLayoutContextType>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { username } = useSelector(
     (state: RootState) => state.auth.user || { username: "" }
   );
@@ -39,14 +40,17 @@ const ProfileRequests = () => {
       if (friendRequests) {
         setFriendRequests(friendRequests);
       }
+      setIsLoading(false);
     };
     fetchFriendRequests();
   }, [dispatch, user.id, user.username, username]);
   if (user.username !== username)
     return (
-      <p className="text-gray-500 text-center mt-4">
-        You can not view friend requests of other users
-      </p>
+      <div className="py-10 bg-white rounded-xl mt-4">
+        <p className="text-gray-500 text-center   ">
+          You can not view friend requests of other users
+        </p>
+      </div>
     );
   return (
     <div className="bg-white rounded-xl p-4 mt-4">
@@ -70,10 +74,12 @@ const ProfileRequests = () => {
           );
         })}
       </div>
-      {friendRequests.length === 0 && (
-        <p className="text-gray-500 text-center mt-4">
-          No friend requests to show
-        </p>
+      {friendRequests.length === 0 && !isLoading && (
+        <div className="py-10 bg-white rounded-xl mt-4">
+          <p className="text-gray-500 text-center   ">
+            No friend requests to show
+          </p>
+        </div>
       )}
     </div>
   );

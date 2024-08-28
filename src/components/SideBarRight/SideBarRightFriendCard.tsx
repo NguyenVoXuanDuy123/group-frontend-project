@@ -5,7 +5,7 @@ interface FriendCardProps {
   name: string;
   avatar: string;
   username: string;
-  mutualFriendCount: number;
+  mutualFriendCount?: number;
 }
 
 const SideBarRightFriendCard = ({
@@ -24,9 +24,11 @@ const SideBarRightFriendCard = ({
           <span className="ml-4 font-medium hover:underline">{name}</span>
         </Link>
         <Link to={`/${username}/friends`}>
-          <span className="ml-4 text-xs text-gray-500 hover:underline">
-            {mutualFriendCount} mutual friends
-          </span>
+          {mutualFriendCount && (
+            <span className="ml-4 text-xs text-gray-500 hover:underline">
+              {mutualFriendCount} mutual friends
+            </span>
+          )}
         </Link>
       </div>
     </div>

@@ -15,6 +15,7 @@ const ProfileMyGroups = () => {
     GroupStatus.APPROVED
   );
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { user } = useOutletContext<ProfileLayoutContextType>();
   const { username } = useSelector(
     (state: RootState) => state.auth.user || { username: "" }
@@ -45,6 +46,7 @@ const ProfileMyGroups = () => {
       if (groups) {
         setGroups(groups);
       }
+      setIsLoading(false);
     };
     fetchGroups();
   }, [dispatch, groupStatus, user.id, user.username, username]);
@@ -52,14 +54,17 @@ const ProfileMyGroups = () => {
   // only show groups if the user is viewing their own profile
   if (user.username !== username)
     return (
-      <p className="text-gray-500 text-center mt-4">
-        You can not view groups of other users
-      </p>
+      <div className="py-10 bg-white rounded-xl mt-4">
+        <p className="text-gray-500 text-center   ">
+          You can not view groups of other users
+        </p>
+      </div>
     );
+
   return (
     <div className="flex-1 flex flex-col bg-white rounded-xl p-4 mt-4">
       <h2 className="text-lg font-bold text-gray-900">My Groups</h2>
-      <div className="flex space-x-4 mt-1">
+      <div className="flex space-x-4 mt-1 ml-1">
         <button
           onClick={() => setGroupStatus(GroupStatus.APPROVED)}
           className={`${
@@ -104,7 +109,7 @@ const ProfileMyGroups = () => {
           );
         })}
       </div>
-      {groups.length === 0 && (
+      {groups.length === 0 && !isLoading && (
         <p className="text-gray-500 text-center mt-4">No groups to show</p>
       )}
     </div>

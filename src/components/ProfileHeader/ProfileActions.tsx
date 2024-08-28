@@ -1,5 +1,5 @@
 import { EditProfileModal } from "@/components/Modal/EditProfileModal";
-import WarningModal from "@/components/Modal/WarningModal";
+import WarningModal from "@/components/Modal/WarningUnfriendModal";
 
 import AcceptFriendRequestIcon from "@/components/svg/profile-actions/AcceptFriendRequestIcon";
 import AddFriendIcon from "@/components/svg/profile-actions/AddFriendIcon";

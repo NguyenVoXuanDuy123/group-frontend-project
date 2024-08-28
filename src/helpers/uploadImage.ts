@@ -1,6 +1,6 @@
 import EnvVars from "@/constants/EnvVars";
+import RouteError from "@/error/RouteError";
 import { setToast } from "@/redux/slices/toastSlice";
-import { ErrorType } from "@/types/api.types";
 import { ImageResponse } from "@/types/image.types";
 import { Dispatch } from "@reduxjs/toolkit";
 
@@ -32,7 +32,7 @@ export const uploadImage = async (
     //dispatch the error message, global toast will show the error message
     dispatch(
       setToast({
-        message: (error as ErrorType).message || "Network error occurred",
+        message: (error as RouteError).message || "Network error occurred",
         type: "error",
       })
     );

@@ -9,6 +9,7 @@ import { useOutletContext } from "react-router-dom";
 const ProfileGroups = () => {
   // list of groups of the profile owner
   const [groups, setGroups] = useState<GroupCard[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const dispatch = useDispatch();
   const { user } = useOutletContext<ProfileLayoutContextType>();
   useEffect(() => {
@@ -22,6 +23,7 @@ const ProfileGroups = () => {
       if (groups) {
         setGroups(groups);
       }
+      setIsLoading(false);
     };
     fetchGroups();
   }, [dispatch, user.id]);
@@ -32,7 +34,9 @@ const ProfileGroups = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 mt-1  ">
         {groups.map((group) => {
           return (
-            <div className="flex justify-center sm:justify-start">
+            <div
+              className="flex justify-center sm:justify-start"
+              key={`group-${group.id}`}>
               <ProfileGroupCard
                 id={group.id}
                 memberCount={group.memberCount}
@@ -43,8 +47,10 @@ const ProfileGroups = () => {
           );
         })}
       </div>
-      {groups.length === 0 && (
-        <p className="text-gray-500 text-center mt-4">No groups to show</p>
+      {groups.length === 0 && !isLoading && (
+        <div className="py-10 bg-white rounded-xl mt-4">
+          <p className="text-gray-500 text-center   ">No groups to show</p>
+        </div>
       )}
     </div>
   );

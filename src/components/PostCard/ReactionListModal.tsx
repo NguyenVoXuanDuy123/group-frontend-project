@@ -78,7 +78,7 @@ const ReactionListModal = ({
       <div className="mt-4 px-2">
         {users.map((info) => (
           <ProfileFriendCard
-            key={info.id}
+            key={`${info.user.id}-${info.type}`}
             avatar={info.user.avatar}
             fullName={getFullName(info.user)}
             username={info.user.username}
@@ -94,18 +94,16 @@ const ReactionListModal = ({
         <div className="border-b border-light-grey">
           <nav className="flex space-x-4">
             {Object.values(ReactionType).map((reaction) => (
-              <>
-                <button
-                  key={reaction}
-                  onClick={() => setActiveTab(reaction)}
-                  className={`px-4 py-2 text-sm ${
-                    activeTab === reaction
-                      ? "border-b-2 border-primary text-primary font-semibold"
-                      : ""
-                  }`}>
-                  {reaction.charAt(0).toUpperCase() + reaction.slice(1)}
-                </button>
-              </>
+              <button
+                key={reaction}
+                onClick={() => setActiveTab(reaction)}
+                className={`px-4 py-2 text-sm ${
+                  activeTab === reaction
+                    ? "border-b-2 border-primary text-primary font-semibold"
+                    : ""
+                }`}>
+                {reaction.charAt(0).toUpperCase() + reaction.slice(1)}
+              </button>
             ))}
           </nav>
         </div>

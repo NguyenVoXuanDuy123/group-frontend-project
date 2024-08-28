@@ -1,7 +1,10 @@
 import EnvVars from "@/constants/EnvVars";
+import RouteError from "@/error/RouteError";
 import { setToast } from "@/redux/slices/toastSlice";
-import { ErrorType } from "@/types/api.types";
 import { Dispatch } from "@reduxjs/toolkit";
+
+// this array contains the error codes that should not display through the toast
+const notDisplayErrorToast = [6005, 8009];
 
 export const fetchApi = async <
   T = {
@@ -27,7 +30,10 @@ export const fetchApi = async <
     // If the response is not successful, throw an error
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(error.message || "API request failed");
+      throw new RouteError(
+        error.errorCode,
+        error.message || "API request failed"
+      );
     }
 
     const data = await response.json();
@@ -35,16 +41,24 @@ export const fetchApi = async <
     return (data.result as T) || ({ status: "success" } as T);
   } catch (error) {
     console.error("Error in fetchApi:", error);
-    //dispatch the error message, global modal will show the error message
+    if (!(error instanceof RouteError)) {
+      return null;
+    }
 
-    dispatch(
-      setToast({
-        message: (error as ErrorType).message || "Network error occurred",
-        type: "error",
-      })
-    );
+    // Display error toast only if the error code is not in the notDisplayErrorToast array
+    if (!notDisplayErrorToast.includes(error.errorCode)) {
+      //dispatch the error message, global toast will show the error message
+      dispatch(
+        setToast({
+          message: error.message || "Network error occurred",
+          type: "error",
+        })
+      );
+      return null;
+    }
 
     // Return null if there is an error, meaning the API request failed
+
     return null;
   }
 };
