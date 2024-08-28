@@ -74,13 +74,13 @@ export const fetchApi = async <
     }
 
     // errorCode 8005 is for that post is not visible to the user
-    // it can be because the post is deleted, the post is not in the circle that the user is in
+    // it can be because the post is deleted, or the post is not in the circle that the user is in
     if (error.errorCode === 8005) {
       dispatch(
         setToast({
           type: "error",
           message:
-            "This post is not longer available for you, please refresh the page.",
+            "Can not perform this action, This post is not longer available for you, please refresh the page.",
         })
       );
       return null;

@@ -26,12 +26,14 @@ const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
         {/* <UploadAvatarModal open={open} onClose={() => setOpen(false)} /> */}
 
         {/* Profile Image */}
-        <Avatar
-          photoURL={user.avatar}
-          size={168}
-          //add key to Avatar component to force re-render (to update the image)
-          key={user.avatar}
-        />
+        <div>
+          <Avatar
+            photoURL={user.avatar}
+            size={168}
+            //add key to Avatar component to force re-render (to update the image)
+            key={user.avatar}
+          />
+        </div>
 
         {/* Profile Details */}
         <div className="ml-6">

@@ -4,7 +4,7 @@ import { ReactionUserInfo } from "@/types/reaction.types";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Modal from "../Modal";
-import UserCard from "../Common/UserCard/ProfileFriendCard";
+import UserCard from "../Common/UserCard/UserCard";
 import { ReactionType } from "@/enums/post.enums";
 
 type ReactionListModalProps = {
@@ -35,6 +35,7 @@ const ReactionListModal = ({
 
   useEffect(() => {
     const fetchReactions = async () => {
+      console.log("Fetching reactions");
       const likeRes = await fetchApi<ReactionUserInfo[]>(
         `/api/posts/${postId}/reactions?type=like`,
         "GET",

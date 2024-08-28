@@ -1,4 +1,4 @@
-import UserCard from "@/components/Common/UserCard/ProfileFriendCard";
+import UserCard from "@/components/Common/UserCard/UserCard";
 import { UserGroupRelation } from "@/enums/group.enums";
 import { fetchApi } from "@/helpers/fetchApi";
 import getFullName from "@/helpers/getFullName";

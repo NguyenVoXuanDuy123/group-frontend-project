@@ -1,4 +1,4 @@
-import UserCard from "@/components/Common/UserCard/ProfileFriendCard";
+import UserCard from "@/components/Common/UserCard/UserCard";
 import { fetchApi } from "@/helpers/fetchApi";
 import getFullName from "@/helpers/getFullName";
 import { ProfileLayoutContextType } from "@/pages/layout/ProfileLayout";

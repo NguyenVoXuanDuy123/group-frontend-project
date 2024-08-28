@@ -3,7 +3,7 @@ import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-type FriendCardProps = {
+type UserCardProps = {
   username?: string;
   fullName: string;
   mutualFriendCount?: number;
@@ -15,7 +15,7 @@ const UserCard = ({
   fullName,
   mutualFriendCount,
   avatar,
-}: FriendCardProps) => {
+}: UserCardProps) => {
   const { username: authUserUsername } = useSelector(
     (state: RootState) => state.auth.user || { username: "" }
   );
