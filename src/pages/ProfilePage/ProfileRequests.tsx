@@ -2,7 +2,6 @@ import FriendRequestCard from "@/components/Profile/FriendRequestCard";
 import { fetchApi } from "@/helpers/fetchApi";
 import getFullName from "@/helpers/getFullName";
 import { ProfileLayoutContextType } from "@/pages/layout/ProfileLayout";
-import { setToast } from "@/redux/slices/toastSlice";
 import { RootState } from "@/redux/store";
 import { FriendRequestCardType } from "@/types/user.types";
 import { useEffect, useState } from "react";
@@ -22,12 +21,6 @@ const ProfileRequests = () => {
   useEffect(() => {
     // only fetch friend requests if the user is viewing their own profile, not someone else's
     if (user.username !== username) {
-      dispatch(
-        setToast({
-          message: "You can not view friend requests of other users",
-          type: "error",
-        })
-      );
       return;
     }
     // fetch friend requests of the profile owner

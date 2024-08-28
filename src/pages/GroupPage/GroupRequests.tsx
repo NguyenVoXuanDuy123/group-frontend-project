@@ -2,7 +2,6 @@ import GroupJoinRequestCard from "@/components/Group/GroupJoinRequestCard";
 import { fetchApi } from "@/helpers/fetchApi";
 import getFullName from "@/helpers/getFullName";
 import { GroupLayoutContextType } from "@/pages/layout/GroupLayout";
-import { setToast } from "@/redux/slices/toastSlice";
 import { RootState } from "@/redux/store";
 import { GroupJoinRequestCardType } from "@/types/group.types";
 import { useEffect, useState } from "react";
@@ -22,12 +21,6 @@ const GroupRequests = () => {
   useEffect(() => {
     // only fetch group join requests if the user is the admin of the group
     if (group.admin.id !== id) {
-      dispatch(
-        setToast({
-          message: "Just the admin group can view join requests",
-          type: "error",
-        })
-      );
       return;
     }
     // fetch group join requests of the group

@@ -4,6 +4,7 @@ import Avatar from "@/components/user/Avatar";
 import { FriendRequestStatus } from "@/enums/user.enums";
 import { fetchApi } from "@/helpers/fetchApi";
 import { timeAgo } from "@/helpers/timeAgo";
+import { setToast } from "@/redux/slices/toastSlice";
 import {
   FriendRequest,
   FriendRequestCardType,
@@ -58,6 +59,12 @@ const FriendRequestCard = ({
       setFriendRequests((prev) =>
         prev.filter((req) => req.id !== friendRequest.id)
       );
+      dispatch(
+        setToast({
+          message: "You and " + fullName + " are now friends",
+          type: "success",
+        })
+      );
     }
     setIsLoading(false);
   };
@@ -65,7 +72,7 @@ const FriendRequestCard = ({
   const handleDeclineRequest = async () => {
     setIsLoading(true);
     const response = await fetchApi(
-      `/api/users/me/friends/requests/${user.friendRequest?.id}`,
+      `/api/users/me/friends/requests/${friendRequest.id}`,
       "PATCH",
       dispatch,
       {
@@ -75,6 +82,12 @@ const FriendRequestCard = ({
     if (response?.status === "success") {
       setFriendRequests((prev) =>
         prev.filter((req) => req.id !== friendRequest.id)
+      );
+      dispatch(
+        setToast({
+          message: "Friend request of " + fullName + " is declined",
+          type: "success",
+        })
       );
     }
     setIsLoading(false);

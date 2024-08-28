@@ -2,7 +2,6 @@ import ProfileGroupCard from "@/components/Profile/ProfileGroupCard";
 import { GroupRole, GroupStatus } from "@/enums/group.enums";
 import { fetchApi } from "@/helpers/fetchApi";
 import { ProfileLayoutContextType } from "@/pages/layout/ProfileLayout";
-import { setToast } from "@/redux/slices/toastSlice";
 import { RootState } from "@/redux/store";
 import { GroupCard } from "@/types/group.types";
 import { useEffect, useState } from "react";
@@ -23,12 +22,6 @@ const ProfileMyGroups = () => {
   useEffect(() => {
     // only fetch groups if the user is viewing their own profile, not someone else's
     if (user.username !== username) {
-      dispatch(
-        setToast({
-          message: "You can not view groups of other users",
-          type: "error",
-        })
-      );
       return;
     }
     // fetch groups of the profile owner
