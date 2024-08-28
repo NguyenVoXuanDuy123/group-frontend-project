@@ -18,7 +18,7 @@ const ReactionListModal = ({
   hideModal,
   postId,
 }: ReactionListModalProps) => {
-  const [activeTab, setActiveTab] = useState<string>("like");
+  const [activeTab, setActiveTab] = useState<ReactionType>(ReactionType.LIKE);
   const [reactionLikeUserInfos, setReactionLikeUserInfos] = useState<
     ReactionUserInfo[]
   >([]);
