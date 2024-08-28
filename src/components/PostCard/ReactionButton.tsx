@@ -1,7 +1,6 @@
 import reactionMap from "@/constants/reactionMap";
 import { ReactionType } from "@/enums/post.enums";
 import { fetchApi } from "@/helpers/fetchApi";
-import { setToast } from "@/redux/slices/toastSlice";
 import { UserReaction } from "@/types/post.types";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -51,10 +50,6 @@ const ReactionButton = ({
 
     if (response) {
       updateUserReaction(userReaction);
-    } else {
-      dispatch(
-        setToast({ message: "Failed to remove reaction", type: "error" })
-      );
     }
   };
 
@@ -70,11 +65,8 @@ const ReactionButton = ({
 
     if (response) {
       updateUserReaction({ type: reactionType });
-    } else {
-      dispatch(
-        setToast({ message: "Failed to react this post", type: "error" })
-      );
     }
+
     setShowReactions(false);
   };
 

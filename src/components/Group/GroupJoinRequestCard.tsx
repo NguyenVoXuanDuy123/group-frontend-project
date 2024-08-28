@@ -1,62 +1,56 @@
 import AcceptFriendRequestIcon from "@/components/svg/profile-actions/AcceptFriendRequestIcon";
 import RemoveFriendIcon from "@/components/svg/profile-actions/RemoveFriendIcon";
 import Avatar from "@/components/user/Avatar";
-import { FriendRequestStatus } from "@/enums/user.enums";
+import { GroupJoinRequestStatus } from "@/enums/group.enums";
 import { fetchApi } from "@/helpers/fetchApi";
 import { timeAgo } from "@/helpers/timeAgo";
-import {
-  FriendRequest,
-  FriendRequestCardType,
-  UserProfile,
-} from "@/types/user.types";
+import { Group, GroupJoinRequestCardType } from "@/types/group.types";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-type FriendCardProps = {
-  username?: string;
+type GroupJoinRequestCardProps = {
+  username: string;
   fullName: string;
-  mutualFriendCount?: number;
   avatar: string;
-  friendRequest: FriendRequest;
-  setUser: React.Dispatch<React.SetStateAction<UserProfile | null>>;
-  user: UserProfile;
-  setFriendRequests: React.Dispatch<
-    React.SetStateAction<FriendRequestCardType[]>
+  groupJoinRequest: GroupJoinRequestCardType;
+  setGroup: React.Dispatch<React.SetStateAction<Group | null>>;
+  group: Group;
+  setGroupRequests: React.Dispatch<
+    React.SetStateAction<GroupJoinRequestCardType[]>
   >;
 };
 
-const FriendRequestCard = ({
+const GroupJoinRequestCard = ({
   username,
   fullName,
-  mutualFriendCount,
   avatar,
-  friendRequest,
-  setUser,
-  user,
-  setFriendRequests,
-}: FriendCardProps) => {
+  groupJoinRequest,
+  setGroup,
+  group,
+  setGroupRequests,
+}: GroupJoinRequestCardProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
   const handleAcceptRequest = async () => {
     setIsLoading(true);
     const response = await fetchApi(
-      `/api/users/me/friends/requests/${friendRequest.id}`,
+      `/api/groups/requests/${groupJoinRequest.id}`,
       "PATCH",
       dispatch,
       {
-        status: FriendRequestStatus.ACCEPTED,
+        status: GroupJoinRequestStatus.ACCEPTED,
       }
     );
 
     if (response?.status === "success") {
-      const updatedUser: UserProfile = {
-        ...user,
-        friendCount: user.friendCount + 1,
+      const updatedGroup: Group = {
+        ...group,
+        memberCount: group.memberCount + 1,
       };
-      setUser(updatedUser);
-      setFriendRequests((prev) =>
-        prev.filter((req) => req.id !== friendRequest.id)
+      setGroup(updatedGroup);
+      setGroupRequests((prev) =>
+        prev.filter((req) => req.id !== groupJoinRequest.id)
       );
     }
     setIsLoading(false);
@@ -65,16 +59,16 @@ const FriendRequestCard = ({
   const handleDeclineRequest = async () => {
     setIsLoading(true);
     const response = await fetchApi(
-      `/api/users/me/friends/requests/${user.friendRequest?.id}`,
+      `/api/groups/requests/${groupJoinRequest.id}`,
       "PATCH",
       dispatch,
       {
-        status: FriendRequestStatus.REJECTED,
+        status: GroupJoinRequestStatus.REJECTED,
       }
     );
     if (response?.status === "success") {
-      setFriendRequests((prev) =>
-        prev.filter((req) => req.id !== friendRequest.id)
+      setGroupRequests((prev) =>
+        prev.filter((req) => req.id !== groupJoinRequest.id)
       );
     }
     setIsLoading(false);
@@ -93,17 +87,10 @@ const FriendRequestCard = ({
             </span>
           </Link>
           <span className="text-xs text-dark-grey">
-            {timeAgo(friendRequest.createdAt)}
+            {timeAgo(groupJoinRequest.createdAt)}
           </span>
         </div>
 
-        <Link
-          to={`/${username}/friends`}
-          className="text-black no-underline m-0 -mt-2 ">
-          <span className="  cursor-pointer text-xs text-dark-grey hover:underline">
-            {mutualFriendCount && mutualFriendCount + " mutual friends"}
-          </span>
-        </Link>
         <div className="mt-4 flex space-x-4">
           <button
             onClick={handleAcceptRequest}
@@ -129,4 +116,4 @@ const FriendRequestCard = ({
   );
 };
 
-export default FriendRequestCard;
+export default GroupJoinRequestCard;

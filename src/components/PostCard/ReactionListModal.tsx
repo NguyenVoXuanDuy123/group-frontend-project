@@ -4,7 +4,7 @@ import { ReactionUserInfo } from "@/types/reaction.types";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Modal from "../Modal";
-import ProfileFriendCard from "../Profile/ProfileFriendCard";
+import UserCard from "../Common/UserCard/ProfileFriendCard";
 import { ReactionType } from "@/enums/post.enums";
 
 type ReactionListModalProps = {
@@ -77,7 +77,7 @@ const ReactionListModal = ({
     return (
       <div className="mt-4 px-2">
         {users.map((info) => (
-          <ProfileFriendCard
+          <UserCard
             key={`${info.user.id}-${info.type}`}
             avatar={info.user.avatar}
             fullName={getFullName(info.user)}

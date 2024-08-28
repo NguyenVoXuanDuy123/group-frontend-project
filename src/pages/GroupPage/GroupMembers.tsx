@@ -1,18 +1,19 @@
-import ProfileFriendCard from "@/components/Profile/ProfileFriendCard";
+import UserCard from "@/components/Common/UserCard/ProfileFriendCard";
 import { UserGroupRelation } from "@/enums/group.enums";
 import { fetchApi } from "@/helpers/fetchApi";
 import getFullName from "@/helpers/getFullName";
 import GroupAdminActions from "@/pages/GroupPage/GroupAdminActions";
 import { GroupLayoutContextType } from "@/pages/layout/GroupLayout";
+import { RootState } from "@/redux/store";
 import { UserInformation } from "@/types/user.types";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useOutletContext } from "react-router-dom";
 
 const GroupMembers = () => {
   const [members, setMembers] = useState<UserInformation[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
+  const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
   const { group, setGroup } = useOutletContext<GroupLayoutContextType>();
   const { admin } = group;
@@ -35,7 +36,7 @@ const GroupMembers = () => {
     <div className="bg-white rounded-xl p-4 mt-4">
       <h2 className="text-lg font-bold text-gray-900">Admin</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2  mt-1">
-        <ProfileFriendCard
+        <UserCard
           fullName={getFullName(admin)}
           avatar={admin.avatar}
           mutualFriendCount={admin.mutualFriendCount}
@@ -49,20 +50,22 @@ const GroupMembers = () => {
             <div
               className="flex justify-center sm:justify-start relative"
               key={`group-member-${member.id}`}>
-              <ProfileFriendCard
+              <UserCard
                 fullName={getFullName(member)}
                 mutualFriendCount={member.mutualFriendCount}
                 username={member.username}
                 avatar={member.avatar}
               />
-              <div className="absolute right-6 bottom-[40%] z-50 ">
-                <GroupAdminActions
-                  group={group}
-                  setMembers={setMembers}
-                  userId={member.id}
-                  setGroup={setGroup}
-                />
-              </div>
+              {user && user.id === admin.id && (
+                <div className="absolute right-6 bottom-[40%] z-50 ">
+                  <GroupAdminActions
+                    group={group}
+                    setMembers={setMembers}
+                    userId={member.id}
+                    setGroup={setGroup}
+                  />
+                </div>
+              )}
             </div>
           );
         })}

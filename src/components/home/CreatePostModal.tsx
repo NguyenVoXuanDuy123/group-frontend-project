@@ -76,8 +76,6 @@ export default function CreatePostModal({
       dispatch(
         setToast({ message: "Create Post Successfully", type: "success" })
       );
-    } else {
-      dispatch(setToast({ message: "Failed to create post", type: "error" }));
     }
   };
 

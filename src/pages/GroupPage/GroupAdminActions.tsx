@@ -1,6 +1,7 @@
 import Popover from "@/components/Common/Popover";
 import ThreeDotsIcon from "@/components/svg/ThreeDotsIcon";
 import { fetchApi } from "@/helpers/fetchApi";
+import { setToast } from "@/redux/slices/toastSlice";
 import { Group } from "@/types/group.types";
 import { UserInformation } from "@/types/user.types";
 import { useState } from "react";
@@ -40,6 +41,9 @@ const GroupAdminActions = ({
         memberCount: group.memberCount - 1,
       };
       setGroup(updatedGroup);
+      dispatch(
+        setToast({ message: "Removed member successfully", type: "success" })
+      );
     }
     setPopoverOpen(false);
   };

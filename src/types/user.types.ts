@@ -107,7 +107,7 @@ export type FriendRequest = {
 
 export type FriendRequestCardType = {
   id: string;
-  senderDetail: UserInformation & { mutualFriendCount: number };
+  senderDetail: UserInformation;
   status: FriendRequestStatus;
   createdAt: string;
 };

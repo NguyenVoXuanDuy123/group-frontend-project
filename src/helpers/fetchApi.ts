@@ -45,6 +45,47 @@ export const fetchApi = async <
       return null;
     }
 
+    console.error("Error in fetchApi:", error.errorCode);
+
+    // errorCode 5003 is for that group join request is not longer available
+    // it can be because the group request has been accepted, rejected or canceled
+    if (error.errorCode === 7007) {
+      dispatch(
+        setToast({
+          type: "error",
+          message:
+            "This group join request is not longer available, please refresh the page.",
+        })
+      );
+      return null;
+    }
+
+    // errorCode 5003 is for that friend request is not longer available
+    // it can be because the friend request has been accepted, rejected or canceled
+    if (error.errorCode === 5003) {
+      dispatch(
+        setToast({
+          type: "error",
+          message:
+            "This friend request is not longer available, please refresh the page.",
+        })
+      );
+      return null;
+    }
+
+    // errorCode 8005 is for that post is not visible to the user
+    // it can be because the post is deleted, the post is not in the circle that the user is in
+    if (error.errorCode === 8005) {
+      dispatch(
+        setToast({
+          type: "error",
+          message:
+            "This post is not longer available for you, please refresh the page.",
+        })
+      );
+      return null;
+    }
+
     // Display error toast only if the error code is not in the notDisplayErrorToast array
     if (!notDisplayErrorToast.includes(error.errorCode)) {
       //dispatch the error message, global toast will show the error message

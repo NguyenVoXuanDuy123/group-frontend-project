@@ -74,4 +74,13 @@ export type GroupJoinRequest = {
    * request is pending, accepted, rejected, or cancelled.
    */
   status: GroupJoinRequestStatus;
+
+  createdAt: string;
+};
+
+export type GroupJoinRequestCardType = {
+  id: string;
+  senderDetail: UserInformation;
+  status: GroupJoinRequestStatus;
+  createdAt: string;
 };

@@ -1,4 +1,4 @@
-import ProfileFriendCard from "@/components/Profile/ProfileFriendCard";
+import UserCard from "@/components/Common/UserCard/ProfileFriendCard";
 import { fetchApi } from "@/helpers/fetchApi";
 import getFullName from "@/helpers/getFullName";
 import { ProfileLayoutContextType } from "@/pages/layout/ProfileLayout";
@@ -39,7 +39,7 @@ const ProfileFriends = () => {
             <div
               key={`friend-${friend.id}`}
               className="flex justify-center sm:justify-start">
-              <ProfileFriendCard
+              <UserCard
                 fullName={getFullName(friend)}
                 mutualFriendCount={friend.mutualFriendCount}
                 username={friend.username}

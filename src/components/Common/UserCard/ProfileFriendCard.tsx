@@ -10,7 +10,7 @@ type FriendCardProps = {
   avatar: string;
 };
 
-const ProfileFriendCard = ({
+const UserCard = ({
   username,
   fullName,
   mutualFriendCount,
@@ -74,4 +74,4 @@ const ProfileFriendCard = ({
   );
 };
 
-export default ProfileFriendCard;
+export default UserCard;
