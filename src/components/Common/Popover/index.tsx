@@ -1,0 +1,53 @@
+import { useEffect, useRef, useCallback } from "react";
+
+type PopoverProps = {
+  displayComponent: React.ReactNode;
+  children: React.ReactNode;
+  popoverOpen: boolean;
+  setPopoverOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const Popover = ({
+  displayComponent,
+  children,
+  popoverOpen,
+  setPopoverOpen,
+}: PopoverProps) => {
+  const popoverRef = useRef<HTMLDivElement>(null);
+  const displayComponentRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = useCallback((event: MouseEvent) => {
+    if (
+      popoverRef.current &&
+      !popoverRef.current.contains(event.target as Node) &&
+      displayComponentRef.current &&
+      !displayComponentRef.current.contains(event.target as Node)
+    ) {
+      setPopoverOpen(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [handleClickOutside]);
+
+  const togglePopover = () => {
+    setPopoverOpen((prev) => !prev);
+  };
+
+  return (
+    <div className="relative inline-block text-left">
+      <div onClick={togglePopover} ref={displayComponentRef}>
+        {displayComponent}
+      </div>
+      {popoverOpen && (
+        <div ref={popoverRef} className="absolute right-0">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Popover;

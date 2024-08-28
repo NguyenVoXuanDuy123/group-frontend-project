@@ -13,7 +13,7 @@ const Home = () => {
     const getPosts = async () => {
       // Fetch the posts from the API
       const posts = await fetchApi<Post[]>(
-        "/api/users/me/feeds",
+        "/api/users/me/feeds?limit=10",
         "GET",
         dispatch
       );

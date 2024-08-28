@@ -10,6 +10,7 @@ import GlobalIcon from "../svg/GlobalIcon";
 import FriendIcon from "../svg/side-bar-icons/FriendIcon";
 import { PostVisibilityLevel } from "@/enums/post.enums";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
+import Popover from "@/components/Common/Popover";
 
 type CreatePostModalProps = {
   modalShowing: boolean;
@@ -36,7 +37,7 @@ export default function CreatePostModal({
   const [privacy, setPrivacy] = useState<PostVisibilityLevel>(
     PostVisibilityLevel.PUBLIC
   );
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
 
   const dispatch = useDispatch();
 
@@ -91,22 +92,26 @@ export default function CreatePostModal({
             <div className="font-semibold">{fullName}</div>
             {groupId === undefined && (
               <>
-                <button
-                  type="button"
-                  className="inline-flex justify-center items-center w-[60%] px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-light-grey rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                  id="privacy-menu"
-                  aria-haspopup="true"
-                  aria-expanded={isDropdownOpen}
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-                  {privacy === PostVisibilityLevel.PUBLIC ? (
-                    <GlobalIcon className="mr-2 h-4 w-4" />
-                  ) : (
-                    <FriendIcon className="mr-2 h-4 w-4" />
-                  )}
-                  {capitalizeFirstLetter(privacy)}
-                </button>
-
-                {isDropdownOpen && (
+                <Popover
+                  popoverOpen={popoverOpen}
+                  setPopoverOpen={setPopoverOpen}
+                  displayComponent={
+                    <button
+                      type="button"
+                      className="inline-flex justify-center items-center w-[60%] px-4 py-2 text-sm font-medium
+                       text-gray-700 bg-white border border-light-grey rounded-md hover:bg-gray-50 
+                       focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary
+                       w-full sm:w-auto"
+                      id="privacy-menu"
+                      aria-haspopup="true">
+                      {privacy === PostVisibilityLevel.PUBLIC ? (
+                        <GlobalIcon className="mr-2 h-4 w-4" />
+                      ) : (
+                        <FriendIcon className="mr-2 h-4 w-4" />
+                      )}
+                      {capitalizeFirstLetter(privacy)}
+                    </button>
+                  }>
                   <div
                     className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
@@ -118,7 +123,6 @@ export default function CreatePostModal({
                         role="menuitem"
                         onClick={() => {
                           setPrivacy(PostVisibilityLevel.PUBLIC);
-                          setIsDropdownOpen(false);
                         }}>
                         <GlobalIcon className="mr-2 h-4 w-4" />
                         <span>Public</span>
@@ -128,14 +132,13 @@ export default function CreatePostModal({
                         role="menuitem"
                         onClick={() => {
                           setPrivacy(PostVisibilityLevel.FRIEND);
-                          setIsDropdownOpen(false);
                         }}>
                         <FriendIcon className="mr-2 h-4 w-4" />
                         <span>Friends</span>
                       </button>
                     </div>
                   </div>
-                )}
+                </Popover>
               </>
             )}
           </div>
