@@ -1,6 +1,6 @@
 import AcceptFriendRequestIcon from "@/components/svg/profile-actions/AcceptFriendRequestIcon";
 import RemoveFriendIcon from "@/components/svg/profile-actions/RemoveFriendIcon";
-import Avatar from "@/components/User/Avatar";
+import Avatar from "@/components/Common/User/Avatar";
 import { FriendRequestStatus } from "@/enums/user.enums";
 import { fetchApi } from "@/helpers/fetchApi";
 import { timeAgo } from "@/helpers/timeAgo";

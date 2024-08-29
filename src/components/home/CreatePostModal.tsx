@@ -4,7 +4,7 @@ import { Post } from "@/types/post.types";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import Modal from "@/components/Common/Modal";
-import Avatar from "@/components/User/Avatar";
+import Avatar from "@/components/Common/User/Avatar";
 import ImageInput from "@/components/Home/ImageInput";
 import GlobalIcon from "@/components/svg/GlobalIcon";
 import FriendIcon from "@/components/svg/side-bar-icons/FriendIcon";

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ImageAdd from "@/components/svg/post/ImageAdd";
-import Avatar from "@/components/User/Avatar";
+import Avatar from "@/components/Common/User/Avatar";
 import CreatePostModal from "@/components/Home/CreatePostModal";
 import { Post } from "@/types/post.types";
 import { useSelector } from "react-redux";

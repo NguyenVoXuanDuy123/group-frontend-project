@@ -1,5 +1,5 @@
 import Popover from "@/components/Common/Popover";
-import Avatar from "@/components/User/Avatar";
+import Avatar from "@/components/Common/User/Avatar";
 import { logOut } from "@/redux/slices/authSlice";
 import { AppDispatch } from "@/redux/store";
 import { useState } from "react";

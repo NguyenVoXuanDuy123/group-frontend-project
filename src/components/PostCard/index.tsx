@@ -4,7 +4,7 @@ import getThreeMostReactionTypes from "@/helpers/getThreeMostReactionTypes";
 import { timeAgo } from "@/helpers/timeAgo";
 import { Post, ReactionCounter, UserReaction } from "@/types/post.types";
 import CommentAction from "../svg/post/CommentAction";
-import Avatar from "../User/Avatar";
+import Avatar from "../Common/User/Avatar";
 import ImageCarousel from "./ImageCarousel";
 import ReactionButton from "./ReactionButton";
 import TruncateText from "./TruncateContent";
