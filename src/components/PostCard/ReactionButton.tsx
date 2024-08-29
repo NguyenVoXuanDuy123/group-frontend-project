@@ -1,73 +1,77 @@
 import reactionMap from "@/constants/reactionMap";
 import { ReactionType } from "@/enums/post.enums";
+import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import { fetchApi } from "@/helpers/fetchApi";
 import { UserReaction } from "@/types/post.types";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import LikeAction from "../svg/post/LikeAction";
-import AngryReaction from "../svg/reactions/Angry";
-import HahaReaction from "../svg/reactions/Haha";
-import LikeReaction from "../svg/reactions/Like";
-import LoveReaction from "../svg/reactions/Love";
-import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
-
-const reactionColors = {
-  like: "#4D98EF",
-  love: "#F06D6D",
-  haha: "#FCC738",
-  angry: "#E56232",
-};
+import ReactionPopup from "./ReactionPopup";
+import { reactionColors } from "@/constants";
+import { setToast } from "@/redux/slices/toastSlice";
 
 type ReactionButtonProps = {
   postId: string;
   userReaction?: UserReaction | null;
-  updateUserReaction: (newReaction: UserReaction) => void;
+  updateReaction: (newReaction: UserReaction) => void;
 };
 
 const ReactionButton = ({
   postId,
   userReaction,
-  updateUserReaction,
+  updateReaction: updateUserReaction,
 }: ReactionButtonProps) => {
   const [showReactions, setShowReactions] = useState(false);
   const dispatch = useDispatch();
 
-  const handleClickReaction = async () => {
+  const handleReaction = async (reactionType: ReactionType) => {
+    if (userReaction && userReaction.type === reactionType) {
+      const response = await fetchApi(
+        `/api/posts/${postId}/reactions`,
+        "DELETE",
+        dispatch
+      );
+
+      if (!response) {
+        dispatch(
+          setToast({
+            type: "error",
+            message: "Failed to unreact to post",
+          })
+        );
+      }
+    } else {
+      const response = await fetchApi(
+        `/api/posts/${postId}/reactions`,
+        "PUT",
+        dispatch,
+        {
+          type: reactionType,
+        }
+      );
+      if (!response) {
+        dispatch(
+          setToast({
+            type: "error",
+            message: "Failed to react to post",
+          })
+        );
+      }
+    }
+
+    updateUserReaction({ type: reactionType });
+    hideCommentModal();
+  };
+
+  const handleClickReaction = () => {
+    // user has not reacted
     if (!userReaction) {
       handleReaction(ReactionType.LIKE);
       return;
     }
 
-    const response = await fetchApi(
-      `/api/posts/${postId}/reactions`,
-      "PUT",
-      dispatch,
-      {
-        // remove reaction
-        type: userReaction.type,
-      }
-    );
-
-    if (response) {
-      updateUserReaction(userReaction);
-    }
-  };
-
-  const handleReaction = async (reactionType: ReactionType) => {
-    const response = await fetchApi(
-      `/api/posts/${postId}/reactions`,
-      "PUT",
-      dispatch,
-      {
-        type: reactionType,
-      }
-    );
-
-    if (response) {
-      updateUserReaction({ type: reactionType });
-    }
-
-    setShowReactions(false);
+    // user has already reacted
+    handleReaction(userReaction.type);
   };
 
   const _renderReaction = () => {
@@ -88,15 +92,31 @@ const ReactionButton = ({
     }
   };
 
+  const showCommentModal = () => {
+    setShowReactions(true);
+  };
+
+  const hideCommentModal = () => {
+    setShowReactions(false);
+  };
+
+  const delayedHideModal = () => {
+    if (showReactions) {
+      setTimeout(() => {
+        setShowReactions(false);
+      }, 1000);
+    }
+  };
+
   return (
     <div
       className="relative flex-1"
-      onMouseEnter={() => setShowReactions(true)}
-      onMouseLeave={() => setShowReactions(false)}
+      onMouseEnter={showCommentModal}
+      onMouseLeave={delayedHideModal}
     >
       <div
         className="flex-1 rounded-lg p-3 relative flex items-center justify-center cursor-pointer hover:bg-light-grey"
-        onClick={() => handleClickReaction()}
+        onClick={handleClickReaction}
       >
         {userReaction ? (
           _renderReaction()
@@ -107,44 +127,10 @@ const ReactionButton = ({
           </>
         )}
       </div>
-      {/* Reaction Popup */}
-      {
-        <div
-          className={`absolute bottom-full left-0 bg-white border border-gray-200 rounded-lg p-2 flex space-x-2
-          transform transition-transform duration-300 ease-in-out ${
-            //  z-40 is used to make sure the popup is on top of other elements
-            // -z-40 is used to make sure when the popup is hidden, it's not clickable or hoverable
-            showReactions
-              ? "translate-y-0 opacity-100 z-40"
-              : "translate-y-4 -z-40"
-          }`}
-        >
-          <LikeReaction
-            width={48}
-            height={48}
-            onClick={() => handleReaction(ReactionType.LIKE)}
-            className="hover:scale-110 transition-transform duration-150 cursor-pointer"
-          />
-          <LoveReaction
-            width={48}
-            height={48}
-            onClick={() => handleReaction(ReactionType.LOVE)}
-            className="hover:scale-110 transition-transform duration-150 cursor-pointer"
-          />
-          <HahaReaction
-            width={48}
-            height={48}
-            onClick={() => handleReaction(ReactionType.HAHA)}
-            className="hover:scale-110 transition-transform duration-150 cursor-pointer"
-          />
-          <AngryReaction
-            width={48}
-            height={48}
-            onClick={() => handleReaction(ReactionType.ANGRY)}
-            className="hover:scale-110 transition-transform duration-150 cursor-pointer"
-          />
-        </div>
-      }
+      <ReactionPopup
+        handleReaction={handleReaction}
+        showReactions={showReactions}
+      />
     </div>
   );
 };

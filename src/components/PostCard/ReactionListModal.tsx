@@ -35,7 +35,6 @@ const ReactionListModal = ({
 
   useEffect(() => {
     const fetchReactions = async () => {
-      console.log("Fetching reactions");
       const likeRes = await fetchApi<ReactionUserInfo[]>(
         `/api/posts/${postId}/reactions?type=like`,
         "GET",
@@ -102,7 +101,8 @@ const ReactionListModal = ({
                   activeTab === reaction
                     ? "border-b-2 border-primary text-primary font-semibold"
                     : ""
-                }`}>
+                }`}
+              >
                 {reaction.charAt(0).toUpperCase() + reaction.slice(1)}
               </button>
             ))}

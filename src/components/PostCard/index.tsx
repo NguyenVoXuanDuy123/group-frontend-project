@@ -1,23 +1,24 @@
-import reactionMap from "@/constants/reactionMap";
+import VisibilityLevelIcon from "@/components/PostCard/VisibilityLevelIcon";
 import getFullName from "@/helpers/getFullName";
-import getThreeMostReactionTypes from "@/helpers/getThreeMostReactionTypes";
 import { timeAgo } from "@/helpers/timeAgo";
 import { Post, ReactionCounter, UserReaction } from "@/types/post.types";
-import CommentAction from "../svg/post/CommentAction";
-import Avatar from "../Common/User/Avatar";
-import ImageCarousel from "./ImageCarousel";
-import ReactionButton from "./ReactionButton";
-import TruncateText from "./TruncateContent";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import VisibilityLevelIcon from "@/components/PostCard/VisibilityLevelIcon";
+import Avatar from "../Common/User/Avatar";
+import CommentAction from "../svg/post/CommentAction";
+import CommentModal from "./CommentModal";
+import ImageCarousel from "./ImageCarousel";
+import ReactionButton from "./ReactionButton";
 import ReactionListModal from "./ReactionListModal";
+import ThreeMostReaction from "./ThreeMostReaction";
+import TruncateText from "./TruncateContent";
 
 type PostCardProps = {
   post: Post;
+  inCommentModal?: boolean;
 };
 
-const PostCard = ({ post }: PostCardProps) => {
+const PostCard = ({ post, inCommentModal = false }: PostCardProps) => {
   const [userReaction, setUserReaction] = useState<UserReaction | null>(
     post.userReaction || null
   );
@@ -28,18 +29,29 @@ const PostCard = ({ post }: PostCardProps) => {
     post.reactionSummary
   );
 
-  const [reactionModalShowing, setReactionModalShowing] =
+  const [reactionListModalShowing, setReactionListModalShowing] =
     useState<boolean>(false);
 
-  const hideReactionModal = () => {
-    setReactionModalShowing(false);
+  const [commentModalShowing, setCommentModalShowing] =
+    useState<boolean>(false);
+
+  const showCommentModal = () => {
+    setCommentModalShowing(true);
+  };
+
+  const hideCommentModal = () => {
+    setCommentModalShowing(false);
   };
 
   const showReactionModal = () => {
-    setReactionModalShowing(true);
+    setReactionListModalShowing(true);
   };
 
-  const updateUserReaction = (newReaction: UserReaction) => {
+  const hideReactionModal = () => {
+    setReactionListModalShowing(false);
+  };
+
+  const updateReaction = (newReaction: UserReaction) => {
     if (!userReaction) {
       // user has not reacted to the post
       setReactionSummary((prev) =>
@@ -93,86 +105,95 @@ const PostCard = ({ post }: PostCardProps) => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-xl overflow-hidden md:max-w-2xl my-4">
-      <div className="md:flex flex-1">
-        <div className="px-4 pt-4 flex-1 flex flex-col">
-          {/* Profile Section */}
-          <div className="flex items-center mb-2">
-            <Link to={`/${post.author.username}`}>
-              <Avatar photoURL={post.author.avatar} />
-            </Link>
-            <div className="ml-4">
-              <Link
-                to={`/${post.author.username}`}
-                className="text-black no-underline">
-                <div className="hover:underline">
-                  {getFullName(post.author)}
-                </div>
+    <>
+      <div className="w-full mx-auto bg-white rounded-xl overflow-hidden my-4">
+        <div className="md:flex flex-1">
+          <div
+            className={`flex-1 flex flex-col ${inCommentModal ? "" : "px-4 pt-4"}`}
+          >
+            {/* Profile Section */}
+            <div className="flex items-center mb-2">
+              <Link to={`/${post.author.username}`}>
+                <Avatar photoURL={post.author.avatar} />
               </Link>
-              <div className="text-dark-grey text-sm flex  items-center">
-                {timeAgo(post.createdAt)} •{" "}
-                <VisibilityLevelIcon visibilityLevel={post.visibilityLevel} />
+              <div className="ml-4">
+                <Link
+                  to={`/${post.author.username}`}
+                  className="text-black no-underline"
+                >
+                  <div className="hover:underline">
+                    {getFullName(post.author)}
+                  </div>
+                </Link>
+                <div className="text-dark-grey text-sm flex  items-center">
+                  {timeAgo(post.createdAt)} •{" "}
+                  <VisibilityLevelIcon visibilityLevel={post.visibilityLevel} />
+                </div>
               </div>
             </div>
-          </div>
 
-          <TruncateText text={post.content} maxLength={200} />
+            <TruncateText text={post.content} maxLength={200} />
 
-          {post.images.length > 0 && <ImageCarousel images={post.images} />}
+            {post.images.length > 0 && <ImageCarousel images={post.images} />}
 
-          {/* Reactions and Comments */}
-          <div className="my-3 flex justify-between text-dark-grey text-sm">
-            <div className=" flex items-center">
-              {reactionCount > 0 && (
-                <div className="ml-2 mr-2 flex items-center">
-                  {/* get the three most reacted types to display */}
-                  {getThreeMostReactionTypes(reactionSummary).map(
-                    (reactionType) => {
-                      const ReactionComponent = reactionMap[reactionType];
-                      return (
-                        <ReactionComponent
-                          key={`${post.id}-${reactionType}`}
-                          className={`ml-[-8px]`}
-                        />
-                      );
-                    }
-                  )}
-                </div>
-              )}
-              <span
-                className="leading-6 hover:underline cursor-pointer"
-                onClick={showReactionModal}>
-                {reactionCount} {reactionCount > 0 ? "Reactions" : "Reaction"}
-              </span>
-              <ReactionListModal
-                hideModal={hideReactionModal}
-                modalShowing={reactionModalShowing}
+            {/* Reactions and Comments */}
+            <div className="my-3 flex justify-between text-dark-grey text-sm">
+              <div className=" flex items-center">
+                {reactionCount > 0 && (
+                  <ThreeMostReaction
+                    id={post.id}
+                    reactionSummary={reactionSummary}
+                  />
+                )}
+                <span
+                  className="leading-6 hover:underline cursor-pointer"
+                  onClick={showReactionModal}
+                >
+                  {reactionCount} {reactionCount > 0 ? "Reactions" : "Reaction"}
+                </span>
+              </div>
+              <div className="flex items-center">
+                <span
+                  className="leading-6 hover:underline cursor-pointer"
+                  onClick={showCommentModal}
+                >
+                  {post.commentCount}{" "}
+                  {post.commentCount > 0 ? "Comments" : "Comment"}
+                </span>
+              </div>
+            </div>
+
+            {/* Reactions and Comments */}
+            <div
+              className={`border-t py-2 flex justify-between items-center text-dark-grey ${inCommentModal ? "border-b" : ""}`}
+            >
+              <ReactionButton
+                userReaction={userReaction}
+                updateReaction={updateReaction}
                 postId={post.id}
               />
-            </div>
-            <div className="flex items-center">
-              <span>
-                {post.commentCount}{" "}
-                {post.commentCount > 0 ? "Comments" : "Comment"}
-              </span>
-            </div>
-          </div>
-
-          {/* Reactions and Comments */}
-          <div className="border-top py-2 flex justify-between items-center text-dark-grey">
-            <ReactionButton
-              userReaction={userReaction}
-              updateUserReaction={updateUserReaction}
-              postId={post.id}
-            />
-            <div className="rounded-lg p-3 flex flex-1 items-center justify-center cursor-pointer hover:bg-light-grey">
-              <CommentAction />
-              <span className="ml-1">Comments</span>
+              <div
+                onClick={showCommentModal}
+                className="rounded-lg p-3 flex flex-1 items-center justify-center cursor-pointer hover:bg-light-grey"
+              >
+                <CommentAction />
+                <span className="ml-2">Comment</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      <ReactionListModal
+        hideModal={hideReactionModal}
+        modalShowing={reactionListModalShowing}
+        postId={post.id}
+      />
+      <CommentModal
+        open={commentModalShowing}
+        hideModal={hideCommentModal}
+        post={post}
+      />
+    </>
   );
 };
 

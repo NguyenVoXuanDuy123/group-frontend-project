@@ -15,11 +15,11 @@ const VisibilityLevelIcon = ({ visibilityLevel }: VisibilityLevelIconProps) => {
     );
   }
   if (visibilityLevel === PostVisibilityLevel.FRIEND) {
-    return <FriendIcon height={18} width={18} />;
+    return <FriendIcon height={16} width={16} />;
   }
 
   if (visibilityLevel === PostVisibilityLevel.GROUP) {
-    return <GroupIcon height={18} width={18} />;
+    return <GroupIcon height={16} width={16} />;
   }
 
   return null;

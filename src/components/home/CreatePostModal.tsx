@@ -1,16 +1,16 @@
+import Modal from "@/components/Common/Modal";
+import Popover from "@/components/Common/Popover";
+import Avatar from "@/components/Common/User/Avatar";
+import GlobalIcon from "@/components/svg/GlobalIcon";
+import FriendIcon from "@/components/svg/side-bar-icons/FriendIcon";
+import { PostVisibilityLevel } from "@/enums/post.enums";
+import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import { fetchApi } from "@/helpers/fetchApi";
 import { setToast } from "@/redux/slices/toastSlice";
 import { Post } from "@/types/post.types";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import Modal from "@/components/Common/Modal";
-import Avatar from "@/components/Common/User/Avatar";
-import ImageInput from "@/components/Home/ImageInput";
-import GlobalIcon from "@/components/svg/GlobalIcon";
-import FriendIcon from "@/components/svg/side-bar-icons/FriendIcon";
-import { PostVisibilityLevel } from "@/enums/post.enums";
-import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
-import Popover from "@/components/Common/Popover";
+import ImageInput from "./ImageInput";
 
 type CreatePostModalProps = {
   modalShowing: boolean;
@@ -98,7 +98,8 @@ export default function CreatePostModal({
                       className="inline-flex justify-center items-center px-4 py-2 text-sm font-medium
                        text-gray-700 bg-white border border-light-grey rounded-md hover:bg-gray-50 
                        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary
-                       w-full sm:w-auto">
+                       w-full sm:w-auto"
+                    >
                       {privacy === PostVisibilityLevel.PUBLIC ? (
                         <GlobalIcon className="mr-2 h-4 w-4" />
                       ) : (
@@ -106,7 +107,8 @@ export default function CreatePostModal({
                       )}
                       {capitalizeFirstLetter(privacy)}
                     </button>
-                  }>
+                  }
+                >
                   <div className="mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1" role="none">
                       <button
@@ -114,7 +116,8 @@ export default function CreatePostModal({
                         onClick={() => {
                           setPrivacy(PostVisibilityLevel.PUBLIC);
                           setPopoverOpen(false);
-                        }}>
+                        }}
+                      >
                         <GlobalIcon className="mr-2 h-4 w-4" />
                         <span>Public</span>
                       </button>
@@ -123,7 +126,8 @@ export default function CreatePostModal({
                         onClick={() => {
                           setPrivacy(PostVisibilityLevel.FRIEND);
                           setPopoverOpen(false);
-                        }}>
+                        }}
+                      >
                         <FriendIcon className="mr-2 h-4 w-4" />
                         <span>Friends</span>
                       </button>
@@ -136,6 +140,7 @@ export default function CreatePostModal({
         </div>
       </div>
       <textarea
+        autoFocus
         ref={contentInputRef}
         className="w-full mt-3 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
         placeholder={`What's on your mind, ${fullName}?`}

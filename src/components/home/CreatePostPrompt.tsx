@@ -1,11 +1,11 @@
-import { useState } from "react";
-import ImageAdd from "@/components/svg/post/ImageAdd";
 import Avatar from "@/components/Common/User/Avatar";
-import CreatePostModal from "@/components/Home/CreatePostModal";
-import { Post } from "@/types/post.types";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import ImageAdd from "@/components/svg/post/ImageAdd";
 import getFullName from "@/helpers/getFullName";
+import { RootState } from "@/redux/store";
+import { Post } from "@/types/post.types";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import CreatePostModal from "./CreatePostModal";
 
 type CreatePostPromptProps = {
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
@@ -34,7 +34,8 @@ const CreatePostPrompt = ({ setPosts, groupId }: CreatePostPromptProps) => {
         <Avatar photoURL={user.avatar} />
         <button
           onClick={handleShowModal}
-          className="flex items-center justify-between ml-4 w-full h-12 rounded-full bg-light-grey p-2.5 hover:bg-dark-grey/15">
+          className="flex items-center justify-between ml-4 w-full h-12 rounded-full bg-light-grey p-2.5 hover:bg-dark-grey/15"
+        >
           <span className="pl-2 text-grey text-sm">What's on your mind?</span>
           <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
             <ImageAdd />
