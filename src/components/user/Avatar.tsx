@@ -22,6 +22,7 @@ const Avatar = ({ photoURL = profileImgURL, size = 48 }: AvatarProps) => {
         transition: "filter 0.3s",
       }}
       className="rounded-full object-cover hover:brightness-75 cursor-pointer"
+      loading="lazy"
     />
   );
 };

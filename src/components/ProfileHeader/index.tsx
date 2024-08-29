@@ -1,11 +1,13 @@
 import ProfileActions from "@/components/ProfileHeader/ProfileActions";
 // import UploadAvatarModal from "@/components/Modal/UploadAvatarModal";
 import TabItem from "@/components/ProfileHeader/TabItem";
+import UploadAvatarModal from "@/components/ProfileHeader/UploadAvatarModal";
 import Avatar from "@/components/user/Avatar";
 import { UserFriendRelation } from "@/enums/user.enums";
 import { abbreviateNumber } from "@/helpers/abbreviateNumber";
 import getFullName from "@/helpers/getFullName";
 import { UserProfile } from "@/types/user.types";
+import { useState } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -15,18 +17,34 @@ type ProfileHeaderProps = {
 };
 
 const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
+  const [uploadAvatarModalOpen, setUploadAvatarModalOpen] =
+    useState<boolean>(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const handleAvatarClick = () => {
+    if (user.userFriendRelation === UserFriendRelation.SELF) {
+      setUploadAvatarModalOpen(true);
+    }
+  };
 
   return (
     <div className="bg-white pt-6 ">
       {/* Profile image and details */}
       <div className="flex items-center  relative ">
         {/* Avatar Upload Modal */}
-        {/* <UploadAvatarModal open={open} onClose={() => setOpen(false)} /> */}
+
+        <UploadAvatarModal
+          setUser={setUser}
+          user={user}
+          open={uploadAvatarModalOpen}
+          hideModal={() => {
+            setUploadAvatarModalOpen(false);
+          }}
+          avatar={user.avatar}
+        />
 
         {/* Profile Image */}
-        <div>
+        <div onClick={handleAvatarClick}>
           <Avatar
             photoURL={user.avatar}
             size={168}
