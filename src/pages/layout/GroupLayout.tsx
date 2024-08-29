@@ -1,4 +1,4 @@
-import GroupHeader from "@/components/GroupHeader";
+import GroupHeader from "@/components/Group/GroupHeader";
 import Logo from "@/components/svg/Logo";
 import { appName } from "@/constants";
 import { fetchApi } from "@/helpers/fetchApi";

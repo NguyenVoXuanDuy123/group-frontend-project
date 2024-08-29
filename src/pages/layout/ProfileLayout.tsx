@@ -1,4 +1,4 @@
-import ProfileHeader from "@/components/ProfileHeader";
+import ProfileHeader from "@/components/Profile/ProfileHeader";
 import Logo from "@/components/svg/Logo";
 import { appName } from "@/constants";
 import { fetchApi } from "@/helpers/fetchApi";

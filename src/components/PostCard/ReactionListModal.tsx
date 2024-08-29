@@ -3,8 +3,8 @@ import getFullName from "@/helpers/getFullName";
 import { ReactionUserInfo } from "@/types/reaction.types";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import Modal from "../Modal";
-import UserCard from "../Common/UserCard/UserCard";
+import Modal from "../Common/Modal";
+import UserCard from "../Common/UserCard";
 import { ReactionType } from "@/enums/post.enums";
 
 type ReactionListModalProps = {

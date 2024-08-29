@@ -1,11 +1,11 @@
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import PlusIcon from "../svg/PlusIcon";
-import ChevronLeft from "../svg/ChevronLeft";
-import ChevronRight from "../svg/ChevronRight";
+import PlusIcon from "@/components/svg/PlusIcon";
+import ChevronLeft from "@/components/svg/ChevronLeft";
+import ChevronRight from "@/components/svg/ChevronRight";
 import { setToast } from "@/redux/slices/toastSlice";
 import { uploadImage } from "@/helpers/uploadImage";
-import CloseIcon from "../svg/CloseIcon";
+import CloseIcon from "@/components/svg/CloseIcon";
 
 interface ImageInputProps {
   images: string[];

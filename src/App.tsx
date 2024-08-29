@@ -3,7 +3,7 @@ import ProfileLayout from "@/pages/layout/ProfileLayout";
 import { store } from "@/redux/store";
 import { Provider } from "react-redux";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-import Toast from "./components/Toast";
+import Toast from "./components/Common/Toast";
 import ProfilePosts from "@/pages/ProfilePage/ProfilePosts";
 import ProfileFriends from "@/pages/ProfilePage/ProfileFriends";
 import ProfileRequests from "@/pages/ProfilePage/ProfileRequests";

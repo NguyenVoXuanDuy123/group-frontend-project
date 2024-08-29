@@ -1,4 +1,4 @@
-import CreatePostPrompt from "@/components/home/CreatePostPrompt";
+import CreatePostPrompt from "@/components/Home/CreatePostPrompt";
 import PostList from "@/components/PostCard/PostList";
 import { GroupStatus, UserGroupRelation } from "@/enums/group.enums";
 import { fetchApi } from "@/helpers/fetchApi";

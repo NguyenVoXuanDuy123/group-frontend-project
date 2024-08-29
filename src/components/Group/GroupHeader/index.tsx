@@ -1,5 +1,5 @@
-import GroupActions from "@/components/GroupHeader/GroupActions";
-import TabItem from "@/components/ProfileHeader/TabItem";
+import GroupActions from "@/components/Group/GroupHeader/GroupActions";
+import TabItem from "@/components/Profile/ProfileHeader/TabItem";
 import GlobalIcon from "@/components/svg/GlobalIcon";
 import PrivateIcon from "@/components/svg/PrivateIcon";
 import { GroupVisibilityLevel, UserGroupRelation } from "@/enums/group.enums";

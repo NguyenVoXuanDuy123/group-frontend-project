@@ -1,4 +1,4 @@
-import CreatePostPrompt from "@/components/home/CreatePostPrompt";
+import CreatePostPrompt from "@/components/Home/CreatePostPrompt";
 import PostList from "@/components/PostCard/PostList";
 import { UserFriendRelation } from "@/enums/user.enums";
 import { fetchApi } from "@/helpers/fetchApi";

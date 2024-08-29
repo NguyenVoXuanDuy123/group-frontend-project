@@ -1,4 +1,4 @@
-import Modal from "@/components/Modal";
+import Modal from "@/components/Common/Modal";
 import { fetchApi } from "@/helpers/fetchApi";
 import { Group } from "@/types/group.types";
 import { useEffect, useState } from "react";

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import ImageAdd from "../svg/post/ImageAdd";
-import Avatar from "../user/Avatar";
-import CreatePostModal from "./CreatePostModal";
+import ImageAdd from "@/components/svg/post/ImageAdd";
+import Avatar from "@/components/User/Avatar";
+import CreatePostModal from "@/components/Home/CreatePostModal";
 import { Post } from "@/types/post.types";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";

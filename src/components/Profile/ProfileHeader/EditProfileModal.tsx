@@ -1,4 +1,4 @@
-import Modal from "@/components/Modal";
+import Modal from "@/components/Common/Modal";
 import { fetchApi } from "@/helpers/fetchApi";
 import { updateUser } from "@/redux/slices/authSlice";
 import { UserProfile } from "@/types/user.types";

@@ -1,4 +1,4 @@
-import Avatar from "@/components/user/Avatar";
+import Avatar from "@/components/User/Avatar";
 import { Link } from "react-router-dom";
 
 interface FriendCardProps {

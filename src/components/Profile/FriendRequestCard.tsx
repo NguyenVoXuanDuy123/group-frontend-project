@@ -1,6 +1,6 @@
 import AcceptFriendRequestIcon from "@/components/svg/profile-actions/AcceptFriendRequestIcon";
 import RemoveFriendIcon from "@/components/svg/profile-actions/RemoveFriendIcon";
-import Avatar from "@/components/user/Avatar";
+import Avatar from "@/components/User/Avatar";
 import { FriendRequestStatus } from "@/enums/user.enums";
 import { fetchApi } from "@/helpers/fetchApi";
 import { timeAgo } from "@/helpers/timeAgo";
@@ -95,7 +95,7 @@ const FriendRequestCard = ({
   return (
     <div className="items-center w-full rounded-lg flex mb-3 border p-2 h-[132px]">
       <Link to={`/${username}`}>
-        <Avatar size={80} photoURL={avatar} />
+        <Avatar size={80} photoURL={avatar} key={avatar} />
       </Link>
 
       <div className="flex flex-col flex-1 ml-4 mt-1">

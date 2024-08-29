@@ -1,4 +1,4 @@
-import CreatePostPrompt from "@/components/home/CreatePostPrompt";
+import CreatePostPrompt from "@/components/Home/CreatePostPrompt";
 import PostList from "@/components/PostCard/PostList";
 import { fetchApi } from "@/helpers/fetchApi";
 import { Post } from "@/types/post.types";

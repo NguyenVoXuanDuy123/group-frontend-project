@@ -1,8 +1,8 @@
-import ProfileActions from "@/components/ProfileHeader/ProfileActions";
+import ProfileActions from "@/components/Profile/ProfileHeader/ProfileActions";
 // import UploadAvatarModal from "@/components/Modal/UploadAvatarModal";
-import TabItem from "@/components/ProfileHeader/TabItem";
-import UploadAvatarModal from "@/components/ProfileHeader/UploadAvatarModal";
-import Avatar from "@/components/user/Avatar";
+import TabItem from "@/components/Profile/ProfileHeader/TabItem";
+import UploadAvatarModal from "@/components/Profile/ProfileHeader/UploadAvatarModal";
+import Avatar from "@/components/User/Avatar";
 import { UserFriendRelation } from "@/enums/user.enums";
 import { abbreviateNumber } from "@/helpers/abbreviateNumber";
 import getFullName from "@/helpers/getFullName";

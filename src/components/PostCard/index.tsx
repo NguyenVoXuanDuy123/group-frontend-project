@@ -4,7 +4,7 @@ import getThreeMostReactionTypes from "@/helpers/getThreeMostReactionTypes";
 import { timeAgo } from "@/helpers/timeAgo";
 import { Post, ReactionCounter, UserReaction } from "@/types/post.types";
 import CommentAction from "../svg/post/CommentAction";
-import Avatar from "../user/Avatar";
+import Avatar from "../User/Avatar";
 import ImageCarousel from "./ImageCarousel";
 import ReactionButton from "./ReactionButton";
 import TruncateText from "./TruncateContent";
@@ -104,8 +104,7 @@ const PostCard = ({ post }: PostCardProps) => {
             <div className="ml-4">
               <Link
                 to={`/${post.author.username}`}
-                className="text-black no-underline"
-              >
+                className="text-black no-underline">
                 <div className="hover:underline">
                   {getFullName(post.author)}
                 </div>
@@ -142,8 +141,7 @@ const PostCard = ({ post }: PostCardProps) => {
               )}
               <span
                 className="leading-6 hover:underline cursor-pointer"
-                onClick={showReactionModal}
-              >
+                onClick={showReactionModal}>
                 {reactionCount} {reactionCount > 0 ? "Reactions" : "Reaction"}
               </span>
               <ReactionListModal
