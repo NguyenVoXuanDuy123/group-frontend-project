@@ -2,9 +2,9 @@ import { Comment } from "@/types/comment.types";
 import { Post } from "@/types/post.types";
 import PostCard from "@/components/PostCard";
 import Modal from "@/components/Common/Modal";
-import CommentCard from "@/components/PostCard/CommentCard";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import InfiniteScroll from "@/components/Common/InfiniteScroll";
+import CommentCard from "@/components/PostCard/PostModal/CommentCard";
 
 type Props = {
   open: boolean;
@@ -24,7 +24,7 @@ export default function CommentModal({ open, hideModal, post }: Props) {
 
   return (
     <Modal open={open} hideModal={hideModal}>
-      <div className="flex-grow overflow-y-auto w-[672px] max-w-2xl ">
+      <div className="flex-grow overflow-y-auto w-[720px]  ">
         {open ? (
           <>
             <PostCard inCommentModal post={post} />

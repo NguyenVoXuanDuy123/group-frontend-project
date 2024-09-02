@@ -3,9 +3,9 @@ import { timeAgo } from "@/helpers/timeAgo";
 import { Comment } from "@/types/comment.types";
 import { ReactionCounter, UserReaction } from "@/types/post.types";
 import { useState } from "react";
-import Avatar from "../Common/User/Avatar";
+import Avatar from "../../Common/User/Avatar";
 import CommentReactionButton from "./CommentReactionButton";
-import ThreeMostReaction from "./ThreeMostReaction";
+import ThreeMostReaction from "../ThreeMostReaction";
 
 type CommentCardProps = {
   comment: Comment;

@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "../Common/User/Avatar";
 import CommentAction from "../svg/post/CommentAction";
-import CommentModal from "./CommentModal";
+import CommentModal from "./PostModal";
 import ImageCarousel from "./ImageCarousel";
 import ReactionButton from "./ReactionButton";
 import ReactionListModal from "./ReactionListModal";
