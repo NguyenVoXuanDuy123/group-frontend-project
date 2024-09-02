@@ -38,7 +38,7 @@ const GroupPosts = () => {
       {group.userGroupRelation === UserGroupRelation.NOT_MEMBER &&
         posts.length === 0 &&
         !isLoading && (
-          <div className="py-10 bg-white rounded-xl ">
+          <div className="py-10 bg-white rounded-xl mt-3">
             <p className="text-gray-500 text-center    ">
               This group is private. Join the group to see posts.
             </p>

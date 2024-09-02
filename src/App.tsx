@@ -17,9 +17,11 @@ import GroupLayout from "@/pages/layout/GroupLayout";
 import GroupPosts from "@/pages/GroupPage/GroupPosts";
 import GroupMembers from "@/pages/GroupPage/GroupMembers";
 import GroupRequests from "@/pages/GroupPage/GroupRequests";
+import { UserStatus } from "@/enums/user.enums";
+import BannedPage from "@/pages/BannedPage";
 
 function ProtectedRoute() {
-  const { status, isAuthenticated } = useAuth();
+  const { status, isAuthenticated, user } = useAuth();
 
   if (status === "firstLoading") {
     return;
@@ -27,6 +29,9 @@ function ProtectedRoute() {
 
   if (!isAuthenticated) {
     return <AuthPage />;
+  }
+  if (user?.status === UserStatus.BANNED) {
+    return <BannedPage />;
   }
   return <Outlet />;
 }

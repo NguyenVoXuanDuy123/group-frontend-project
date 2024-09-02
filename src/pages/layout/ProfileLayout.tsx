@@ -1,6 +1,7 @@
 import ProfileHeader from "@/components/Profile/ProfileHeader";
 import Logo from "@/components/svg/Logo";
 import { appName } from "@/constants";
+import { UserStatus } from "@/enums/user.enums";
 import { fetchApi } from "@/helpers/fetchApi";
 import { UserProfile } from "@/types/user.types";
 import { useEffect, useState } from "react";
@@ -56,6 +57,15 @@ const ProfileLayout = () => {
           key={user.id}
         />
       </div>
+      {user.status === UserStatus.BANNED && (
+        <div className="fixed bottom-0 left-0 w-full bg-red-100 text-red-800 shadow-md">
+          <div className="container mx-auto px-4 py-3 flex items-center justify-center space-x-2 sm:space-x-4">
+            <p className="text-sm sm:text-base font-medium">
+              This user has been banned due to violation of community guidelines
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

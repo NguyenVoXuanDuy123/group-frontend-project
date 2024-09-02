@@ -164,7 +164,7 @@ const PostCard = ({ post, inCommentModal = false }: PostCardProps) => {
               className={`border-t py-2 flex justify-between items-center text-dark-grey ${inCommentModal ? "border-b" : ""}`}>
               <ReactionButton
                 userReaction={userReaction}
-                updateReaction={updateReaction}
+                updateUserReaction={updateReaction}
                 postId={post.id}
               />
               <div

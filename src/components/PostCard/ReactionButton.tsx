@@ -8,18 +8,17 @@ import { useDispatch } from "react-redux";
 import LikeAction from "@/components/svg/post/LikeAction";
 import ReactionPopup from "@/components/PostCard/ReactionPopup";
 import { reactionColors } from "@/constants";
-import { setToast } from "@/redux/slices/toastSlice";
 
 type ReactionButtonProps = {
   postId: string;
   userReaction?: UserReaction | null;
-  updateReaction: (newReaction: UserReaction) => void;
+  updateUserReaction: (newReaction: UserReaction) => void;
 };
 
 const ReactionButton = ({
   postId,
   userReaction,
-  updateReaction: updateUserReaction,
+  updateUserReaction,
 }: ReactionButtonProps) => {
   const [showReactions, setShowReactions] = useState<boolean>(false);
   const [showDelay, setShowDelay] = useState<NodeJS.Timeout | null>(null);
@@ -34,13 +33,8 @@ const ReactionButton = ({
         dispatch
       );
 
-      if (!response) {
-        dispatch(
-          setToast({
-            type: "error",
-            message: "Failed to unreact to post",
-          })
-        );
+      if (response) {
+        updateUserReaction({ type: reactionType });
       }
     } else {
       const response = await fetchApi(
@@ -51,17 +45,10 @@ const ReactionButton = ({
           type: reactionType,
         }
       );
-      if (!response) {
-        dispatch(
-          setToast({
-            type: "error",
-            message: "Failed to react to post",
-          })
-        );
+      if (response) {
+        updateUserReaction({ type: reactionType });
       }
     }
-
-    updateUserReaction({ type: reactionType });
     setShowReactions(false);
   };
 
