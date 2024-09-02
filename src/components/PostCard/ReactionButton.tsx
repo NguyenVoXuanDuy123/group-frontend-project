@@ -5,8 +5,8 @@ import { fetchApi } from "@/helpers/fetchApi";
 import { UserReaction } from "@/types/post.types";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import LikeAction from "../svg/post/LikeAction";
-import ReactionPopup from "./ReactionPopup";
+import LikeAction from "@/components/svg/post/LikeAction";
+import ReactionPopup from "@/components/PostCard/ReactionPopup";
 import { reactionColors } from "@/constants";
 import { setToast } from "@/redux/slices/toastSlice";
 
@@ -21,7 +21,9 @@ const ReactionButton = ({
   userReaction,
   updateReaction: updateUserReaction,
 }: ReactionButtonProps) => {
-  const [showReactions, setShowReactions] = useState(false);
+  const [showReactions, setShowReactions] = useState<boolean>(false);
+  const [showDelay, setShowDelay] = useState<NodeJS.Timeout | null>(null);
+  const [hideDelay, setHideDelay] = useState<NodeJS.Timeout | null>(null);
   const dispatch = useDispatch();
 
   const handleReaction = async (reactionType: ReactionType) => {
@@ -60,17 +62,14 @@ const ReactionButton = ({
     }
 
     updateUserReaction({ type: reactionType });
-    hideCommentModal();
+    setShowReactions(false);
   };
 
   const handleClickReaction = () => {
-    // user has not reacted
     if (!userReaction) {
       handleReaction(ReactionType.LIKE);
       return;
     }
-
-    // user has already reacted
     handleReaction(userReaction.type);
   };
 
@@ -83,8 +82,7 @@ const ReactionButton = ({
           <Reaction />
           <span
             style={{ color: reactionColors[userReaction.type] }}
-            className={`ml-2 font-bold`}
-          >
+            className={`ml-2 font-bold`}>
             {capitalizeFirstLetter(userReaction.type)}
           </span>
         </>
@@ -92,32 +90,32 @@ const ReactionButton = ({
     }
   };
 
-  const showCommentModal = () => {
-    setShowReactions(true);
+  const showReactionChoices = () => {
+    if (hideDelay) clearTimeout(hideDelay);
+    setShowDelay(
+      setTimeout(() => {
+        setShowReactions(true);
+      }, 500) // Adjust the delay duration as needed
+    );
   };
 
-  const hideCommentModal = () => {
-    setShowReactions(false);
-  };
-
-  const delayedHideModal = () => {
-    if (showReactions) {
+  const hideReactionChoices = () => {
+    if (showDelay) clearTimeout(showDelay);
+    setHideDelay(
       setTimeout(() => {
         setShowReactions(false);
-      }, 1000);
-    }
+      }, 500) // Adjust the delay duration as needed
+    );
   };
 
   return (
     <div
       className="relative flex-1"
-      onMouseEnter={showCommentModal}
-      onMouseLeave={delayedHideModal}
-    >
+      onMouseEnter={showReactionChoices}
+      onMouseLeave={hideReactionChoices}>
       <div
         className="flex-1 rounded-lg p-3 relative flex items-center justify-center cursor-pointer hover:bg-light-grey"
-        onClick={handleClickReaction}
-      >
+        onClick={handleClickReaction}>
         {userReaction ? (
           _renderReaction()
         ) : (

@@ -1,9 +1,9 @@
 import { Post } from "@/types/post.types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface NewsfeedState {
+type NewsfeedState = {
   posts: Post[];
-}
+};
 
 const initialState: NewsfeedState = {
   posts: [],

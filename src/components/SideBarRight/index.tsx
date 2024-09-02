@@ -50,6 +50,11 @@ const SideBarRight = () => {
             />
           );
         })}
+        {friends.length === 0 && (
+          <div className="text-center text-dark-grey font-bold mt-4">
+            Let's make some friends
+          </div>
+        )}
       </div>
     </div>
   );

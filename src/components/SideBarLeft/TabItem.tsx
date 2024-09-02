@@ -1,13 +1,13 @@
-import React from "react";
+import { useState } from "react";
 
-interface TabItemProps {
+type TabItemProps = {
   title: string;
   icon: React.ReactNode;
   onclick: () => void;
-}
+};
 
 const TabItem = ({ title, icon, onclick }: TabItemProps) => {
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <button
       disabled={isLoading}

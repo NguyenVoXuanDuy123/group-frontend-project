@@ -1,51 +1,46 @@
+import InfiniteScroll from "@/components/Common/InfiniteScroll";
 import ProfileGroupCard from "@/components/Profile/ProfileGroupCard";
-import { fetchApi } from "@/helpers/fetchApi";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { ProfileLayoutContextType } from "@/pages/layout/ProfileLayout";
 import { GroupCard } from "@/types/group.types";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useOutletContext } from "react-router-dom";
 
 const ProfileGroups = () => {
   // list of groups of the profile owner
-  const [groups, setGroups] = useState<GroupCard[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const dispatch = useDispatch();
+
   const { user } = useOutletContext<ProfileLayoutContextType>();
-  useEffect(() => {
-    // fetch groups of the profile owner
-    const fetchGroups = async () => {
-      const groups = await fetchApi<GroupCard[]>(
-        `/api/users/${user.id}/groups?limit=50`,
-        "GET",
-        dispatch
-      );
-      if (groups) {
-        setGroups(groups);
-      }
-      setIsLoading(false);
-    };
-    fetchGroups();
-  }, [dispatch, user.id]);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [groups, _, loadMoreGroups, isLoading] = useInfiniteScroll<GroupCard>({
+    endpoint: `/api/users/${user.id}/groups`,
+    limit: 10,
+    idBased: true,
+  });
 
   return (
     <div className="bg-white rounded-xl p-4 mt-4">
-      <h2 className="text-lg font-bold text-gray-900">Groups</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 mt-1  ">
-        {groups.map((group) => {
-          return (
-            <div
-              className="flex justify-center sm:justify-start"
-              key={`group-${group.id}`}>
+      <h2 className="text-lg font-bold text-gray-900">
+        Groups{" "}
+        <span className="text-dark-grey font-semibold">
+          ({user.groupCount})
+        </span>
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 mt-1">
+        <InfiniteScroll
+          loadMore={loadMoreGroups}
+          items={groups}
+          renderItem={(group) => (
+            <div className="flex justify-center sm:justify-start">
               <ProfileGroupCard
+                key={`group-${group.id}`}
                 id={group.id}
-                memberCount={group.memberCount}
                 name={group.name}
+                memberCount={group.memberCount}
                 visibilityLevel={group.visibilityLevel}
               />
             </div>
-          );
-        })}
+          )}
+        />
       </div>
       {groups.length === 0 && !isLoading && (
         <div className="py-10 bg-white rounded-xl mt-4">

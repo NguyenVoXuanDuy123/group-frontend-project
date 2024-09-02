@@ -51,6 +51,7 @@ export const EditGroupModal = ({
   // so we use useEffect to reset the form when the user state changes
   useEffect(() => {
     handleClose();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [group]);
 
   const handleClose = () => {
@@ -97,6 +98,7 @@ export const EditGroupModal = ({
             </label>
             <textarea
               id="bio"
+              aria-hidden
               value={description}
               onChange={handleBioChange}
               rows={4}

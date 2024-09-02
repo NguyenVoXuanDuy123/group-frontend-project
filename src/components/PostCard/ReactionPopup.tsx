@@ -9,47 +9,36 @@ type ReactionPopupProps = {
   handleReaction: (reaction: ReactionType) => void;
 };
 
-const ReactionPopup = ({
+export default function ReactionPopup({
   showReactions,
   handleReaction,
-}: ReactionPopupProps) => {
+}: ReactionPopupProps) {
   return (
     <div
       className={`absolute bottom-full left-0 bg-white border border-gray-200 rounded-lg p-2 flex space-x-2
-    transform transition-transform duration-300 ease-in-out ${
-      //  z-40 is used to make sure the popup is on top of other elements
-      // -z-40 is used to make sure when the popup is hidden, it's not clickable or hoverable
-      showReactions
-        ? "translate-y-0 opacity-100 z-40"
-        : "translate-y-4 opacity-0 -z-40"
-    }`}
-    >
-      <LikeReaction
-        width={48}
-        height={48}
-        onClick={() => handleReaction(ReactionType.LIKE)}
-        className="hover:scale-110 transition-transform duration-150 cursor-pointer"
-      />
-      <LoveReaction
-        width={48}
-        height={48}
-        onClick={() => handleReaction(ReactionType.LOVE)}
-        className="hover:scale-110 transition-transform duration-150 cursor-pointer"
-      />
-      <HahaReaction
-        width={48}
-        height={48}
-        onClick={() => handleReaction(ReactionType.HAHA)}
-        className="hover:scale-110 transition-transform duration-150 cursor-pointer"
-      />
-      <AngryReaction
-        width={48}
-        height={48}
-        onClick={() => handleReaction(ReactionType.ANGRY)}
-        className="hover:scale-110 transition-transform duration-150 cursor-pointer"
-      />
+        transform transition-all duration-300 ease-in-out
+        ${
+          showReactions
+            ? "translate-y-0 opacity-100 scale-100 z-40"
+            : "translate-y-4 opacity-0 scale-95 -z-40 "
+        }`}>
+      {[
+        { type: ReactionType.LIKE, Component: LikeReaction },
+        { type: ReactionType.LOVE, Component: LoveReaction },
+        { type: ReactionType.HAHA, Component: HahaReaction },
+        { type: ReactionType.ANGRY, Component: AngryReaction },
+      ].map(({ type, Component }) => (
+        <button
+          key={type}
+          onClick={() => handleReaction(type)}
+          className="group relative focus:outline-none">
+          <Component
+            width={48}
+            height={48}
+            className="transform transition-all duration-200 ease-out group-hover:scale-125 "
+          />
+        </button>
+      ))}
     </div>
   );
-};
-
-export default ReactionPopup;
+}

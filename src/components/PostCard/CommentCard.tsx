@@ -9,17 +9,9 @@ import ThreeMostReaction from "./ThreeMostReaction";
 
 type CommentCardProps = {
   comment: Comment;
-  index: number;
-  numComments: number;
-  lastCommentElementRef: (node: HTMLDivElement | null) => void;
 };
 
-const CommentCard = ({
-  comment,
-  index,
-  numComments,
-  lastCommentElementRef,
-}: CommentCardProps) => {
+const CommentCard = ({ comment }: CommentCardProps) => {
   const [userReaction, setUserReaction] = useState<UserReaction | null>(
     comment.userReaction || null
   );
@@ -91,11 +83,7 @@ const CommentCard = ({
   };
 
   return (
-    <div
-      key={comment.id}
-      ref={index === numComments - 1 ? lastCommentElementRef : null}
-      className="mb-4 last:mb-0"
-    >
+    <div key={comment.id} className="mb-4 last:mb-0">
       <div className="flex items-start">
         <Avatar photoURL={comment.author.avatar} size={48} />
         <div className="flex-grow ml-4">
@@ -103,9 +91,9 @@ const CommentCard = ({
             <p className="font-semibold">
               {comment.author.firstName} {comment.author.lastName}
             </p>
-            <p className="mt-2">{comment.content}</p>
+            <p className="mt-2 break-words">{comment.content}</p>
           </div>
-          <div className="mt-2 flex items-center text-sm text-dark-grey">
+          <div className="flex items-center text-sm text-dark-grey">
             <span className="ml-3">{timeAgo(comment.createdAt)}</span>
 
             <CommentReactionButton

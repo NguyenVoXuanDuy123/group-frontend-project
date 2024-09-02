@@ -35,7 +35,7 @@ const GroupHeader = ({ group, setGroup }: GroupHeaderProps) => {
                 <PrivateIcon height={16} width={16} />
               </div>
             )}{" "}
-            <h1 className="text-dark-grey font-semibold">
+            <h1 className="text-dark-grey font-semibold ml-1">
               {capitalizeFirstLetter(group.visibilityLevel) + " group" + " •"}
             </h1>
             {/*  div for spacing because for some reason {" "} doesn't work */}

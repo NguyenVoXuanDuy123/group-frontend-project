@@ -1,19 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import ChevronLeft from "../svg/ChevronLeft";
-import ChevronRight from "../svg/ChevronRight";
-import CloseIcon from "../svg/CloseIcon";
+import ChevronLeft from "@/components/svg/ChevronLeft";
+import ChevronRight from "@/components/svg/ChevronRight";
+import CloseIcon from "@/components/svg/CloseIcon";
 
-interface ImageCarouselProps {
+type ImageCarouselProps = {
   images: string[];
-}
+};
 
 export default function ImageCarousel({ images }: ImageCarouselProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [translateX, setTranslateX] = useState(0);
 
   useEffect(() => {
     if (isFullScreen) {
@@ -42,36 +39,6 @@ export default function ImageCarousel({ images }: ImageCarouselProps) {
     }
   }, [images.length]);
 
-  const handleDragStart = (
-    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
-  ) => {
-    if (images.length === 1) return;
-    setIsDragging(true);
-    setStartX("touches" in e ? e.touches[0].clientX : e.clientX);
-  };
-
-  const handleDragMove = (
-    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
-  ) => {
-    if (!isDragging || images.length === 1) return;
-    const currentX = "touches" in e ? e.touches[0].clientX : e.clientX;
-    const diff = currentX - startX;
-    setTranslateX(diff);
-  };
-
-  const handleDragEnd = () => {
-    if (images.length === 1) return;
-    setIsDragging(false);
-    if (Math.abs(translateX) > (containerRef.current?.offsetWidth || 0) / 3) {
-      if (translateX > 0) {
-        goToPrevious();
-      } else {
-        goToNext();
-      }
-    }
-    setTranslateX(0);
-  };
-
   const handleImageClick = () => {
     setIsFullScreen(true);
   };
@@ -88,35 +55,29 @@ export default function ImageCarousel({ images }: ImageCarouselProps) {
 
   return (
     <>
-      <div className="relative w-full mx-auto" ref={containerRef}>
+      <div
+        className="relative w-full mx-auto max-h-[620px] min-h-[300px]"
+        ref={containerRef}>
         <div className="overflow-hidden rounded-lg w-full h-full">
           <div
             className="w-full h-full flex items-center justify-center"
             style={{
               width: `${images.length * 100}%`,
-            }}
-            onMouseDown={handleDragStart}
-            onMouseMove={handleDragMove}
-            onMouseUp={handleDragEnd}
-            onMouseLeave={handleDragEnd}
-            onTouchStart={handleDragStart}
-            onTouchMove={handleDragMove}
-            onTouchEnd={handleDragEnd}
-          >
+            }}>
             {images.map((src, index) => (
               <div
                 key={src + index}
                 className="bg-grey flex justify-center items-center transition-transform duration-300 ease-in-out h-full w-full"
                 style={{
-                  transform: `translateX(calc(-${currentIndex * 100}% + ${translateX}px))`,
-                }}
-              >
+                  transform: `translateX(calc(-${currentIndex * 100}%))`,
+                }}>
                 <img
                   src={src}
                   alt={`Image ${index + 1}`}
                   className="w-full h-full object-cover cursor-pointer"
                   draggable="false"
                   onClick={handleImageClick}
+                  loading="lazy"
                 />
               </div>
             ))}
@@ -128,25 +89,26 @@ export default function ImageCarousel({ images }: ImageCarouselProps) {
             <button
               onClick={goToPrevious}
               className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-opacity"
-              aria-label="Previous image"
-            >
+              aria-label="Previous image">
               <ChevronLeft className="w-6 h-6" />
             </button>
             <button
               onClick={goToNext}
               className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-opacity"
-              aria-label="Next image"
-            >
+              aria-label="Next image">
               <ChevronRight className="w-6 h-6" />
             </button>
-            <div className="absolute cursor-pointer bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3">
               {images.map((_, index) => (
-                <div
+                <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-colors duration-300 ${
-                    index === currentIndex ? "bg-white" : "bg-gray-400"
+                  className={`w-2 h-2 rounded-full transition-all duration-300  ${
+                    index === currentIndex
+                      ? "bg-white scale-125"
+                      : "bg-gray-400"
                   } shadow-md`}
+                  aria-label={`Go to image ${index + 1}`}
                 />
               ))}
             </div>
@@ -159,14 +121,12 @@ export default function ImageCarousel({ images }: ImageCarouselProps) {
             <button
               onClick={closeFullScreen}
               className="absolute top-4 right-4 text-white bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-75 transition-opacity z-10"
-              aria-label="Close full screen"
-            >
+              aria-label="Close full screen">
               <CloseIcon className="w-6 h-6" />
             </button>
             <div
               className="w-full h-full flex items-center justify-center"
-              onClick={closeFullScreen}
-            >
+              onClick={closeFullScreen}>
               <img
                 src={images[currentIndex]}
                 alt={`Full screen image ${currentIndex + 1}`}
@@ -181,28 +141,31 @@ export default function ImageCarousel({ images }: ImageCarouselProps) {
                     e.stopPropagation();
                     goToPrevious();
                   }}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-opacity"
-                  aria-label="Previous image"
-                >
-                  <ChevronLeft className="w-6 h-6" />
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 
+                  rounded-full hover:bg-opacity-10 transition-all duration-300"
+                  aria-label="Previous image">
+                  <ChevronLeft className="w-8 h-8" />
                 </button>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     goToNext();
                   }}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-opacity"
-                  aria-label="Next image"
-                >
-                  <ChevronRight className="w-6 h-6" />
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-75 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  aria-label="Next image">
+                  <ChevronRight className="w-8 h-8" />
                 </button>
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3">
                   {images.map((_, index) => (
-                    <div
+                    <button
                       key={index}
-                      className={`w-2 h-2 rounded-full transition-colors duration-300 ${
-                        index === currentIndex ? "bg-white" : "bg-gray-400"
+                      onClick={() => setCurrentIndex(index)}
+                      className={`w-4 h-4 rounded-full transition-all duration-300 ${
+                        index === currentIndex
+                          ? "bg-white scale-125"
+                          : "bg-gray-400"
                       } shadow-md`}
+                      aria-label={`Go to image ${index + 1}`}
                     />
                   ))}
                 </div>

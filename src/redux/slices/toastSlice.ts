@@ -2,14 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type ToastType = "success" | "error";
 
-interface Toast {
+type Toast = {
   message: string;
   type: ToastType;
-}
+};
 
-interface ToastState {
+type ToastState = {
   currentToast: Toast | null;
-}
+};
 
 const initialState: ToastState = {
   currentToast: null,

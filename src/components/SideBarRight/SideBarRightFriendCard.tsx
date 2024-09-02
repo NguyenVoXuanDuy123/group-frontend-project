@@ -1,12 +1,12 @@
 import Avatar from "@/components/Common/User/Avatar";
 import { Link } from "react-router-dom";
 
-interface FriendCardProps {
+type FriendCardProps = {
   name: string;
   avatar: string;
   username: string;
   mutualFriendCount?: number;
-}
+};
 
 const SideBarRightFriendCard = ({
   name,

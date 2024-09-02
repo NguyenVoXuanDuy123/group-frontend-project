@@ -120,6 +120,7 @@ export const EditProfileModal = ({
             </label>
             <textarea
               id="bio"
+              aria-hidden
               value={bio}
               onChange={handleBioChange}
               rows={4}

@@ -2,6 +2,8 @@ import Modal from "@/components/Common/Modal";
 import ChevronLeft from "@/components/svg/ChevronLeft";
 import ChevronRight from "@/components/svg/ChevronRight";
 import { fetchApi } from "@/helpers/fetchApi";
+import { updateUser } from "@/redux/slices/authSlice";
+import { setToast } from "@/redux/slices/toastSlice";
 import { UserProfile } from "@/types/user.types";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -77,6 +79,13 @@ const UploadAvatarModal = ({
       setUser({ ...user, avatar: selectedAvatar });
       setIsFemale(false);
       hideModal();
+      dispatch(updateUser({ avatar: selectedAvatar }));
+      dispatch(
+        setToast({
+          type: "success",
+          message: "Change avatar successfully",
+        })
+      );
     }
   };
   return (

@@ -8,3 +8,4 @@ export const reactionColors = {
   haha: "#FCC738",
   angry: "#E56232",
 };
+export const POSTS_PER_FETCH = 20;

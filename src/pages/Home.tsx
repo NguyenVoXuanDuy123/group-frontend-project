@@ -1,32 +1,25 @@
 import CreatePostPrompt from "@/components/Home/CreatePostPrompt";
-import PostList from "@/components/PostCard/PostList";
-import { fetchApi } from "@/helpers/fetchApi";
 import { Post } from "@/types/post.types";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import PostCard from "@/components/PostCard";
+import InfiniteScroll from "@/components/Common/InfiniteScroll";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+
+const POSTS_PER_FETCH = 20;
 
 const Home = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const dispatch = useDispatch();
+  const [posts, setPosts, loadMorePosts] = useInfiniteScroll<Post>({
+    endpoint: "/api/users/me/feeds",
+    limit: POSTS_PER_FETCH,
+  });
 
-  useEffect(() => {
-    const getPosts = async () => {
-      // Fetch the posts from the API
-      const posts = await fetchApi<Post[]>(
-        "/api/users/me/feeds?limit=10",
-        "GET",
-        dispatch
-      );
-      if (posts) {
-        setPosts(posts);
-      }
-    };
-    getPosts();
-  }, [dispatch]);
   return (
-    <div>
+    <div className="container mx-auto px-4">
       <CreatePostPrompt setPosts={setPosts} />
-      <PostList posts={posts} />
+      <InfiniteScroll
+        items={posts}
+        loadMore={loadMorePosts}
+        renderItem={(post) => <PostCard key={post.id} post={post} />}
+      />
     </div>
   );
 };

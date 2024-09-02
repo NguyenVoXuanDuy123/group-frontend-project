@@ -8,13 +8,13 @@ import UserCard from "../Common/UserCard";
 import { ReactionType } from "@/enums/post.enums";
 
 type ReactionListModalProps = {
-  modalShowing: boolean;
+  open: boolean;
   hideModal: () => void;
   postId: string;
 };
 
 const ReactionListModal = ({
-  modalShowing,
+  open,
   hideModal,
   postId,
 }: ReactionListModalProps) => {
@@ -61,10 +61,10 @@ const ReactionListModal = ({
       setReactionHahaUserInfos(hahaRes || []);
       setReactionAngryUserInfos(angryRes || []);
     };
-    if (modalShowing) {
+    if (open) {
       fetchReactions();
     }
-  }, [modalShowing, postId, dispatch]);
+  }, [open, postId, dispatch]);
 
   const renderUserList = (users: ReactionUserInfo[]) => {
     if (!users.length)
@@ -89,7 +89,7 @@ const ReactionListModal = ({
   };
 
   return (
-    <Modal open={modalShowing} hideModal={hideModal}>
+    <Modal open={open} hideModal={hideModal}>
       <div className="p-3 max-h-[500px] w-[484px]">
         <div className="border-b border-light-grey">
           <nav className="flex space-x-4">
@@ -101,8 +101,7 @@ const ReactionListModal = ({
                   activeTab === reaction
                     ? "border-b-2 border-primary text-primary font-semibold"
                     : ""
-                }`}
-              >
+                }`}>
                 {reaction.charAt(0).toUpperCase() + reaction.slice(1)}
               </button>
             ))}

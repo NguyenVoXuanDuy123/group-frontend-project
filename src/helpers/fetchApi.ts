@@ -3,8 +3,35 @@ import RouteError from "@/error/RouteError";
 import { setToast } from "@/redux/slices/toastSlice";
 import { Dispatch } from "@reduxjs/toolkit";
 
-// this array contains the error codes that should not display through the toast
-const notDisplayErrorToast = [6005, 8009];
+const handleError = (error: RouteError, dispatch: Dispatch): null => {
+  // Errors that should not display a toast
+  const notDisplayErrorToast = [6005, 8009];
+
+  // Error messages for specific some error codes
+  const errorMessages: { [key: number]: string } = {
+    7007: "This group join request is no longer available, please refresh the page.",
+    5003: "This friend request is no longer available, please refresh the page.",
+    8005: "Cannot perform this action, this post may have been deleted or not in your circle. Please refresh the page.",
+  };
+
+  if (error.errorCode in errorMessages) {
+    dispatch(
+      setToast({
+        type: "error",
+        message: errorMessages[error.errorCode],
+      })
+    );
+  } else if (!notDisplayErrorToast.includes(error.errorCode)) {
+    dispatch(
+      setToast({
+        type: "error",
+        message: error.message,
+      })
+    );
+  }
+
+  return null;
+};
 
 export const fetchApi = async <
   T = {
@@ -14,20 +41,20 @@ export const fetchApi = async <
   url: string,
   method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
   dispatch: Dispatch,
-  body?: { [key: string]: unknown }
+  body?: { [key: string]: unknown },
+  signal?: AbortSignal
 ): Promise<T | null> => {
   try {
-    // Fetch the data from the API
     const response = await fetch(`${EnvVars.API_URL}${url}`, {
-      method: method,
+      method,
       headers: {
         "Content-Type": "application/json",
       },
-      body: body ? JSON.stringify(body) : undefined,
+      body: body && JSON.stringify(body),
       credentials: "include",
+      signal,
     });
 
-    // If the response is not successful, throw an error
     if (!response.ok) {
       const error = await response.json();
       throw new RouteError(
@@ -36,70 +63,27 @@ export const fetchApi = async <
       );
     }
 
-    const data = await response.json();
+    const { result } = await response.json();
 
-    return (data.result as T) || ({ status: "success" } as T);
+    // Return the result if it exists, otherwise return a default success object
+    return (result as T) || ({ status: "success" } as T);
   } catch (error) {
-    console.error("Error in fetchApi:", error);
-    if (!(error instanceof RouteError)) {
+    if (error instanceof RouteError) {
+      return handleError(error, dispatch);
+    } else if ((error as Error).name === "AbortError") {
+      console.log("Fetch request was aborted");
+      // Handle the abort case specifically if needed
       return null;
-    }
-
-    console.error("Error in fetchApi:", error.errorCode);
-
-    // errorCode 5003 is for that group join request is not longer available
-    // it can be because the group request has been accepted, rejected or canceled
-    if (error.errorCode === 7007) {
+    } else {
       dispatch(
         setToast({
-          type: "error",
-          message:
-            "This group join request is not longer available, please refresh the page.",
-        })
-      );
-      return null;
-    }
-
-    // errorCode 5003 is for that friend request is not longer available
-    // it can be because the friend request has been accepted, rejected or canceled
-    if (error.errorCode === 5003) {
-      dispatch(
-        setToast({
-          type: "error",
-          message:
-            "This friend request is not longer available, please refresh the page.",
-        })
-      );
-      return null;
-    }
-
-    // errorCode 8005 is for that post is not visible to the user
-    // it can be because the post is deleted, or the post is not in the circle that the user is in
-    if (error.errorCode === 8005) {
-      dispatch(
-        setToast({
-          type: "error",
-          message:
-            "Can not perform this action, This post is not longer available for you, please refresh the page.",
-        })
-      );
-      return null;
-    }
-
-    // Display error toast only if the error code is not in the notDisplayErrorToast array
-    if (!notDisplayErrorToast.includes(error.errorCode)) {
-      //dispatch the error message, global toast will show the error message
-      dispatch(
-        setToast({
-          message: error.message || "Network error occurred",
+          message: "An unexpected error occurred",
           type: "error",
         })
       );
+
+      // If fetch request fails, return null
       return null;
     }
-
-    // Return null if there is an error, meaning the API request failed
-
-    return null;
   }
 };

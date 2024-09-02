@@ -109,8 +109,7 @@ const PostCard = ({ post, inCommentModal = false }: PostCardProps) => {
       <div className="w-full mx-auto bg-white rounded-xl overflow-hidden my-4">
         <div className="md:flex flex-1">
           <div
-            className={`flex-1 flex flex-col ${inCommentModal ? "" : "px-4 pt-4"}`}
-          >
+            className={`flex-1 flex flex-col ${inCommentModal ? "" : "px-4 pt-4"}`}>
             {/* Profile Section */}
             <div className="flex items-center mb-2">
               <Link to={`/${post.author.username}`}>
@@ -119,8 +118,7 @@ const PostCard = ({ post, inCommentModal = false }: PostCardProps) => {
               <div className="ml-4">
                 <Link
                   to={`/${post.author.username}`}
-                  className="text-black no-underline"
-                >
+                  className="text-black no-underline">
                   <div className="hover:underline">
                     {getFullName(post.author)}
                   </div>
@@ -147,16 +145,14 @@ const PostCard = ({ post, inCommentModal = false }: PostCardProps) => {
                 )}
                 <span
                   className="leading-6 hover:underline cursor-pointer"
-                  onClick={showReactionModal}
-                >
+                  onClick={showReactionModal}>
                   {reactionCount} {reactionCount > 0 ? "Reactions" : "Reaction"}
                 </span>
               </div>
               <div className="flex items-center">
                 <span
                   className="leading-6 hover:underline cursor-pointer"
-                  onClick={showCommentModal}
-                >
+                  onClick={showCommentModal}>
                   {post.commentCount}{" "}
                   {post.commentCount > 0 ? "Comments" : "Comment"}
                 </span>
@@ -165,8 +161,7 @@ const PostCard = ({ post, inCommentModal = false }: PostCardProps) => {
 
             {/* Reactions and Comments */}
             <div
-              className={`border-t py-2 flex justify-between items-center text-dark-grey ${inCommentModal ? "border-b" : ""}`}
-            >
+              className={`border-t py-2 flex justify-between items-center text-dark-grey ${inCommentModal ? "border-b" : ""}`}>
               <ReactionButton
                 userReaction={userReaction}
                 updateReaction={updateReaction}
@@ -174,8 +169,7 @@ const PostCard = ({ post, inCommentModal = false }: PostCardProps) => {
               />
               <div
                 onClick={showCommentModal}
-                className="rounded-lg p-3 flex flex-1 items-center justify-center cursor-pointer hover:bg-light-grey"
-              >
+                className="rounded-lg p-3 flex flex-1 items-center justify-center cursor-pointer hover:bg-light-grey">
                 <CommentAction />
                 <span className="ml-2">Comment</span>
               </div>
@@ -185,12 +179,13 @@ const PostCard = ({ post, inCommentModal = false }: PostCardProps) => {
       </div>
       <ReactionListModal
         hideModal={hideReactionModal}
-        modalShowing={reactionListModalShowing}
+        open={reactionListModalShowing}
         postId={post.id}
       />
+
       <CommentModal
-        open={commentModalShowing}
         hideModal={hideCommentModal}
+        open={commentModalShowing}
         post={post}
       />
     </>

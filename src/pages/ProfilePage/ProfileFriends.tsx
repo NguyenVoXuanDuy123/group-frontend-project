@@ -1,41 +1,35 @@
+import InfiniteScroll from "@/components/Common/InfiniteScroll";
 import UserCard from "@/components/Common/UserCard";
-import { fetchApi } from "@/helpers/fetchApi";
 import getFullName from "@/helpers/getFullName";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { ProfileLayoutContextType } from "@/pages/layout/ProfileLayout";
-import { UserInformation } from "@/types/user.types";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { UserProfile } from "@/types/user.types";
 import { useOutletContext } from "react-router-dom";
 
 const ProfileFriends = () => {
-  // list of friends of profile owner
-  const [friends, setFriends] = useState<UserInformation[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const dispatch = useDispatch();
   const { user } = useOutletContext<ProfileLayoutContextType>();
 
-  useEffect(() => {
-    // fetch friends of the profile owner
-    const fetchFriends = async () => {
-      const friends = await fetchApi<UserInformation[]>(
-        `/api/users/${user.id}/friends?limit=50`,
-        "GET",
-        dispatch
-      );
-      if (friends) {
-        setFriends(friends);
-      }
-      setIsLoading(false);
-    };
-    fetchFriends();
-  }, [dispatch, user.id]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [friends, _, loadMoreFriends, isLoading] =
+    useInfiniteScroll<UserProfile>({
+      endpoint: `/api/users/${user.id}/friends`,
+      limit: 10,
+      idBased: true,
+    });
 
   return (
     <div className="bg-white rounded-xl p-4 mt-4">
-      <h2 className="text-lg font-bold text-gray-900">Friends</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2  mt-1">
-        {friends.map((friend) => {
-          return (
+      <h2 className="text-lg font-bold text-gray-900">
+        Friends{" "}
+        <span className="text-dark-grey font-semibold">
+          ({user.friendCount})
+        </span>
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 mt-1">
+        <InfiniteScroll
+          loadMore={loadMoreFriends}
+          items={friends}
+          renderItem={(friend) => (
             <div
               key={`friend-${friend.id}`}
               className="flex justify-center sm:justify-start">
@@ -46,8 +40,8 @@ const ProfileFriends = () => {
                 avatar={friend.avatar}
               />
             </div>
-          );
-        })}
+          )}
+        />
       </div>
       {friends.length === 0 && !isLoading && (
         <div className="py-10 bg-white rounded-xl mt-4">

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-interface TruncateTextProps {
+type TruncateTextProps = {
   text: string;
   maxLength: number;
-}
+};
 
-const TruncateText: React.FC<TruncateTextProps> = ({ text, maxLength }) => {
+const TruncateText = ({ text, maxLength }: TruncateTextProps) => {
   const [isTruncated, setIsTruncated] = useState(true);
 
   const toggleTruncate = () => {
@@ -23,8 +23,7 @@ const TruncateText: React.FC<TruncateTextProps> = ({ text, maxLength }) => {
       {text.length > maxLength && (
         <button
           onClick={toggleTruncate}
-          className="inline-block text-primary font-semibold hover:underline"
-        >
+          className="inline-block text-primary font-semibold hover:underline">
           {isTruncated ? "See More" : "See Less"}
         </button>
       )}

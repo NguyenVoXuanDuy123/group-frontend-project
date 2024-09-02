@@ -6,7 +6,7 @@ import { setToast } from "@/redux/slices/toastSlice";
 import { UserReaction } from "@/types/post.types";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import ReactionPopup from "./ReactionPopup";
+import ReactionPopup from "@/components/PostCard/ReactionPopup";
 
 type ReactionButtonProps = {
   commentId: string;
@@ -34,7 +34,7 @@ const CommentReactionButton = ({
     if (showReactions) {
       setTimeout(() => {
         setShowReactions(false);
-      }, 1000);
+      }, 500);
     }
   };
 
@@ -87,11 +87,10 @@ const CommentReactionButton = ({
   };
 
   return (
-    <button
+    <div
       onMouseEnter={showReactionModal}
       onMouseLeave={delayedHideModal}
-      className="relative font-bold px-4 py-2"
-    >
+      className="relative font-bold px-4 py-2 cursor-pointer">
       <div className="mr-2 text-dark-grey" onClick={handleClickReaction}>
         <span
           style={
@@ -100,8 +99,7 @@ const CommentReactionButton = ({
                   color: reactionColors[userReaction?.type],
                 }
               : {}
-          }
-        >
+          }>
           {capitalizeFirstLetter(userReaction?.type || "Like")}
         </span>
       </div>
@@ -110,7 +108,7 @@ const CommentReactionButton = ({
         handleReaction={reactToComment}
         showReactions={showReactions}
       />
-    </button>
+    </div>
   );
 };
 

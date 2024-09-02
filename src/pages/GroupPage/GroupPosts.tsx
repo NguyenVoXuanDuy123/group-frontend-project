@@ -1,34 +1,19 @@
+import InfiniteScroll from "@/components/Common/InfiniteScroll";
 import CreatePostPrompt from "@/components/Home/CreatePostPrompt";
-import PostList from "@/components/PostCard/PostList";
+import PostCard from "@/components/PostCard";
+import { POSTS_PER_FETCH } from "@/constants";
 import { GroupStatus, UserGroupRelation } from "@/enums/group.enums";
-import { fetchApi } from "@/helpers/fetchApi";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { GroupLayoutContextType } from "@/pages/layout/GroupLayout";
 import { Post } from "@/types/post.types";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useOutletContext } from "react-router-dom";
 
 const GroupPosts = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const dispatch = useDispatch();
   const { group } = useOutletContext<GroupLayoutContextType>();
-  useEffect(() => {
-    // fetch posts of the group
-    const fetchPosts = async () => {
-      const posts = await fetchApi<Post[]>(
-        `/api/groups/${group.id}/posts`,
-        "GET",
-        dispatch
-      );
-
-      if (posts) {
-        setPosts(posts);
-      }
-      setIsLoading(false);
-    };
-    fetchPosts();
-  }, [dispatch, group.id]);
+  const [posts, setPosts, loadMorePosts, isLoading] = useInfiniteScroll<Post>({
+    endpoint: `/api/groups/${group.id}/posts`,
+    limit: POSTS_PER_FETCH,
+  });
 
   return (
     <>
@@ -39,22 +24,26 @@ const GroupPosts = () => {
         group.userGroupRelation === UserGroupRelation.ADMIN) &&
         group.status === GroupStatus.APPROVED &&
         !isLoading && (
-          <div className="w-full flex justify-center mt-4">
-            <div className="w-[672px]">
-              <CreatePostPrompt setPosts={setPosts} groupId={group.id} />
-            </div>
+          <div className="mt-4">
+            <CreatePostPrompt setPosts={setPosts} groupId={group.id} />
           </div>
         )}
-      <PostList posts={posts} />
-      {posts.length === 0 && !isLoading && (
-        <div className="py-10 bg-white rounded-xl mt-4">
-          <p className="text-gray-500 text-center   ">
-            {group.userGroupRelation === UserGroupRelation.NOT_MEMBER
-              ? "Join the group to see posts"
-              : "No posts to show"}
-          </p>
-        </div>
-      )}
+      <InfiniteScroll
+        items={posts}
+        loadMore={loadMorePosts}
+        renderItem={(post) => <PostCard key={post.id} post={post} />}
+      />
+
+      {/* Show a message if the user is not a member of the group and the group is private */}
+      {group.userGroupRelation === UserGroupRelation.NOT_MEMBER &&
+        posts.length === 0 &&
+        !isLoading && (
+          <div className="py-10 bg-white rounded-xl ">
+            <p className="text-gray-500 text-center    ">
+              This group is private. Join the group to see posts.
+            </p>
+          </div>
+        )}
     </>
   );
 };
