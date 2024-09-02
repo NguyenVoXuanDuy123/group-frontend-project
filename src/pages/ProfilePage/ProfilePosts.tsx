@@ -25,7 +25,9 @@ const ProfilePosts = () => {
       <InfiniteScroll
         items={posts}
         loadMore={loadMore}
-        renderItem={(post) => <PostCard key={post.id} post={post} />}
+        renderItem={(post) => (
+          <PostCard key={post.id} post={post} setPosts={setPosts} />
+        )}
       />
     </>
   );

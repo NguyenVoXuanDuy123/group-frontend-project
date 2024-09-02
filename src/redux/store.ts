@@ -1,13 +1,11 @@
 import authSlice from "@/redux/slices/authSlice";
+import toastSlice from "@/redux/slices/toastSlice";
 import { configureStore } from "@reduxjs/toolkit";
-import toastSlice from "./slices/toastSlice";
-import newsfeedSlice from "./slices/newsfeedSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
     toast: toastSlice.reducer,
-    newsfeedSlice: newsfeedSlice.reducer,
   },
 });
 

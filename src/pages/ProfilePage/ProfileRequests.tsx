@@ -1,42 +1,24 @@
+import InfiniteScroll from "@/components/Common/InfiniteScroll";
 import FriendRequestCard from "@/components/Profile/FriendRequestCard";
-import { fetchApi } from "@/helpers/fetchApi";
 import getFullName from "@/helpers/getFullName";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { ProfileLayoutContextType } from "@/pages/layout/ProfileLayout";
 import { RootState } from "@/redux/store";
 import { FriendRequestCardType } from "@/types/user.types";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useOutletContext } from "react-router-dom";
 
 const ProfileRequests = () => {
-  const [friendRequests, setFriendRequests] = useState<FriendRequestCardType[]>(
-    []
-  );
-  const dispatch = useDispatch();
+  const [friendRequests, setFriendRequests, fetchMoreRequests, isLoading] =
+    useInfiniteScroll<FriendRequestCardType>({
+      endpoint: "/api/users/me/friends/pending-requests",
+      limit: 10,
+    });
   const { user, setUser } = useOutletContext<ProfileLayoutContextType>();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { username } = useSelector(
     (state: RootState) => state.auth.user || { username: "" }
   );
-  useEffect(() => {
-    // only fetch friend requests if the user is viewing their own profile, not someone else's
-    if (user.username !== username) {
-      return;
-    }
-    // fetch friend requests of the profile owner
-    const fetchFriendRequests = async () => {
-      const friendRequests = await fetchApi<FriendRequestCardType[]>(
-        `/api/users/me/friends/pending-requests`,
-        "GET",
-        dispatch
-      );
-      if (friendRequests) {
-        setFriendRequests(friendRequests);
-      }
-      setIsLoading(false);
-    };
-    fetchFriendRequests();
-  }, [dispatch, user.id, user.username, username]);
+
   if (user.username !== username)
     return (
       <div className="py-10 bg-white rounded-xl mt-4">
@@ -49,23 +31,26 @@ const ProfileRequests = () => {
     <div className="bg-white rounded-xl p-4 mt-4">
       <h2 className="text-lg font-bold text-gray-900">Friend Requests</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2  mt-1">
-        {friendRequests.map((friendRequest) => {
-          const sender = friendRequest.senderDetail;
-          return (
-            <div className="flex justify-center sm:justify-start">
+        <InfiniteScroll
+          renderItem={(friendRequest) => (
+            <div
+              className="flex justify-center sm:justify-start"
+              key={`friend-request-${friendRequest.id}`}>
               <FriendRequestCard
                 user={user}
-                fullName={getFullName(sender)}
-                mutualFriendCount={sender.mutualFriendCount}
-                username={sender.username}
-                avatar={sender.avatar}
+                fullName={getFullName(friendRequest.senderDetail)}
+                mutualFriendCount={friendRequest.senderDetail.mutualFriendCount}
+                username={friendRequest.senderDetail.username}
+                avatar={friendRequest.senderDetail.avatar}
                 setUser={setUser}
                 friendRequest={friendRequest}
                 setFriendRequests={setFriendRequests}
               />
             </div>
-          );
-        })}
+          )}
+          items={friendRequests}
+          loadMore={fetchMoreRequests}
+        />
       </div>
       {friendRequests.length === 0 && !isLoading && (
         <div className="py-10 bg-white rounded-xl mt-4">

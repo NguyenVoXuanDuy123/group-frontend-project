@@ -1,4 +1,13 @@
-export default function BannedPage() {
+import LogOutIcon from "@/components/svg/side-bar-icons/LogOutIcon";
+import { logOut } from "@/redux/slices/authSlice";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+
+const BannedPage = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const handleLogout = () => {
+    dispatch(logOut({ dispatch }));
+  };
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-md">
@@ -28,6 +37,7 @@ export default function BannedPage() {
               </div>
             </div>
           </div>
+
           <div className="text-sm text-gray-700">
             <p>
               If you believe this ban was issued in error or would like to
@@ -35,16 +45,31 @@ export default function BannedPage() {
               and respond within 3-5 business days.
             </p>
           </div>
+          {/* Contact support button */}
           <div>
             <button
-              type="button"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm
+             font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 
+             focus:ring-offset-2 focus:ring-indigo-500">
               <span className="absolute left-0 inset-y-0 flex items-center pl-3"></span>
               Contact Support
+            </button>
+          </div>
+          {/* Logout button */}
+          <div>
+            <button
+              onClick={handleLogout}
+              className="group relative w-full items-center flex justify-center py-2 px-4 border border-transparent text-sm font-bold rounded-md 
+              text-gray-700 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 -mt-4 focus:ring-offset-2 focus:ring-gray-500">
+              <span className="absolute left-0 inset-y-0 flex items-center pl-3"></span>
+              Logout
+              <LogOutIcon className="ml-2" />
             </button>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default BannedPage;

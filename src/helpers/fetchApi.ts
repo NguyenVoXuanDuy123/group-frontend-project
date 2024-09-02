@@ -11,7 +11,8 @@ const handleError = (error: RouteError, dispatch: Dispatch): null => {
   const errorMessages: { [key: number]: string } = {
     7007: "This group join request is no longer available, please refresh the page.",
     5003: "This friend request is no longer available, please refresh the page.",
-    8005: "Cannot perform this action, this post may have been deleted or not in your circle. Please refresh the page.",
+    8005: "Cannot perform this action, the post you want to do this action on may have been deleted or not in your circle. Please refresh the page.",
+    8004: "Cannot perform this action, the post you want to do this action on may have been deleted or not in your circle. Please refresh the page.",
   };
 
   if (error.errorCode in errorMessages) {

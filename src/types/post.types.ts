@@ -63,6 +63,11 @@ type Group = {
    * The name of the group.
    */
   name: string;
+
+  /*
+   * The id of the admin of the group.
+   */
+  admin: string;
 };
 
 export type EditHistory = {

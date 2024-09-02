@@ -18,7 +18,9 @@ const Home = () => {
       <InfiniteScroll
         items={posts}
         loadMore={loadMorePosts}
-        renderItem={(post) => <PostCard key={post.id} post={post} />}
+        renderItem={(post) => (
+          <PostCard key={post.id} post={post} setPosts={setPosts} />
+        )}
       />
     </div>
   );

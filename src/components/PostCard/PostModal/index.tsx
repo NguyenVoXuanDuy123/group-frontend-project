@@ -10,11 +10,12 @@ type Props = {
   open: boolean;
   hideModal: () => void;
   post: Post;
+  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
 };
 
 const COMMENTS_PER_PAGE = 5;
 
-export default function CommentModal({ open, hideModal, post }: Props) {
+export const PostModal = ({ open, hideModal, post, setPosts }: Props) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [comments, setComments, loadMore, isLoading] =
     useInfiniteScroll<Comment>({
@@ -27,7 +28,7 @@ export default function CommentModal({ open, hideModal, post }: Props) {
       <div className="flex-grow overflow-y-auto w-[720px]  ">
         {open ? (
           <>
-            <PostCard inCommentModal post={post} />
+            <PostCard setPosts={setPosts} inCommentModal post={post} />
             <InfiniteScroll
               items={comments}
               loadMore={loadMore}
@@ -45,4 +46,6 @@ export default function CommentModal({ open, hideModal, post }: Props) {
       )}
     </Modal>
   );
-}
+};
+
+export default PostModal;

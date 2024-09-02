@@ -7,7 +7,7 @@ import { abbreviateNumber } from "@/helpers/abbreviateNumber";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import { Group } from "@/types/group.types";
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 type GroupHeaderProps = {
   group: Group;
@@ -40,18 +40,20 @@ const GroupHeader = ({ group, setGroup }: GroupHeaderProps) => {
             </h1>
             {/*  div for spacing because for some reason {" "} doesn't work */}
             <div className="w-1"></div>
-            <span
-              className="text-dark-grey font-semibold cursor-pointer hover:underline"
-              onClick={() => {
-                if (
-                  group.visibilityLevel === GroupVisibilityLevel.PUBLIC ||
-                  group.userGroupRelation === UserGroupRelation.ADMIN
-                ) {
-                  navigate(`/groups/${group.id}/members`);
-                }
-              }}>
-              {abbreviateNumber(group.memberCount) + " members "}{" "}
-            </span>
+            <Link to={`/groups/${group.id}/members`}>
+              <span
+                className="text-dark-grey font-semibold cursor-pointer hover:underline"
+                onClick={() => {
+                  if (
+                    group.visibilityLevel === GroupVisibilityLevel.PUBLIC ||
+                    group.userGroupRelation === UserGroupRelation.ADMIN
+                  ) {
+                    navigate(`/groups/${group.id}/members`);
+                  }
+                }}>
+                {abbreviateNumber(group.memberCount) + " members "}{" "}
+              </span>
+            </Link>
           </div>
           {/* description */}
           <p className="mt-2 text-dark-grey m-0 w-[656px] break-words">
