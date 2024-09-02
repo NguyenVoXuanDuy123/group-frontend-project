@@ -3,13 +3,15 @@ import ProfileActions from "@/components/Profile/ProfileHeader/ProfileActions";
 import TabItem from "@/components/Profile/ProfileHeader/TabItem";
 import UploadAvatarModal from "@/components/Profile/ProfileHeader/UploadAvatarModal";
 import Avatar from "@/components/Common/User/Avatar";
-import { UserFriendRelation } from "@/enums/user.enums";
+import { UserFriendRelation, UserRole } from "@/enums/user.enums";
 import { abbreviateNumber } from "@/helpers/abbreviateNumber";
 import getFullName from "@/helpers/getFullName";
 import { UserProfile } from "@/types/user.types";
 import { useState } from "react";
-
 import { useLocation, useNavigate } from "react-router-dom";
+import SiteAdminActions from "@/components/Profile/ProfileHeader/SiteAdminActions";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 type ProfileHeaderProps = {
   user: UserProfile;
@@ -17,6 +19,9 @@ type ProfileHeaderProps = {
 };
 
 const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
+  const { role } = useSelector(
+    (state: RootState) => state.auth.user || { role: UserRole.USER }
+  );
   const [uploadAvatarModalOpen, setUploadAvatarModalOpen] =
     useState<boolean>(false);
   const location = useLocation();
@@ -54,8 +59,18 @@ const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
         </div>
 
         {/* Profile Details */}
-        <div className="ml-6">
-          <h1 className="text-3xl font-bold">{getFullName(user)}</h1>
+        <div className="ml-6 flex-1">
+          <div className="flex justify-between items-center">
+            <h1 className="text-3xl font-bold">{getFullName(user)}</h1>
+
+            {/* site admin action only show if the owner of the profile is not an admin
+             *and the viewer is an admin
+             */}
+            {user.role !== UserRole.ADMIN && role === UserRole.ADMIN && (
+              <SiteAdminActions user={user} setUser={setUser} />
+            )}
+          </div>
+
           <span
             className="text-dark-grey font-semibold cursor-pointer hover:underline"
             onClick={() => {

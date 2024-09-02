@@ -1,5 +1,5 @@
-import { EditGroupModal } from "@/components/Group/GroupHeader/EditGroupModal";
 import WarningModal from "@/components/Common/Modal/WarningUnfriendModal";
+import CreateOrUpdateGroupModal from "@/components/Group/CreateNewGroupModal";
 import AddFriendIcon from "@/components/svg/profile-actions/AddFriendIcon";
 import CancelFriendRequestIcon from "@/components/svg/profile-actions/CancelFriendRequestIcon";
 import EditProfileIcon from "@/components/svg/profile-actions/EditProfileIcon";
@@ -83,24 +83,26 @@ const GroupActions = ({ group, setGroup }: ProfileActionsProps) => {
     setIsLoading(false);
   };
 
+  const hideEditGroupModal = () => {
+    setEditGroupModalOpen(false);
+  };
+
+  const showEditGroupModal = () => {
+    setEditGroupModalOpen(true);
+  };
+
   /**  If the user is the owner of the group, show an "Edit Group" button. */
   if (group.userGroupRelation === UserGroupRelation.ADMIN) {
     return (
       <div className="mt-6 flex space-x-4 absolute right-0 bottom-0">
-        {/* <EditProfileModal
-          open={editProfileModalOpen}
-          onClose={() => setEditProfileModalOpen(false)}
-          group={group}
-          setGroup={setGroup}
-        /> */}
-        <EditGroupModal
+        <CreateOrUpdateGroupModal
+          hideModal={hideEditGroupModal}
           open={editGroupModalOpen}
-          onClose={() => setEditGroupModalOpen(false)}
           group={group}
           setGroup={setGroup}
         />
         <button
-          onClick={() => setEditGroupModalOpen(true)}
+          onClick={showEditGroupModal}
           className="bg-gray-700 hover:bg-gray-800 text-white font-semibold  h-10
           py-2 px-4 rounded flex justify-center items-center">
           <div className="mb-1   mr-1">

@@ -1,4 +1,6 @@
+import CreateOrUpdateGroupModal from "@/components/Group/CreateNewGroupModal";
 import ProfileGroupCard from "@/components/Profile/ProfileGroupCard";
+import PlusIcon from "@/components/svg/PlusIcon";
 import { GroupRole, GroupStatus } from "@/enums/group.enums";
 import { fetchApi } from "@/helpers/fetchApi";
 import { ProfileLayoutContextType } from "@/pages/layout/ProfileLayout";
@@ -19,6 +21,8 @@ const ProfileMyGroups = () => {
   const { username } = useSelector(
     (state: RootState) => state.auth.user || { username: "" }
   );
+  const [CreateNewGroupModalOpen, setCreateNewGroupModalOpen] =
+    useState<boolean>(false);
   useEffect(() => {
     // only fetch groups if the user is viewing their own profile, not someone else's
     if (user.username !== username) {
@@ -54,37 +58,54 @@ const ProfileMyGroups = () => {
       </div>
     );
 
+  const hideCreateNewGroupModal = () => {
+    setCreateNewGroupModalOpen(false);
+  };
+
+  const showCreateNewGroupModal = () => {
+    setCreateNewGroupModalOpen(true);
+  };
+
   return (
     <div className="flex-1 flex flex-col bg-white rounded-xl p-4 mt-4">
       <h2 className="text-lg font-bold text-gray-900">My Groups</h2>
-      <div className="flex space-x-4 mt-1 ml-1">
-        <button
-          onClick={() => setGroupStatus(GroupStatus.APPROVED)}
-          className={`${
-            groupStatus === GroupStatus.APPROVED
-              ? "bg-primary text-white scale-105 "
-              : "text-light-grey bg-dark-grey"
-          } px-4 py-2 rounded-md transition-transform duration-300 ease-in-out transform focus:outline-none hover:scale-105 `}>
-          Approved
-        </button>
-        <button
-          onClick={() => setGroupStatus(GroupStatus.PENDING)}
-          className={`${
-            groupStatus === GroupStatus.PENDING
-              ? "bg-primary text-white scale-105 "
-              : "text-light-grey bg-dark-grey"
-          } px-4 py-2 rounded-md transition-transform duration-300 ease-in-out transform focus:outline-none hover:scale-105 `}>
-          Pending
-        </button>
-        <button
-          onClick={() => setGroupStatus(GroupStatus.REJECTED)}
-          className={`${
-            groupStatus === GroupStatus.REJECTED
-              ? "bg-primary text-white scale-105 "
-              : "text-light-grey bg-dark-grey"
-          } px-4 py-2 rounded-md transition-transform duration-300 ease-in-out transform focus:outline-none hover:scale-105 `}>
-          Rejected
-        </button>
+      <CreateOrUpdateGroupModal
+        open={CreateNewGroupModalOpen}
+        hideModal={hideCreateNewGroupModal}
+      />
+      <div className="flex justify-between items-center mt-1 ml-1">
+        <div className="space-x-4 ">
+          <button
+            onClick={() => setGroupStatus(GroupStatus.APPROVED)}
+            className={`${
+              groupStatus === GroupStatus.APPROVED
+                ? "bg-primary text-white scale-105 "
+                : "text-light-grey bg-dark-grey"
+            } px-4 py-2 rounded-md transition-transform duration-300 ease-in-out transform focus:outline-none hover:scale-105 `}>
+            Approved
+          </button>
+          <button
+            onClick={() => setGroupStatus(GroupStatus.PENDING)}
+            className={`${
+              groupStatus === GroupStatus.PENDING
+                ? "bg-primary text-white scale-105 "
+                : "text-light-grey bg-dark-grey"
+            } px-4 py-2 rounded-md transition-transform duration-300 ease-in-out transform focus:outline-none hover:scale-105 `}>
+            Pending
+          </button>
+          <button
+            onClick={() => setGroupStatus(GroupStatus.REJECTED)}
+            className={`${
+              groupStatus === GroupStatus.REJECTED
+                ? "bg-primary text-white scale-105 "
+                : "text-light-grey bg-dark-grey"
+            } px-4 py-2 rounded-md transition-transform duration-300 ease-in-out transform focus:outline-none hover:scale-105 `}>
+            Rejected
+          </button>
+        </div>
+        <div className="cursor-pointer" onClick={showCreateNewGroupModal}>
+          <PlusIcon size={40} color="fill-primary" />
+        </div>
       </div>
       <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-x-2 mt-4">
         {groups.map((group) => {
