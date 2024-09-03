@@ -5,8 +5,13 @@
 @tailwind utilities;
 
 body {
- overflow-y: scroll;
+  overflow-y: scroll;
 }
+
+.small-scrollbar::-webkit-scrollbar {
+  height: 10px;
+}
+
 /* Hide scrollbar but keep layout space */
 .hide-scrollbar {
   overflow: hidden;

@@ -12,7 +12,7 @@ export default function ScrollableImageList({
 }: ScrollableImageListProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
-  const [activeIndex, setActiveIndex] = useState(0);
+  //   const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleDragStart = useCallback(
@@ -63,36 +63,15 @@ export default function ScrollableImageList({
     };
   }, [isDragging, handleDrag, handleDragEnd]);
 
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const handleScroll = () => {
-      const scrollPosition = container.scrollLeft;
-      const imageWidth = container.clientWidth;
-      const newIndex = Math.round(scrollPosition / imageWidth);
-      setActiveIndex(newIndex);
-    };
-
-    container.addEventListener("scroll", handleScroll);
-    return () => container.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const handleDelete = useCallback(
-    (indexToDelete: number) => {
-      setActiveIndex((prevIndex) =>
-        indexToDelete > prevIndex ? prevIndex : prevIndex - 1
-      );
-      deleteImage(indexToDelete);
-    },
-    [deleteImage]
-  );
+  const handleDelete = (indexToDelete: number) => {
+    deleteImage(indexToDelete);
+  };
 
   return (
     <div className="w-full">
       <div
         ref={containerRef}
-        className="flex w-full space-x-2 overflow-x-scroll scrollbar-hide cursor-grab active:cursor-grabbing mb-4"
+        className="flex w-full pb-1 space-x-2 overflow-x-scroll hide-scrollbar cursor-grab active:cursor-grabbing mb-4"
         onMouseDown={handleDragStart}
         onTouchStart={handleDragStart}
       >
