@@ -25,7 +25,7 @@ export default function CommentPrompt({
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
-      const newHeight = Math.min(textareaRef.current.scrollHeight, 160);
+      const newHeight = Math.min(textareaRef.current.scrollHeight, 208);
       textareaRef.current.style.height = `${newHeight}px`;
     }
   }, [message]);
@@ -48,30 +48,23 @@ export default function CommentPrompt({
         content: message.trim(),
       }
     );
-    if (!res) {
-      dispatch(
-        setToast({
-          message: "Failed to post comment",
-          type: "error",
-        })
-      );
-      return;
+    if (res) {
+      setMessage("");
+      onSubmit(res);
     }
-    setMessage("");
-    console.log(onSubmit);
-    onSubmit(res);
   };
 
   return (
     <div className="relative flex mb-6">
       <Avatar photoURL={user.avatar} />
-      <div className="p-3 w-full ml-4 bg-light-grey rounded-lg flex flex-col items-end space-y-2">
+      <div className="p-3 w-full ml-4 bg-light-grey rounded-lg flex flex-col items-end space-y-0">
         <textarea
           ref={textareaRef}
           value={message}
+          rows={1}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Type your comment here..."
-          className=" w-full pr-3 text-black bg-light-grey focus:outline-none resize-none overflow-y-auto min-h-10 max-h-52"
+          className=" w-full pr-3 text-black bg-light-grey focus:outline-none resize-none overflow-y-auto  "
         ></textarea>
 
         <div className="self-end cursor-pointer w-10 h-10 flex items-center justify-center hover:bg-grey rounded-full">
