@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
+import { RootState } from "@/redux/store";
 import { clearToast } from "@/redux/slices/toastSlice";
-import CloseIcon from "../../svg/CloseIcon";
-import CheckIcon from "../../svg/CheckIcon";
+import CloseIcon from "@/components/svg/CloseIcon";
+import CheckIcon from "@/components/svg/CheckIcon";
 
 const Toast: React.FC = () => {
   const dispatch = useDispatch();

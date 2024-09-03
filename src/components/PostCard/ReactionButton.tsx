@@ -34,7 +34,6 @@ const ReactionButton = ({
       );
 
       if (response) {
-        console.log("response", response);
         updateUserReaction({ type: reactionType });
       }
     } else {
