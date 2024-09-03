@@ -1,11 +1,9 @@
-import React, { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
 import PlusIcon from "@/components/svg/PlusIcon";
-import ChevronLeft from "@/components/svg/ChevronLeft";
-import ChevronRight from "@/components/svg/ChevronRight";
-import { setToast } from "@/redux/slices/toastSlice";
 import { uploadImage } from "@/helpers/uploadImage";
-import CloseIcon from "@/components/svg/CloseIcon";
+import { setToast } from "@/redux/slices/toastSlice";
+import React, { useRef } from "react";
+import { useDispatch } from "react-redux";
+import ScrollableImageList from "./ScrollableImageList";
 
 type ImageInputProps = {
   images: string[];
@@ -13,32 +11,9 @@ type ImageInputProps = {
 };
 
 const ImageInput = React.memo(({ images, updateImages }: ImageInputProps) => {
-  const [scrolled, setScrolled] = useState<boolean>(false);
-
-  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useDispatch();
-
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({
-        left: -1000,
-        behavior: "smooth",
-      });
-      setScrolled(false);
-    }
-  };
-
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({
-        left: 1000,
-        behavior: "smooth",
-      });
-      setScrolled(true);
-    }
-  };
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -110,13 +85,13 @@ const ImageInput = React.memo(({ images, updateImages }: ImageInputProps) => {
     fileInputRef.current?.click(); // Trigger the file input click when the div is clicked
   };
 
-  const handleClear = (index: number) => {
+  const deleteImage = (index: number) => {
     updateImages(images.filter((_, i) => i !== index));
   };
 
   return (
     <div className="w-[680px] relative mt-4 mx-auto rounded-lg text-dark-grey text-center">
-      {images.length > 0 && (
+      {/* {images.length > 0 && (
         <div className="mb-4 relative flex items-center">
           <div
             ref={scrollContainerRef}
@@ -157,12 +132,14 @@ const ImageInput = React.memo(({ images, updateImages }: ImageInputProps) => {
             </button>
           )}
         </div>
-      )}
+      )} */}
+      <ScrollableImageList images={images} deleteImage={deleteImage} />
       <div
         className="flex flex-col cursor-pointer items-center justify-center h-40 bg-light-grey rounded-lg border-2 border-dashed border-grey"
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        onClick={handleClick}>
+        onClick={handleClick}
+      >
         <div className="flex flex-col items-center">
           <PlusIcon />
           <span className="my-2 font-bold">Add photos</span>

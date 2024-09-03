@@ -8,6 +8,8 @@ import { RootState } from "@/redux/store";
 import { Post } from "@/types/post.types";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import EditIcon from "../svg/EditIcon";
+import HistoryIcon from "../svg/HistoryIcon";
 
 type SiteAdminActionsProps = {
   post: Post;
@@ -46,7 +48,8 @@ const PostActions = ({
     <Popover
       popoverOpen={popoverOpen}
       setPopoverOpen={setPopoverOpen}
-      displayComponent={<ThreeDotsIcon />}>
+      displayComponent={<ThreeDotsIcon />}
+    >
       <div className=" w-[212px] bg-white shadow-md rounded-md ">
         {/* Post can only be deleted by the author, site-admin or group admin */}
         {(user._id === post.author._id ||
@@ -54,9 +57,10 @@ const PostActions = ({
           user._id === groupAdminId) && (
           <button
             onClick={handleDeletePost}
-            className="flex w-full px-4  py-2 text-gray-700 hover:bg-gray-100 text-left items-center">
-            <div className="mr-1 mb-[2px]">
-              <TrashIcon size={24} />
+            className="flex w-full px-4  py-2 text-gray-700 hover:bg-gray-100 text-left items-center"
+          >
+            <div className="mr-2 mb-[2px]">
+              <TrashIcon />
             </div>
             Delete post
           </button>
@@ -64,15 +68,15 @@ const PostActions = ({
         {/* Post can only be edited by the author */}
         {user._id === post.author._id && (
           <button className="flex w-full px-4  py-2 text-gray-700 hover:bg-gray-100 text-left items-center">
-            <div className="mr-1 mb-[2px]">
-              <TrashIcon size={24} />
+            <div className="mr-2 mb-[2px]">
+              <EditIcon />
             </div>
             Edit post
           </button>
         )}
         <button className="flex w-full px-4 rounded-md py-2 text-gray-700 hover:bg-gray-100 text-left items-center">
-          <div className="mr-1 mb-[2px]">
-            <TrashIcon size={24} />
+          <div className="mr-2 mb-[2px]">
+            <HistoryIcon />
           </div>
           View Edit History
         </button>

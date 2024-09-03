@@ -40,11 +40,12 @@ const Popover = ({
   };
 
   return (
-    <div className="relative inline-block text-left z-[1000]">
+    <div className="relative inline-block text-left z-[40]">
       <div
         onClick={togglePopover}
         ref={displayComponentRef}
-        className="cursor-pointer">
+        className="cursor-pointer"
+      >
         {displayComponent}
       </div>
       {popoverOpen && (
