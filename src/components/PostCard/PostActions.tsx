@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from "@/components/svg/EditIcon";
 import HistoryIcon from "@/components/svg/HistoryIcon";
+import WarningModal from "@/components/Common/Modal/WarningUnfriendModal";
 
 type SiteAdminActionsProps = {
   post: Post;
@@ -25,6 +26,8 @@ const PostActions = ({
   groupAdminId,
 }: SiteAdminActionsProps) => {
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
+  const [warningDeletePostModal, setWarningDeletePostModal] =
+    useState<boolean>(false);
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user!);
   const handleDeletePost = async () => {
@@ -44,43 +47,51 @@ const PostActions = ({
     setPopoverOpen(false);
   };
   return (
-    <Popover
-      key={post._id}
-      popoverOpen={popoverOpen}
-      setPopoverOpen={setPopoverOpen}
-      displayComponent={<ThreeDotsIcon />}>
-      <div className=" w-[212px] bg-white shadow-md rounded-md ">
-        {/* Post can only be deleted by the author, site-admin or group admin */}
-        {(user._id === post.author._id ||
-          user.role === UserRole.ADMIN ||
-          user._id === groupAdminId) && (
-          <button
-            onClick={handleDeletePost}
-            className="flex w-full px-4  py-2 text-gray-700 hover:bg-gray-100 text-left items-center">
-            <div className="mr-2 mb-[2px]">
-              <TrashIcon />
-            </div>
-            Delete post
-          </button>
-        )}
-        {/* Post can only be edited by the author */}
-        {user._id === post.author._id && (
-          <button className="flex w-full px-4  py-2 text-gray-700 hover:bg-gray-100 text-left items-center">
-            <div className="mr-2 mb-[2px]">
-              <EditIcon />
-            </div>
-            Edit post
-          </button>
-        )}
+    <>
+      <Popover
+        key={post._id}
+        popoverOpen={popoverOpen}
+        setPopoverOpen={setPopoverOpen}
+        displayComponent={<ThreeDotsIcon />}>
+        <div className=" w-[212px] bg-white shadow-md rounded-md ">
+          {/* Post can only be deleted by the author, site-admin or group admin */}
+          {(user._id === post.author._id ||
+            user.role === UserRole.ADMIN ||
+            user._id === groupAdminId) && (
+            <button
+              onClick={() => setWarningDeletePostModal(true)}
+              className="flex w-full px-4  py-2 text-gray-700 hover:bg-gray-100 text-left items-center">
+              <div className="mr-2 mb-[2px]">
+                <TrashIcon />
+              </div>
+              Delete post
+            </button>
+          )}
+          {/* Post can only be edited by the author */}
+          {user._id === post.author._id && (
+            <button className="flex w-full px-4  py-2 text-gray-700 hover:bg-gray-100 text-left items-center">
+              <div className="mr-2 mb-[2px]">
+                <EditIcon />
+              </div>
+              Edit post
+            </button>
+          )}
 
-        <button className="flex w-full px-4 rounded-md py-2 text-gray-700 hover:bg-gray-100 text-left items-center">
-          <div className="mr-2 mb-[2px]">
-            <HistoryIcon />
-          </div>
-          View Edit History
-        </button>
-      </div>
-    </Popover>
+          <button className="flex w-full px-4 rounded-md py-2 text-gray-700 hover:bg-gray-100 text-left items-center">
+            <div className="mr-2 mb-[2px]">
+              <HistoryIcon />
+            </div>
+            View Edit History
+          </button>
+        </div>
+      </Popover>
+      <WarningModal
+        onClose={() => setWarningDeletePostModal(false)}
+        onConfirm={handleDeletePost}
+        open={warningDeletePostModal}
+        warningContent="Are you sure you want to delete this post?"
+      />
+    </>
   );
 };
 
