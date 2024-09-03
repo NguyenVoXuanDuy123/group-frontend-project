@@ -2,7 +2,7 @@ import VisibilityLevelIcon from "@/components/PostCard/VisibilityLevelIcon";
 import getFullName from "@/helpers/getFullName";
 import { timeAgo } from "@/helpers/timeAgo";
 import { Post, UserReaction } from "@/types/post.types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "@/components/Common/User/Avatar";
 import CommentAction from "@/components/svg/post/CommentAction";
@@ -36,6 +36,11 @@ const PostCard = ({
     useState<boolean>(false);
 
   const [postModalShowing, setPostModalShowing] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log(post.reactionSummary);
+    console.log(post.reactionCount);
+  }, [post.reactionSummary]);
 
   const showPostModal = () => {
     if (inCommentModal) return;
@@ -108,7 +113,7 @@ const PostCard = ({
           if (p._id === post._id) {
             return {
               ...p,
-              reactionCount: p.reactionCount + 1,
+              reactionCount: p.reactionCount,
               reactionSummary: p.reactionSummary.map((reaction) => {
                 if (reaction.type === newReaction.type) {
                   return {
@@ -116,7 +121,7 @@ const PostCard = ({
                     count: reaction.count + 1,
                   };
                 }
-                if (reaction.type === post.userReaction?.type) {
+                if (reaction.type === post.userReaction!.type) {
                   return {
                     ...reaction,
                     count: reaction.count - 1,
@@ -138,7 +143,8 @@ const PostCard = ({
       <div className="w-full mx-auto bg-white rounded-xl overflow-hidden my-4">
         <div className="md:flex flex-1">
           <div
-            className={`flex-1 flex flex-col ${inCommentModal ? "" : "px-4 pt-4"}`}>
+            className={`flex-1 flex flex-col ${inCommentModal ? "" : "px-4 pt-4"}`}
+          >
             {/* Profile Section */}
             <div className="flex items-center mb-2">
               {/* Avatar Section */}
@@ -161,7 +167,8 @@ const PostCard = ({
                         post.group && (
                           <Link
                             to={`/groups/${post.group._id}`}
-                            className="text-black no-underline">
+                            className="text-black no-underline"
+                          >
                             <div className="hover:underline">
                               {post.group.name}{" "}
                             </div>
@@ -170,7 +177,8 @@ const PostCard = ({
                     }
                     <Link
                       to={`/${post.author.username}`}
-                      className="text-black no-underline">
+                      className="text-black no-underline"
+                    >
                       <div className="hover:underline">
                         {getFullName(post.author)}
                       </div>
@@ -207,7 +215,8 @@ const PostCard = ({
                 )}
                 <span
                   className="leading-6 hover:underline cursor-pointer"
-                  onClick={showReactionModal}>
+                  onClick={showReactionModal}
+                >
                   {post.reactionCount}{" "}
                   {post.reactionCount > 0 ? "Reactions" : "Reaction"}
                 </span>
@@ -215,7 +224,8 @@ const PostCard = ({
               <div className="flex items-center">
                 <span
                   className="leading-6 hover:underline cursor-pointer"
-                  onClick={showPostModal}>
+                  onClick={showPostModal}
+                >
                   {post.commentCount}{" "}
                   {post.commentCount > 0 ? "Comments" : "Comment"}
                 </span>
@@ -224,7 +234,8 @@ const PostCard = ({
 
             {/* Reactions and Comments */}
             <div
-              className={`border-t py-2 flex justify-between items-center text-dark-grey ${inCommentModal ? "border-b" : ""}`}>
+              className={`border-t py-2 flex justify-between items-center text-dark-grey ${inCommentModal ? "border-b" : ""}`}
+            >
               <ReactionButton
                 userReaction={post.userReaction}
                 updateUserReaction={updateReaction}
@@ -232,7 +243,8 @@ const PostCard = ({
               />
               <div
                 onClick={showPostModal}
-                className="rounded-lg p-3 flex flex-1 items-center justify-center cursor-pointer hover:bg-light-grey">
+                className="rounded-lg p-3 flex flex-1 items-center justify-center cursor-pointer hover:bg-light-grey"
+              >
                 <CommentAction />
                 <span className="ml-2">Comment</span>
               </div>

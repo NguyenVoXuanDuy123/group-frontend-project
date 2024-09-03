@@ -10,13 +10,13 @@ import { useDispatch } from "react-redux";
 type CommentPromptProps = {
   postId: string;
   user: UserInformation;
-  setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
+  onSubmit: (comment: Comment) => void;
 };
 
 export default function CommentPrompt({
   postId,
   user,
-  setComments,
+  onSubmit,
 }: CommentPromptProps) {
   const [message, setMessage] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -58,8 +58,8 @@ export default function CommentPrompt({
       return;
     }
     setMessage("");
-    console.log(res);
-    setComments((prev) => [res, ...prev]);
+    console.log(onSubmit);
+    onSubmit(res);
   };
 
   return (

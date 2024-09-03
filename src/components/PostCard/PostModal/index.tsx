@@ -33,6 +33,21 @@ export const PostModal = ({ open, hideModal, post, setPosts }: Props) => {
     );
   };
 
+  const createNewComment = (newComment: Comment) => {
+    setComments((prev) => [newComment, ...prev]);
+    setPosts((prev) =>
+      prev.map((p) => {
+        if (p._id === post._id) {
+          return {
+            ...p,
+            commentCount: p.commentCount + 1,
+          };
+        }
+        return p;
+      })
+    );
+  };
+
   return (
     <Modal open={open} hideModal={hideModal}>
       <div className="flex-grow overflow-y-auto w-[720px]  ">
@@ -40,7 +55,7 @@ export const PostModal = ({ open, hideModal, post, setPosts }: Props) => {
           <>
             <PostCard setPosts={setPosts} inCommentModal post={post} />
             <CommentPrompt
-              setComments={setComments}
+              onSubmit={createNewComment}
               postId={post._id}
               user={user!}
             />
@@ -62,7 +77,7 @@ export const PostModal = ({ open, hideModal, post, setPosts }: Props) => {
       </div>
       {!isLoading && comments.length === 0 && (
         <div className="mt-2 text-center text-gray-500">
-          No comments to display
+          No comments to display.
         </div>
       )}
     </Modal>

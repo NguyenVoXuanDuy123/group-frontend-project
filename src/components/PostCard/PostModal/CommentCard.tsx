@@ -14,65 +14,62 @@ const CommentCard = ({ comment, updateComment }: CommentCardProps) => {
   const updateCommentReaction = (reactionType: ReactionType) => {
     // user has not reacted to the comment
     if (!comment.userReaction) {
-      updateComment(
-        Object.assign({}, comment, {
-          reactionCount: comment.reactionCount + 1,
-          userReaction: { type: reactionType },
-          reactionSummary: comment.reactionSummary.map((reaction) => {
-            if (reaction.type === reactionType) {
-              return {
-                ...reaction,
-                count: reaction.count + 1,
-              };
-            }
-            return reaction;
-          }),
-        })
-      );
+      updateComment({
+        ...comment,
+        reactionCount: comment.reactionCount + 1,
+        userReaction: { type: reactionType },
+        reactionSummary: comment.reactionSummary.map((reaction) => {
+          if (reaction.type === reactionType) {
+            return {
+              ...reaction,
+              count: reaction.count + 1,
+            };
+          }
+          return reaction;
+        }),
+      });
     }
 
     // user reacted to the comment with the same reaction
     else if (comment.userReaction.type === reactionType) {
-      updateComment(
-        Object.assign({}, comment, {
-          reactionCount: comment.reactionCount - 1,
-          userReaction: null,
-          reactionSummary: comment.reactionSummary.map((reaction) => {
-            if (reaction.type === reactionType) {
-              return {
-                ...reaction,
-                count: reaction.count - 1,
-              };
-            }
-            return reaction;
-          }),
-        })
-      );
+      updateComment({
+        ...comment,
+        reactionCount: comment.reactionCount - 1,
+        userReaction: null,
+        reactionSummary: comment.reactionSummary.map((reaction) => {
+          if (reaction.type === reactionType) {
+            return {
+              ...reaction,
+              count: reaction.count - 1,
+            };
+          }
+          return reaction;
+        }),
+      });
     }
 
     // user has reacted to the comment with a different reaction
     else {
-      updateComment(
-        Object.assign({}, comment, {
-          reactionCount: comment.reactionCount + 1,
-          userReaction: { type: reactionType },
-          reactionSummary: comment.reactionSummary.map((reaction) => {
-            if (reaction.type === reactionType) {
-              return {
-                ...reaction,
-                count: reaction.count + 1,
-              };
-            }
-            if (reaction.type === comment.userReaction!.type) {
-              return {
-                ...reaction,
-                count: reaction.count - 1,
-              };
-            }
-            return reaction;
-          }),
-        })
-      );
+      updateComment({
+        ...comment,
+        reactionCount: comment.reactionCount,
+        userReaction: { type: reactionType },
+        reactionSummary: comment.reactionSummary.map((reaction) => {
+          if (reaction.type === reactionType) {
+            return {
+              ...reaction,
+              count: reaction.count + 1,
+            };
+          }
+          if (reaction.type === comment.userReaction!.type) {
+            return {
+              ...reaction,
+              count: reaction.count - 1,
+            };
+          }
+          return reaction;
+        }),
+      });
     }
   };
 
