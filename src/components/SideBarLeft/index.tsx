@@ -1,4 +1,4 @@
-import { appName } from "@/constants";
+import { APP_NAME } from "@/constants";
 import Logo from "@/components/svg/Logo";
 import TabItem from "@/components/SideBarLeft/TabItem";
 import NewsFeedIcon from "@/components/svg/side-bar-icons/NewsFeedIcon";
@@ -20,7 +20,7 @@ const SideBarLeft = () => {
     <div className="w-80 h-screen p-4 flex flex-col justify-between sticky top-0 bg-white">
       <div className="flex items-center mb-10 cursor-pointer ml-9">
         <Logo width={70} height={70} />
-        <h1 className="text-[30px] font-bold ml-3 text-primary">{appName}</h1>
+        <h1 className="text-[30px] font-bold ml-3 text-primary">{APP_NAME}</h1>
       </div>
       <div className="flex flex-1 flex-col justify-between">
         <div>

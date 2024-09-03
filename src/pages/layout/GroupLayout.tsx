@@ -1,6 +1,6 @@
 import GroupHeader from "@/components/Group/GroupHeader";
 import Logo from "@/components/svg/Logo";
-import { appName } from "@/constants";
+import { APP_NAME } from "@/constants";
 import { fetchApi } from "@/helpers/fetchApi";
 import { Group } from "@/types/group.types";
 import { useEffect, useState } from "react";
@@ -40,7 +40,7 @@ const GroupLayout = () => {
           <div className="flex items-center justify-center absolute left-10 top-7 mb-10 cursor-pointer">
             <Logo width={70} height={70} />
             <h1 className="text-[30px] font-bold ml-3 text-primary">
-              {appName}
+              {APP_NAME}
             </h1>
           </div>
         </Link>

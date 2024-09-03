@@ -43,9 +43,9 @@ const PostActions = ({
     }
     setPopoverOpen(false);
   };
-
   return (
     <Popover
+      key={post._id}
       popoverOpen={popoverOpen}
       setPopoverOpen={setPopoverOpen}
       displayComponent={<ThreeDotsIcon />}

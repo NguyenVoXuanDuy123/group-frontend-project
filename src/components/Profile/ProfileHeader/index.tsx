@@ -12,6 +12,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import SiteAdminActions from "@/components/Profile/ProfileHeader/SiteAdminActions";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import LogoWithName from "@/components/Common/LogoWithName";
 
 type ProfileHeaderProps = {
   user: UserProfile;
@@ -33,7 +34,8 @@ const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
   };
 
   return (
-    <div className="bg-white pt-6 ">
+    <div className="bg-white pt-62 ">
+      <LogoWithName />
       {/* Profile image and details */}
       <div className="flex items-center  relative ">
         {/* Avatar Upload Modal */}
