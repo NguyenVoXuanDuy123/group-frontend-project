@@ -29,7 +29,7 @@ export type Post = {
   /**
    * Must be a 24-character hexadecimal string.
    */
-  id: string;
+  _id: string;
   /**
    * The list of image URLs, provided as an array.
    */
@@ -58,7 +58,7 @@ type Group = {
   /**
    * Must be a 24-character hexadecimal string.
    */
-  id: string;
+  _id: string;
   /**
    * The name of the group.
    */
@@ -82,7 +82,7 @@ export type EditHistory = {
   /**
    * Must be a 24-character hexadecimal string.
    */
-  id: string;
+  _id: string;
   /**
    * The list of image URLs, provided as an array.
    */

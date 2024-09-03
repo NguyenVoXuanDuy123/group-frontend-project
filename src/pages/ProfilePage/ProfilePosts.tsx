@@ -11,7 +11,7 @@ import { useOutletContext } from "react-router-dom";
 const ProfilePosts = () => {
   const { user } = useOutletContext<ProfileLayoutContextType>();
   const [posts, setPosts, loadMore] = useInfiniteScroll<Post>({
-    endpoint: `/api/users/${user.id}/posts`,
+    endpoint: `/api/users/${user._id}/posts`,
     limit: POSTS_PER_FETCH,
   });
 
@@ -26,7 +26,7 @@ const ProfilePosts = () => {
         items={posts}
         loadMore={loadMore}
         renderItem={(post) => (
-          <PostCard key={post.id} post={post} setPosts={setPosts} />
+          <PostCard key={post._id} post={post} setPosts={setPosts} />
         )}
       />
     </>

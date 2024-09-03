@@ -54,7 +54,7 @@ const ProfileLayout = () => {
             user,
             setUser,
           }}
-          key={user.id}
+          key={user._id}
         />
       </div>
       {user.status === UserStatus.BANNED && (

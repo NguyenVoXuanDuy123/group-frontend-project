@@ -9,7 +9,7 @@ const PostList = ({ posts }: PostListProps) => {
   return (
     <>
       {posts.map((post) => (
-        <PostCard key={`${post.id}`} post={post} />
+        <PostCard key={`${post._id}`} post={post} />
       ))}
     </>
   );

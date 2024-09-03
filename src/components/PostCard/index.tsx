@@ -59,7 +59,7 @@ const PostCard = ({
       // user has not reacted to the post
       setPosts((prev) =>
         prev.map((p) => {
-          if (p.id === post.id) {
+          if (p._id === post._id) {
             return {
               ...p,
               reactionCount: p.reactionCount + 1,
@@ -82,7 +82,7 @@ const PostCard = ({
       // user has reacted to the post with the same reaction then remove the reaction
       setPosts((prev) =>
         prev.map((p) => {
-          if (p.id === post.id) {
+          if (p._id === post._id) {
             return {
               ...p,
               reactionCount: p.reactionCount - 1,
@@ -105,7 +105,7 @@ const PostCard = ({
       // user has reacted to the post with a different reaction
       setPosts((prev) =>
         prev.map((p) => {
-          if (p.id === post.id) {
+          if (p._id === post._id) {
             return {
               ...p,
               reactionCount: p.reactionCount + 1,
@@ -160,7 +160,7 @@ const PostCard = ({
                          */
                         post.group && (
                           <Link
-                            to={`/groups/${post.group.id}`}
+                            to={`/groups/${post.group._id}`}
                             className="text-black no-underline">
                             <div className="hover:underline">
                               {post.group.name}{" "}
@@ -182,7 +182,7 @@ const PostCard = ({
                     // If the post is fetched while user is viewing a group, we pass the group.admin.id
                     // Otherwise we pass the post.group.admin, which is the admin id of the group where the post was created
                     // If the post is not created in a group, null is passed
-                    groupAdminId={group?.admin.id || post.group?.admin}
+                    groupAdminId={group?.admin._id || post.group?.admin}
                   />
                 </div>
                 <div className="text-dark-grey text-sm flex  items-center">
@@ -201,7 +201,7 @@ const PostCard = ({
               <div className=" flex items-center">
                 {post.reactionCount > 0 && (
                   <ThreeMostReaction
-                    id={post.id}
+                    id={post._id}
                     reactionSummary={post.reactionSummary}
                   />
                 )}
@@ -228,7 +228,7 @@ const PostCard = ({
               <ReactionButton
                 userReaction={post.userReaction}
                 updateUserReaction={updateReaction}
-                postId={post.id}
+                postId={post._id}
               />
               <div
                 onClick={showPostModal}
@@ -243,7 +243,7 @@ const PostCard = ({
       <ReactionListModal
         hideModal={hideReactionModal}
         open={reactionListModalShowing}
-        postId={post.id}
+        postId={post._id}
       />
 
       <PostModal

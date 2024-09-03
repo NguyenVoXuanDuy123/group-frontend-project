@@ -13,13 +13,14 @@ type Props = {
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
 };
 
-const COMMENTS_PER_PAGE = 5;
+const COMMENTS_PER_PAGE = 15;
 
 export const PostModal = ({ open, hideModal, post, setPosts }: Props) => {
+  //add edit and delete comment nhe <3
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [comments, setComments, loadMore, isLoading] =
     useInfiniteScroll<Comment>({
-      endpoint: `/api/posts/${post.id}/comments`,
+      endpoint: `/api/posts/${post._id}/comments`,
       limit: COMMENTS_PER_PAGE,
     });
 
@@ -33,7 +34,7 @@ export const PostModal = ({ open, hideModal, post, setPosts }: Props) => {
               items={comments}
               loadMore={loadMore}
               renderItem={(comment) => (
-                <CommentCard key={comment.id} comment={comment} />
+                <CommentCard key={comment._id} comment={comment} />
               )}
             />
           </>

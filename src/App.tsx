@@ -54,7 +54,7 @@ export default function App() {
               <Route path="friend-requests" element={<ProfileRequests />} />
               <Route path="*" element={<NoPage />} />
             </Route>
-            <Route path="/groups/:id" element={<GroupLayout />}>
+            <Route path="/groups/:groupId" element={<GroupLayout />}>
               <Route index element={<GroupPosts />} />
               <Route path="members" element={<GroupMembers />} />
               <Route path="requests" element={<GroupRequests />} />
@@ -63,7 +63,8 @@ export default function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-      {/*Global Toast, can be used anywhere in the app*/}
+
+      {/*Global Toast, can be triggered by dispatching toast actions*/}
       <Toast />
     </Provider>
   );

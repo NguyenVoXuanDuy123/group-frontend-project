@@ -19,7 +19,7 @@ const Home = () => {
         items={posts}
         loadMore={loadMorePosts}
         renderItem={(post) => (
-          <PostCard key={post.id} post={post} setPosts={setPosts} />
+          <PostCard key={post._id} post={post} setPosts={setPosts} />
         )}
       />
     </div>

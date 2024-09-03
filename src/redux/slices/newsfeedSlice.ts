@@ -17,7 +17,7 @@ const newsfeedSlice = createSlice({
       state.posts.push(action.payload);
     },
     removePost: (state, action: PayloadAction<string>) => {
-      state.posts = state.posts.filter((post) => post.id !== action.payload);
+      state.posts = state.posts.filter((post) => post._id !== action.payload);
     },
   },
 });

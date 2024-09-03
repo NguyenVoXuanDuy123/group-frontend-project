@@ -47,12 +47,6 @@ export default function ImageCarousel({ images }: ImageCarouselProps) {
     setIsFullScreen(false);
   };
 
-  if (images.length === 0) {
-    return (
-      <div className="text-center text-gray-500">No images to display</div>
-    );
-  }
-
   return (
     <>
       <div

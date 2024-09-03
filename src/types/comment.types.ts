@@ -21,7 +21,7 @@ export type Comment = {
   /**
    * Must be a 24-character hexadecimal string.
    */
-  id: string;
+  _id: string;
   /**
    * The count of reactions for the comment.,
    */
@@ -49,5 +49,5 @@ export type CommentEditHistory = {
   /**
    * Must be a 24-character hexadecimal string.
    */
-  id: string;
+  _id: string;
 };

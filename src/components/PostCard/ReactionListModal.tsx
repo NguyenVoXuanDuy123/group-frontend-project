@@ -78,7 +78,7 @@ const ReactionListModal = ({
       <div className="mt-4 px-2">
         {users.map((info) => (
           <UserCard
-            key={`${info.user.id}-${info.type}`}
+            key={`${info.user._id}-${info.type}`}
             avatar={info.user.avatar}
             fullName={getFullName(info.user)}
             username={info.user.username}

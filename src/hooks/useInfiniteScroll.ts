@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchApi } from "@/helpers/fetchApi";
@@ -10,8 +9,8 @@ type UsePaginatedDataOptions = {
 };
 
 const DATA_PER_RENDER = 4;
-
-export const useInfiniteScroll = <T>({
+type WithIdAndCreatedAt = { _id: string; createdAt?: string };
+export const useInfiniteScroll = <T extends WithIdAndCreatedAt>({
   endpoint,
   limit,
   // If the infinite scroll is based on id, set idBased to true
@@ -69,15 +68,13 @@ export const useInfiniteScroll = <T>({
 
     // ALways fetch limit/2 more data when data.length - renderedData.length < limit/2
     //, so that the data still extends when the internet is disconnected
-    if (
-      data.length > 0 &&
-      data.length - renderedData.length < Math.floor(limit / 2)
-    ) {
+    const halfLimit = Math.ceil(limit / 2);
+    if (data.length > 0 && data.length - renderedData.length < halfLimit) {
       const lastItem = data[data.length - 1];
       if (!idBased) {
-        fetchData(limit / 2, { beforeDate: (lastItem as any).createdAt });
+        fetchData(halfLimit, { beforeDate: lastItem.createdAt });
       } else {
-        fetchData(limit / 2, { afterId: (lastItem as any).id });
+        fetchData(halfLimit, { afterId: lastItem._id });
       }
     }
   }, [

@@ -11,7 +11,7 @@ import { useOutletContext } from "react-router-dom";
 const GroupPosts = () => {
   const { group } = useOutletContext<GroupLayoutContextType>();
   const [posts, setPosts, loadMorePosts, isLoading] = useInfiniteScroll<Post>({
-    endpoint: `/api/groups/${group.id}/posts`,
+    endpoint: `/api/groups/${group._id}/posts`,
     limit: POSTS_PER_FETCH,
   });
 
@@ -25,7 +25,7 @@ const GroupPosts = () => {
         group.status === GroupStatus.APPROVED &&
         !isLoading && (
           <div className="mt-4">
-            <CreatePostPrompt setPosts={setPosts} groupId={group.id} />
+            <CreatePostPrompt setPosts={setPosts} groupId={group._id} />
           </div>
         )}
       <InfiniteScroll
@@ -33,7 +33,7 @@ const GroupPosts = () => {
         loadMore={loadMorePosts}
         renderItem={(post) => (
           <PostCard
-            key={post.id}
+            key={post._id}
             post={post}
             setPosts={setPosts}
             group={group}

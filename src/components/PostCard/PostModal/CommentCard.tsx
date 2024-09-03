@@ -83,7 +83,7 @@ const CommentCard = ({ comment }: CommentCardProps) => {
   };
 
   return (
-    <div key={comment.id} className="mb-4 last:mb-0">
+    <div key={comment._id} className="mb-4 last:mb-0">
       <div className="flex items-start">
         <Avatar photoURL={comment.author.avatar} size={48} />
         <div className="flex-grow ml-4">
@@ -98,7 +98,7 @@ const CommentCard = ({ comment }: CommentCardProps) => {
 
             <CommentReactionButton
               updateCommentReaction={updateCommentReaction}
-              commentId={comment.id}
+              commentId={comment._id}
               userReaction={userReaction}
             />
 
@@ -106,7 +106,7 @@ const CommentCard = ({ comment }: CommentCardProps) => {
               <>
                 <span className="mr-2">{reactionCount}</span>
                 <ThreeMostReaction
-                  id={comment.id}
+                  id={comment._id}
                   reactionSummary={reactionSummary}
                 />
               </>

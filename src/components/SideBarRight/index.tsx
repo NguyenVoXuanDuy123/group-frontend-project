@@ -31,7 +31,7 @@ const SideBarRight = () => {
 
   return (
     <div className="w-80 h-screen p-4 sticky top-0 bg-white">
-      <div className="flex justify-end">
+      <div className="flex ">
         <div className="mr-3 flex items-center justify-center w-12 h-12 bg-light-grey rounded-full">
           <NotificationIcon />
         </div>
@@ -42,7 +42,7 @@ const SideBarRight = () => {
         {friends.map((friend) => {
           return (
             <SideBarRightFriendCard
-              key={friend.id}
+              key={friend._id}
               username={friend.username}
               name={friend.firstName + " " + friend.lastName}
               avatar={friend.avatar}

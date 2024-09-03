@@ -12,7 +12,7 @@ const ProfileGroups = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [groups, _, loadMoreGroups, isLoading] = useInfiniteScroll<GroupCard>({
-    endpoint: `/api/users/${user.id}/groups`,
+    endpoint: `/api/users/${user._id}/groups`,
     limit: 10,
     idBased: true,
   });
@@ -26,10 +26,10 @@ const ProfileGroups = () => {
           items={groups}
           renderItem={(group) => (
             <div
-              key={`group-${group.id}`}
+              key={`group-${group._id}`}
               className="flex justify-center sm:justify-start">
               <ProfileGroupCard
-                id={group.id}
+                _id={group._id}
                 name={group.name}
                 memberCount={group.memberCount}
                 visibilityLevel={group.visibilityLevel}

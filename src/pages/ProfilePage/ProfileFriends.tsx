@@ -12,8 +12,8 @@ const ProfileFriends = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [friends, _, loadMoreFriends, isLoading] =
     useInfiniteScroll<UserProfile>({
-      endpoint: `/api/users/${user.id}/friends`,
-      limit: 10,
+      endpoint: `/api/users/${user._id}/friends`,
+      limit: 20,
       idBased: true,
     });
 
@@ -31,7 +31,7 @@ const ProfileFriends = () => {
           items={friends}
           renderItem={(friend) => (
             <div
-              key={`friend-${friend.id}`}
+              key={`friend-${friend._id}`}
               className="flex justify-center sm:justify-start">
               <UserCard
                 fullName={getFullName(friend)}

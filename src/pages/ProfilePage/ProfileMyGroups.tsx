@@ -1,4 +1,4 @@
-import CreateOrUpdateGroupModal from "@/components/Group/CreateNewGroupModal";
+import CreateOrUpdateGroupModal from "@/components/Group/CreateOrUpdateGroupModal";
 import ProfileGroupCard from "@/components/Profile/ProfileGroupCard";
 import PlusIcon from "@/components/svg/PlusIcon";
 import { GroupRole, GroupStatus } from "@/enums/group.enums";
@@ -36,7 +36,7 @@ const ProfileMyGroups = () => {
     }).toString();
     const fetchGroups = async () => {
       const groups = await fetchApi<GroupCard[]>(
-        `/api/users/${user.id}/groups?${queryParams}`,
+        `/api/users/${user._id}/groups?${queryParams}`,
         "GET",
         dispatch
       );
@@ -46,7 +46,7 @@ const ProfileMyGroups = () => {
       setIsLoading(false);
     };
     fetchGroups();
-  }, [dispatch, groupStatus, user.id, user.username, username]);
+  }, [dispatch, groupStatus, user._id, user.username, username]);
 
   // only show groups if the user is viewing their own profile
   if (user.username !== username)
@@ -111,10 +111,10 @@ const ProfileMyGroups = () => {
         {groups.map((group) => {
           return (
             <div
-              key={group.id}
+              key={group._id}
               className="flex justify-center sm:justify-start">
               <ProfileGroupCard
-                id={group.id}
+                _id={group._id}
                 memberCount={group.memberCount}
                 name={group.name}
                 visibilityLevel={group.visibilityLevel}

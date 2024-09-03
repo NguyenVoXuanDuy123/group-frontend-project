@@ -30,7 +30,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
     setIsLoading(true);
     setWarningUnfriendModalOpen(false);
     const response = await fetchApi(
-      `/api/users/me/friends/${user.id}`,
+      `/api/users/me/friends/${user._id}`,
       "DELETE",
       dispatch
     );
@@ -49,7 +49,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
   const handleAddFriend = async () => {
     setIsLoading(true);
     const response = await fetchApi<FriendRequest>(
-      `/api/users/me/friends/${user.id}/requests`,
+      `/api/users/me/friends/${user._id}/requests`,
       "POST",
       dispatch
     );
@@ -68,7 +68,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
   const handleCancelRequest = async () => {
     setIsLoading(true);
     const response = await fetchApi(
-      `/api/users/me/friends/requests/${user.friendRequest?.id}`,
+      `/api/users/me/friends/requests/${user.friendRequest?._id}`,
       "PATCH",
       dispatch,
       {
@@ -90,7 +90,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
   const handleAcceptRequest = async () => {
     setIsLoading(true);
     const response = await fetchApi(
-      `/api/users/me/friends/requests/${user.friendRequest?.id}`,
+      `/api/users/me/friends/requests/${user.friendRequest?._id}`,
       "PATCH",
       dispatch,
       {
@@ -113,7 +113,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
   const handleDeclineRequest = async () => {
     setIsLoading(true);
     const response = await fetchApi(
-      `/api/users/me/friends/requests/${user.friendRequest?.id}`,
+      `/api/users/me/friends/requests/${user.friendRequest?._id}`,
       "PATCH",
       dispatch,
       {

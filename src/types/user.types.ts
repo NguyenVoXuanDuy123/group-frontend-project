@@ -14,7 +14,7 @@ export type UserInformation = {
   /**
    * Must be a 24-character hexadecimal string.
    */
-  id: string;
+  _id: string;
   /**
    * The last name of the user.
    */
@@ -58,7 +58,7 @@ export type UserProfile = {
   /**
    * Must be a 24-character hexadecimal string.
    */
-  id: string;
+  _id: string;
   /**
    * The last name of the user.
    */
@@ -97,7 +97,7 @@ export type FriendRequest = {
   /**
    * Must be a 24-character hexadecimal string.
    */
-  id: string;
+  _id: string;
   /**
    * Represents the different stages a friend request can go through in a social networking
    * application.
@@ -106,7 +106,7 @@ export type FriendRequest = {
 };
 
 export type FriendRequestCardType = {
-  id: string;
+  _id: string;
   senderDetail: UserInformation;
   status: FriendRequestStatus;
   createdAt: string;

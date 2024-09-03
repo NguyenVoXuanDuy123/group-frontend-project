@@ -13,7 +13,7 @@ const GroupMembers = () => {
   const { admin, userGroupRelation } = group;
   const [members, setMembers, loadMoreMembers] =
     useInfiniteScroll<UserInformation>({
-      endpoint: `/api/groups/${group.id}/members`,
+      endpoint: `/api/groups/${group._id}/members`,
       limit: 10,
       idBased: true,
     });
@@ -37,7 +37,7 @@ const GroupMembers = () => {
           renderItem={(member) => (
             <div
               className="flex justify-center sm:justify-start relative"
-              key={`group-member-${member.id}`}>
+              key={`group-member-${member._id}`}>
               <UserCard
                 fullName={getFullName(member)}
                 mutualFriendCount={member.mutualFriendCount}
@@ -49,7 +49,7 @@ const GroupMembers = () => {
                   <GroupAdminActions
                     group={group}
                     setMembers={setMembers}
-                    userId={member.id}
+                    userId={member._id}
                     setGroup={setGroup}
                   />
                 </div>

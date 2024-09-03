@@ -17,9 +17,7 @@ type GroupHeaderProps = {
 const GroupHeader = ({ group, setGroup }: GroupHeaderProps) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const canSeeGroupContent =
-    group.visibilityLevel === GroupVisibilityLevel.PUBLIC ||
-    group.userGroupRelation === UserGroupRelation.ADMIN;
+
   return (
     <div className="bg-white pt-6 ">
       {/* Profile image and details */}
@@ -28,7 +26,7 @@ const GroupHeader = ({ group, setGroup }: GroupHeaderProps) => {
         <div className="">
           <h1 className="text-3xl font-bold">{group.name}</h1>
           <div className="flex  items-center">
-            {canSeeGroupContent ? (
+            {group.visibilityLevel === GroupVisibilityLevel.PUBLIC ? (
               <GlobalIcon height={16} width={16} />
             ) : (
               <div className="mb-[2px]">
@@ -40,7 +38,7 @@ const GroupHeader = ({ group, setGroup }: GroupHeaderProps) => {
             </h1>
             {/*  div for spacing because for some reason {" "} doesn't work */}
             <div className="w-1"></div>
-            <Link to={`/groups/${group.id}/members`}>
+            <Link to={`/groups/${group._id}/members`}>
               <span
                 className="text-dark-grey font-semibold cursor-pointer hover:underline"
                 onClick={() => {
@@ -48,7 +46,7 @@ const GroupHeader = ({ group, setGroup }: GroupHeaderProps) => {
                     group.visibilityLevel === GroupVisibilityLevel.PUBLIC ||
                     group.userGroupRelation === UserGroupRelation.ADMIN
                   ) {
-                    navigate(`/groups/${group.id}/members`);
+                    navigate(`/groups/${group._id}/members`);
                   }
                 }}>
                 {abbreviateNumber(group.memberCount) + " members "}{" "}
@@ -71,21 +69,21 @@ const GroupHeader = ({ group, setGroup }: GroupHeaderProps) => {
         <>
           <TabItem
             title="Posts"
-            url={`/groups/${group.id}`}
-            isActive={location.pathname === `/groups/${group.id}`}
+            url={`/groups/${group._id}`}
+            isActive={location.pathname === `/groups/${group._id}`}
           />
           <TabItem
             title="Members"
-            url={`/groups/${group.id}/members`}
-            isActive={location.pathname === `/groups/${group.id}/members`}
+            url={`/groups/${group._id}/members`}
+            isActive={location.pathname === `/groups/${group._id}/members`}
           />
         </>
         {/* If the user is the owner of the group, show additional tabs */}
         {group.userGroupRelation === UserGroupRelation.ADMIN && (
           <TabItem
             title="Requests"
-            url={`/groups/${group.id}/requests`}
-            isActive={location.pathname === `/groups/${group.id}/requests`}
+            url={`/groups/${group._id}/requests`}
+            isActive={location.pathname === `/groups/${group._id}/requests`}
           />
         )}
       </div>

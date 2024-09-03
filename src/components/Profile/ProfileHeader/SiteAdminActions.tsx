@@ -1,3 +1,4 @@
+import WarningModal from "@/components/Common/Modal/WarningUnfriendModal";
 import Popover from "@/components/Common/Popover";
 import ThreeDotsIcon from "@/components/svg/ThreeDotsIcon";
 import { UserStatus } from "@/enums/user.enums";
@@ -14,11 +15,12 @@ type SiteAdminActionsProps = {
 
 const SiteAdminActions = ({ user, setUser }: SiteAdminActionsProps) => {
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
+  const [suspendModalOpen, setSuspendModalOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   const handleChangeUserStatus = async (status: UserStatus) => {
     const response = await fetchApi(
-      `/api/users/${user.id}/status`,
+      `/api/users/${user._id}/status`,
       "PATCH",
       dispatch,
       { status }
@@ -39,30 +41,41 @@ const SiteAdminActions = ({ user, setUser }: SiteAdminActionsProps) => {
   };
 
   return (
-    <Popover
-      popoverOpen={popoverOpen}
-      setPopoverOpen={setPopoverOpen}
-      displayComponent={<ThreeDotsIcon />}>
-      <div className=" w-[145px] bg-white shadow-md rounded-md">
-        {user.status === "active" ? (
-          <button
-            onClick={() => {
-              handleChangeUserStatus(UserStatus.BANNED);
-            }}
-            className="flex items-center w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100 transition-colors duration-200">
-            Suspend User
-          </button>
-        ) : (
-          <button
-            onClick={() => {
-              handleChangeUserStatus(UserStatus.ACTIVE);
-            }}
-            className="flex items-center w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100 transition-colors duration-200">
-            Resume User
-          </button>
-        )}
-      </div>
-    </Popover>
+    <>
+      <Popover
+        popoverOpen={popoverOpen}
+        setPopoverOpen={setPopoverOpen}
+        displayComponent={<ThreeDotsIcon />}>
+        <div className=" w-[145px] bg-white shadow-md rounded-md">
+          {user.status === "active" ? (
+            <button
+              onClick={() => {
+                setSuspendModalOpen(true);
+              }}
+              className="flex items-center w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100 transition-colors duration-200">
+              Suspend User
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                handleChangeUserStatus(UserStatus.ACTIVE);
+              }}
+              className="flex items-center w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100 transition-colors duration-200">
+              Resume User
+            </button>
+          )}
+        </div>
+      </Popover>
+      <WarningModal
+        warningContent="Are you sure you want to suspend this user?"
+        onClose={() => setSuspendModalOpen(false)}
+        onConfirm={() => {
+          handleChangeUserStatus(UserStatus.BANNED);
+          setSuspendModalOpen(false);
+        }}
+        open={suspendModalOpen}
+      />
+    </>
   );
 };
 

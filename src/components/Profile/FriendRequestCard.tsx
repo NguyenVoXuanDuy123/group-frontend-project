@@ -42,7 +42,7 @@ const FriendRequestCard = ({
   const handleAcceptRequest = async () => {
     setIsLoading(true);
     const response = await fetchApi(
-      `/api/users/me/friends/requests/${friendRequest.id}`,
+      `/api/users/me/friends/requests/${friendRequest._id}`,
       "PATCH",
       dispatch,
       {
@@ -57,7 +57,7 @@ const FriendRequestCard = ({
       };
       setUser(updatedUser);
       setFriendRequests((prev) =>
-        prev.filter((req) => req.id !== friendRequest.id)
+        prev.filter((req) => req._id !== friendRequest._id)
       );
       dispatch(
         setToast({
@@ -72,7 +72,7 @@ const FriendRequestCard = ({
   const handleDeclineRequest = async () => {
     setIsLoading(true);
     const response = await fetchApi(
-      `/api/users/me/friends/requests/${friendRequest.id}`,
+      `/api/users/me/friends/requests/${friendRequest._id}`,
       "PATCH",
       dispatch,
       {
@@ -81,7 +81,7 @@ const FriendRequestCard = ({
     );
     if (response?.status === "success") {
       setFriendRequests((prev) =>
-        prev.filter((req) => req.id !== friendRequest.id)
+        prev.filter((req) => req._id !== friendRequest._id)
       );
       dispatch(
         setToast({

@@ -12,20 +12,24 @@ export type GroupLayoutContextType = {
 };
 
 const GroupLayout = () => {
-  const { id } = useParams();
+  const { groupId } = useParams();
   const dispatch = useDispatch();
   const [group, setGroup] = useState<Group | null>(null);
 
   useEffect(() => {
-    if (!id) return;
+    if (!groupId) return;
     const fetchData = async () => {
-      const group = await fetchApi<Group>(`/api/groups/${id}`, "GET", dispatch);
+      const group = await fetchApi<Group>(
+        `/api/groups/${groupId}`,
+        "GET",
+        dispatch
+      );
       if (group) {
         setGroup(group);
       }
     };
     fetchData();
-  }, [id, dispatch, setGroup]);
+  }, [groupId, dispatch, setGroup]);
 
   if (!group) return null;
 
@@ -50,7 +54,7 @@ const GroupLayout = () => {
             group,
             setGroup,
           }}
-          key={group.id}
+          key={group._id}
         />
       </div>
     </div>

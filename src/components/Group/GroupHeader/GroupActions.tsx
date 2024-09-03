@@ -1,5 +1,5 @@
 import WarningModal from "@/components/Common/Modal/WarningUnfriendModal";
-import CreateOrUpdateGroupModal from "@/components/Group/CreateNewGroupModal";
+import CreateOrUpdateGroupModal from "@/components/Group/CreateOrUpdateGroupModal";
 import AddFriendIcon from "@/components/svg/profile-actions/AddFriendIcon";
 import CancelFriendRequestIcon from "@/components/svg/profile-actions/CancelFriendRequestIcon";
 import EditProfileIcon from "@/components/svg/profile-actions/EditProfileIcon";
@@ -26,7 +26,7 @@ const GroupActions = ({ group, setGroup }: ProfileActionsProps) => {
     setIsLoading(true);
     setWarningUnfriendModalOpen(false);
     const response = await fetchApi(
-      `/api/users/me/groups/${group.id}`,
+      `/api/users/me/groups/${group._id}`,
       "DELETE",
       dispatch
     );
@@ -45,7 +45,7 @@ const GroupActions = ({ group, setGroup }: ProfileActionsProps) => {
   const handleSendGroupJoinRequest = async () => {
     setIsLoading(true);
     const response = await fetchApi<GroupJoinRequest>(
-      `/api/groups/${group.id}/requests`,
+      `/api/groups/${group._id}/requests`,
       "POST",
       dispatch
     );
@@ -64,7 +64,7 @@ const GroupActions = ({ group, setGroup }: ProfileActionsProps) => {
   const handleCancelRequest = async () => {
     setIsLoading(true);
     const response = await fetchApi(
-      `/api/groups/requests/${group.groupJoinRequest?.id}`,
+      `/api/groups/requests/${group.groupJoinRequest?._id}`,
       "PATCH",
       dispatch,
       {

@@ -35,7 +35,7 @@ const ProfileRequests = () => {
           renderItem={(friendRequest) => (
             <div
               className="flex justify-center sm:justify-start"
-              key={`friend-request-${friendRequest.id}`}>
+              key={`friend-request-${friendRequest._id}`}>
               <FriendRequestCard
                 user={user}
                 fullName={getFullName(friendRequest.senderDetail)}

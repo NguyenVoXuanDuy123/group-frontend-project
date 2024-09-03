@@ -35,7 +35,7 @@ const GroupJoinRequestCard = ({
   const handleAcceptRequest = async () => {
     setIsLoading(true);
     const response = await fetchApi(
-      `/api/groups/requests/${groupJoinRequest.id}`,
+      `/api/groups/requests/${groupJoinRequest._id}`,
       "PATCH",
       dispatch,
       {
@@ -50,7 +50,7 @@ const GroupJoinRequestCard = ({
       };
       setGroup(updatedGroup);
       setGroupRequests((prev) =>
-        prev.filter((req) => req.id !== groupJoinRequest.id)
+        prev.filter((req) => req._id !== groupJoinRequest._id)
       );
     }
     setIsLoading(false);
@@ -59,7 +59,7 @@ const GroupJoinRequestCard = ({
   const handleDeclineRequest = async () => {
     setIsLoading(true);
     const response = await fetchApi(
-      `/api/groups/requests/${groupJoinRequest.id}`,
+      `/api/groups/requests/${groupJoinRequest._id}`,
       "PATCH",
       dispatch,
       {
@@ -68,7 +68,7 @@ const GroupJoinRequestCard = ({
     );
     if (response?.status === "success") {
       setGroupRequests((prev) =>
-        prev.filter((req) => req.id !== groupJoinRequest.id)
+        prev.filter((req) => req._id !== groupJoinRequest._id)
       );
     }
     setIsLoading(false);

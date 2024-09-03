@@ -23,7 +23,6 @@ const Modal = ({ open, hideModal, children }: Props) => {
   }, [open]);
 
   return (
-    // Backdrop
     <div
       onClick={hideModal}
       className={`fixed z-[1000] inset-0 no-scrollbar overflow-y-auto transition-opacity duration-300 ${open ? "opacity-100 pointer-events-auto bg-black/20" : "opacity-0 pointer-events-none"}`}

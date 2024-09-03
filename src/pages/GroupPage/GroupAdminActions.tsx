@@ -25,7 +25,7 @@ const GroupAdminActions = ({
   const handleRemoveMember = async () => {
     // Remove the member from the group
     const response = await fetchApi(
-      `/api/groups/${group.id}/members/${userId}`,
+      `/api/groups/${group._id}/members/${userId}`,
       "DELETE",
       dispatch
     );
@@ -33,7 +33,7 @@ const GroupAdminActions = ({
     if (response) {
       // Remove the member from the list
       setMembers((prevMembers) =>
-        prevMembers.filter((member) => member.id !== userId)
+        prevMembers.filter((member) => member._id !== userId)
       );
 
       const updatedGroup: Group = {

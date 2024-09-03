@@ -7,6 +7,7 @@ import PrivateIcon from "@/components/svg/PrivateIcon";
 import { Group } from "@/types/group.types";
 import { fetchApi } from "@/helpers/fetchApi";
 import { useDispatch } from "react-redux";
+import { setToast } from "@/redux/slices/toastSlice";
 
 type CreateNewGroupModalProps = {
   open: boolean;
@@ -38,7 +39,7 @@ const CreateOrUpdateGroupModal = ({
     // Handle form submission here
     if (group && setGroup) {
       const response = await fetchApi(
-        `/api/groups/${group.id}`,
+        `/api/groups/${group._id}`,
         "PATCH",
         dispatch,
         {
@@ -56,6 +57,9 @@ const CreateOrUpdateGroupModal = ({
           visibilityLevel,
         };
         setGroup(newGroup);
+        dispatch(
+          setToast({ type: "success", message: "Group updated successfully" })
+        );
         hideModal();
       }
     } else {
@@ -65,8 +69,11 @@ const CreateOrUpdateGroupModal = ({
         visibilityLevel,
       });
 
-      if (response) {
+      if (response?.status === "success") {
         hideModal();
+        dispatch(
+          setToast({ type: "success", message: "Group created successfully" })
+        );
         setName("");
         setDescription("");
         setVisibilityLevel(GroupVisibilityLevel.PUBLIC);

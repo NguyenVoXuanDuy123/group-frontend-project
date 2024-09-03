@@ -7,7 +7,7 @@ import {
 import { UserInformation } from "@/types/user.types";
 
 export type GroupCard = {
-  id: string;
+  _id: string;
   name: string;
   visibilityLevel: GroupVisibilityLevel;
   status: GroupStatus;
@@ -35,7 +35,7 @@ export type Group = {
   /**
    * Must be a 24-character hexadecimal string.
    */
-  id: string;
+  _id: string;
   /**
    * The count of members is a part of., The count of members is a part of.
    */
@@ -68,7 +68,7 @@ export type GroupJoinRequest = {
   /**
    * Must be a 24-character hexadecimal string.
    */
-  id: string;
+  _id: string;
   /**
    * Represents the status of a user's request to join a group. It indicates whether the
    * request is pending, accepted, rejected, or cancelled.
@@ -79,7 +79,7 @@ export type GroupJoinRequest = {
 };
 
 export type GroupJoinRequestCardType = {
-  id: string;
+  _id: string;
   senderDetail: UserInformation;
   status: GroupJoinRequestStatus;
   createdAt: string;

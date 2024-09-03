@@ -15,18 +15,18 @@ const GroupRequests = () => {
   const dispatch = useDispatch();
   const { group, setGroup } = useOutletContext<GroupLayoutContextType>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { id } = useSelector(
-    (state: RootState) => state.auth.user || { id: "" }
+  const { _id } = useSelector(
+    (state: RootState) => state.auth.user || { _id: "" }
   );
   useEffect(() => {
     // only fetch group join requests if the user is the admin of the group
-    if (group.admin.id !== id) {
+    if (group.admin._id !== _id) {
       return;
     }
     // fetch group join requests of the group
     const fetchGroupJoinRequests = async () => {
       const groupJoinRequests = await fetchApi<GroupJoinRequestCardType[]>(
-        `/api/groups/${group.id}/pending-requests`,
+        `/api/groups/${group._id}/pending-requests`,
         "GET",
         dispatch
       );
@@ -36,9 +36,9 @@ const GroupRequests = () => {
       setIsLoading(false);
     };
     fetchGroupJoinRequests();
-  }, [dispatch, group.admin.id, group.id, id]);
+  }, [dispatch, group.admin._id, group._id, _id]);
 
-  if (group.admin.id !== id)
+  if (group.admin._id !== _id)
     return (
       <div className="py-10 bg-white rounded-xl mt-4">
         <p className="text-gray-500 text-center   ">
