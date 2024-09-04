@@ -44,11 +44,13 @@ const Popover = ({
       <div
         onClick={togglePopover}
         ref={displayComponentRef}
-        className="cursor-pointer z-40">
+        className="absolute right-0 top-0 cursor-pointer z-40 hover:bg-grey mt-[-8px] p-2 rounded-full"
+      >
         {displayComponent}
       </div>
+
       {popoverOpen && (
-        <div ref={popoverRef} className="absolute right-0 z-50">
+        <div ref={popoverRef} className="absolute right-0 top-8 z-50">
           {children}
         </div>
       )}

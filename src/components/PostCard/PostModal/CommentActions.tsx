@@ -1,0 +1,132 @@
+import WarningModal from "@/components/Common/Modal/WarningUnfriendModal";
+import Popover from "@/components/Common/Popover";
+import EditIcon from "@/components/svg/EditIcon";
+import HistoryIcon from "@/components/svg/HistoryIcon";
+import ThreeDotsIcon from "@/components/svg/ThreeDotsIcon";
+import TrashIcon from "@/components/svg/TrashIcon";
+import { UserRole } from "@/enums/user.enums";
+import { RootState } from "@/redux/store";
+import { Comment } from "@/types/comment.types";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+type CommentActionsProps = {
+  comment: Comment;
+  postAuthorId: string;
+  groupAdminId?: string;
+};
+
+const CommentActions = ({
+  comment,
+  postAuthorId,
+  groupAdminId,
+}: CommentActionsProps) => {
+  const dispatch = useDispatch();
+  const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
+  const [warningDeletePostModal, setWarningDeletePostModal] =
+    useState<boolean>(false);
+  const [editCommentModalOpen, setEditCommentModalOpen] =
+    useState<boolean>(false);
+  const [editHistoryModalOpen, setEditHistoryModalOpen] =
+    useState<boolean>(false);
+
+  const user = useSelector((state: RootState) => state.auth.user!);
+
+  const showEditHistoryModal = () => {
+    setEditHistoryModalOpen(true);
+  };
+
+  const hideEditHistoryModal = () => {
+    setEditHistoryModalOpen(false);
+  };
+
+  const showEditModal = () => {
+    setEditCommentModalOpen(true);
+  };
+
+  const hideEditModal = () => {
+    setEditCommentModalOpen(false);
+  };
+
+  const handleDeletePost = async () => {
+    // const response = await fetchApi(
+    //   `/api/posts/${post._id}`,
+    //   "DELETE",
+    //   dispatch
+    // );
+    // if (response) {
+    //   setPosts((prevPosts) =>
+    //     prevPosts.filter((prevPost) => prevPost._id !== post._id)
+    //   );
+    //   dispatch(
+    //     setToast({ message: "Post deleted successfully", type: "success" })
+    //   );
+    // }
+    // setPopoverOpen(false);
+  };
+
+  return (
+    <>
+      <Popover
+        key={comment._id}
+        popoverOpen={popoverOpen}
+        setPopoverOpen={setPopoverOpen}
+        displayComponent={<ThreeDotsIcon />}
+      >
+        <div className=" w-[244px] bg-white shadow-md rounded-md ">
+          {/* Comment can only be deleted by the comment author, post author, site-admin or group admin */}
+          {user._id === comment.author._id ||
+            user._id === postAuthorId ||
+            user.role === UserRole.ADMIN ||
+            (user._id === groupAdminId && (
+              <button
+                onClick={() => setWarningDeletePostModal(true)}
+                className="flex w-full px-4  py-2 text-gray-700 hover:bg-gray-100 text-left items-center"
+              >
+                <div className="mr-2 mb-[2px]">
+                  <TrashIcon />
+                </div>
+                Delete Comment
+              </button>
+            ))}
+          {/* Post can only be edited by the author */}
+          {user._id === comment.author._id && (
+            <button
+              onClick={showEditModal}
+              className="flex w-full px-4  py-2 text-gray-700 hover:bg-gray-100 text-left items-center"
+            >
+              <div className="mr-2 mb-[2px]">
+                <EditIcon />
+              </div>
+              Edit Comment
+            </button>
+          )}
+
+          <button
+            onClick={showEditHistoryModal}
+            className="flex w-full px-4 rounded-md py-2 text-gray-700 hover:bg-gray-100 text-left items-center"
+          >
+            <div className="mr-2 mb-[2px]">
+              <HistoryIcon />
+            </div>
+            View Edit History ({comment.editHistory.length})
+          </button>
+        </div>
+      </Popover>
+      <WarningModal
+        onClose={() => setWarningDeletePostModal(false)}
+        onConfirm={handleDeletePost}
+        open={warningDeletePostModal}
+        warningContent="Are you sure you want to delete this comment?"
+      />
+      {/* Edit Comment */}
+      {/* <EditHistoryModal
+        originalPost={post}
+        modalShowing={editHistoryModalOpen}
+        hideModal={hideEditHistoryModal}
+      /> */}
+    </>
+  );
+};
+
+export default CommentActions;

@@ -19,11 +19,10 @@ const EditHistoryModal = ({
       {originalPost.editHistory.length > 0 ? (
         <div className="pr-2 mt-4 max-w-2xl max-h-[80vh] overflow-y-scroll">
           {originalPost.editHistory.reverse().map((history) => {
-            const post: Post = {
+            const post = {
               ...originalPost,
               content: history.content,
               images: history.images || [],
-              visibilityLevel: history.visibilityLevel,
             };
             return (
               <div>

@@ -66,6 +66,7 @@ export const PostModal = ({ open, hideModal, post, setPosts }: Props) => {
                 <CommentCard
                   key={comment._id}
                   comment={comment}
+                  postAuthorId={post.author._id}
                   updateComment={updateComment}
                 />
               )}
