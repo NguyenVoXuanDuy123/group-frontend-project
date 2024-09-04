@@ -1,11 +1,9 @@
 import GroupHeader from "@/components/Group/GroupHeader";
-import Logo from "@/components/svg/Logo";
-import { APP_NAME } from "@/constants";
 import { fetchApi } from "@/helpers/fetchApi";
 import { Group } from "@/types/group.types";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, Outlet, useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 export type GroupLayoutContextType = {
   group: Group;
   setGroup: React.Dispatch<React.SetStateAction<Group | null>>;
@@ -35,15 +33,7 @@ const GroupLayout = () => {
 
   return (
     <div>
-      <div className="bg-white relative">
-        <Link to={`/`}>
-          <div className="flex items-center justify-center absolute left-10 top-7 mb-10 cursor-pointer">
-            <Logo width={70} height={70} />
-            <h1 className="text-[30px] font-bold ml-3 text-primary">
-              {APP_NAME}
-            </h1>
-          </div>
-        </Link>
+      <div className="bg-white">
         <div className="max-w-[880px] mx-auto px-6">
           <GroupHeader group={group} setGroup={setGroup} />
         </div>

@@ -16,29 +16,35 @@ const EditHistoryModal = ({
 }: EditHistoryModalProps) => {
   return (
     <Modal open={modalShowing} hideModal={hideModal}>
-      <div className="pr-2 mt-4 max-w-2xl max-h-[80vh] overflow-y-scroll">
-        {originalPost.editHistory.reverse().map((history) => {
-          const post = {
-            ...originalPost,
-            content: history.content,
-            images: history.images,
-            visibilityLevel: history.visibilityLevel,
-          } as Post;
-          console.log(history.visibilityLevel);
-
-          return (
-            <div>
-              <span>{`Edited ${timeAgo(history.editedAt)}`}</span>
-              <PostCard
-                readonly
-                post={post}
-                key={post._id + history.editedAt}
-              />
-              <div className="h-[1px] bg-grey w-full mb-8"></div>
-            </div>
-          );
-        })}
-      </div>
+      {originalPost.editHistory.length > 0 ? (
+        <div className="pr-2 mt-4 max-w-2xl max-h-[80vh] overflow-y-scroll">
+          {originalPost.editHistory.reverse().map((history) => {
+            const post: Post = {
+              ...originalPost,
+              content: history.content,
+              images: history.images || [],
+              visibilityLevel: history.visibilityLevel,
+            };
+            return (
+              <div>
+                <span>{`Edited ${timeAgo(history.editedAt)}`}</span>
+                <PostCard
+                  readonly
+                  post={post}
+                  key={post._id + history.editedAt}
+                />
+                <div className="h-[1px] bg-grey w-full mb-8"></div>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div>
+          <div className="text-center text-gray-500 mt-4 w-[672px]">
+            No edit history to display
+          </div>
+        </div>
+      )}
     </Modal>
   );
 };

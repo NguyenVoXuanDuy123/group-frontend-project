@@ -140,8 +140,7 @@ const PostCard = ({
   return (
     <>
       <div
-        className={`w-full mx-auto rounded-xl overflow-hidden my-4 ${readonly ? "bg-light-grey" : "bg-white"}`}
-      >
+        className={`w-full mx-auto rounded-xl overflow-hidden my-4 ${readonly ? "bg-light-grey" : "bg-white"}`}>
         <div className="md:flex flex-1">
           <div className={`flex-1 flex flex-col ${inModal ? "" : "px-4 pt-4"}`}>
             {/* Profile Section */}
@@ -166,8 +165,7 @@ const PostCard = ({
                         post.group && (
                           <Link
                             to={`/groups/${post.group._id}`}
-                            className="text-black no-underline"
-                          >
+                            className="text-black no-underline">
                             <div className="hover:underline">
                               {post.group.name}{" "}
                             </div>
@@ -181,8 +179,7 @@ const PostCard = ({
                       // or the post is not created in a group
                       <Link
                         to={`/${post.author.username}`}
-                        className="text-black no-underline"
-                      >
+                        className="text-black no-underline">
                         <div className="hover:underline">
                           {getFullName(post.author)}
                         </div>
@@ -206,8 +203,7 @@ const PostCard = ({
                     // if the user on feed is viewing a post created in a group
                     <Link
                       to={`/${post.author.username}`}
-                      className="text-dark-grey no-underline"
-                    >
+                      className="text-dark-grey no-underline">
                       <div className="hover:underline">
                         {getFullName(post.author) + " • "}
                       </div>
@@ -238,8 +234,7 @@ const PostCard = ({
                     )}
                     <span
                       className="leading-6 hover:underline cursor-pointer"
-                      onClick={showReactionModal}
-                    >
+                      onClick={showReactionModal}>
                       {post.reactionCount}{" "}
                       {post.reactionCount > 0 ? "Reactions" : "Reaction"}
                     </span>
@@ -247,16 +242,14 @@ const PostCard = ({
                   <div className="flex items-center">
                     <span
                       className="leading-6 hover:underline cursor-pointer"
-                      onClick={readonly ? showPostModal : () => {}}
-                    >
+                      onClick={!readonly ? showPostModal : () => {}}>
                       {post.commentCount}{" "}
                       {post.commentCount > 0 ? "Comments" : "Comment"}
                     </span>
                   </div>
                 </div>
                 <div
-                  className={`border-t py-2 flex justify-between items-center text-dark-grey ${inModal ? "border-b" : ""}`}
-                >
+                  className={`border-t py-2 flex justify-between items-center text-dark-grey ${inModal ? "border-b" : ""}`}>
                   <ReactionButton
                     userReaction={post.userReaction}
                     updateUserReaction={updateReaction}
@@ -264,8 +257,7 @@ const PostCard = ({
                   />
                   <div
                     onClick={showPostModal}
-                    className="rounded-lg p-3 flex flex-1 items-center justify-center cursor-pointer hover:bg-light-grey"
-                  >
+                    className="rounded-lg p-3 flex flex-1 items-center justify-center cursor-pointer hover:bg-light-grey">
                     <CommentAction />
                     <span className="ml-2">Comment</span>
                   </div>

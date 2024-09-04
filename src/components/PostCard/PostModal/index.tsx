@@ -53,7 +53,7 @@ export const PostModal = ({ open, hideModal, post, setPosts }: Props) => {
       <div className="flex-grow overflow-y-auto w-[720px]  ">
         {open ? (
           <>
-            <PostCard setPosts={setPosts} inCommentModal post={post} />
+            <PostCard setPosts={setPosts} inModal post={post} />
             <CommentPrompt
               onSubmit={createNewComment}
               postId={post._id}

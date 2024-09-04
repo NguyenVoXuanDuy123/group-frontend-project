@@ -2,7 +2,6 @@ import { reactionColors } from "@/constants";
 import { ReactionType } from "@/enums/post.enums";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import { fetchApi } from "@/helpers/fetchApi";
-import { setToast } from "@/redux/slices/toastSlice";
 import { UserReaction } from "@/types/post.types";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -41,38 +40,27 @@ const CommentReactionButton = ({
   const reactToComment = async (reactionType: ReactionType) => {
     try {
       if (userReaction && userReaction.type === reactionType) {
-        const response = await fetchApi<Comment>(
+        const response = await fetchApi(
           `/api/comments/${commentId}/reactions`,
           "DELETE",
           dispatch
         );
-        if (!response) {
-          dispatch(
-            setToast({
-              type: "error",
-              message: "Failed to unreact to comment",
-            })
-          );
+        if (response) {
+          updateCommentReaction(reactionType);
         }
       } else {
-        const response = await fetchApi<Comment>(
+        const response = await fetchApi(
           `/api/comments/${commentId}/reactions`,
           "PUT",
           dispatch,
           { type: reactionType }
         );
-        if (!response) {
-          dispatch(
-            setToast({
-              type: "error",
-              message: "Failed to react to comment",
-            })
-          );
+        if (response) {
+          updateCommentReaction(reactionType);
         }
       }
 
       hideReactionModal();
-      updateCommentReaction(reactionType);
     } catch (error) {
       console.error("Error reacting to comment:", error);
     }

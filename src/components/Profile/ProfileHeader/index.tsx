@@ -13,6 +13,7 @@ import SiteAdminActions from "@/components/Profile/ProfileHeader/SiteAdminAction
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import LogoWithName from "@/components/Common/LogoWithName";
+import NotificationAndAvatar from "@/components/Common/NotificationAndAvatar";
 
 type ProfileHeaderProps = {
   user: UserProfile;
@@ -36,8 +37,11 @@ const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
   return (
     <div className="bg-white pt-62 ">
       <LogoWithName />
+      <div className="absolute right-5 top-8">
+        <NotificationAndAvatar />
+      </div>
       {/* Profile image and details */}
-      <div className="flex items-center  relative ">
+      <div className="flex items-center  relative pt-2 ">
         {/* Avatar Upload Modal */}
 
         <UploadAvatarModal

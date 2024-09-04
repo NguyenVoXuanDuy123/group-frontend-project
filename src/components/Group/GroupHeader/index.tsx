@@ -1,3 +1,5 @@
+import LogoWithName from "@/components/Common/LogoWithName";
+import NotificationAndAvatar from "@/components/Common/NotificationAndAvatar";
 import GroupActions from "@/components/Group/GroupHeader/GroupActions";
 import TabItem from "@/components/Profile/ProfileHeader/TabItem";
 import GlobalIcon from "@/components/svg/GlobalIcon";
@@ -21,6 +23,10 @@ const GroupHeader = ({ group, setGroup }: GroupHeaderProps) => {
   return (
     <div className="bg-white pt-6 ">
       {/* Profile image and details */}
+      <LogoWithName />
+      <div className="absolute right-5 top-8">
+        <NotificationAndAvatar />
+      </div>
       <div className="flex items-center  relative ">
         {/* Profile Details */}
         <div className="">
