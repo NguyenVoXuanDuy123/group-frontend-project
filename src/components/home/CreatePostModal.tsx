@@ -8,20 +8,25 @@ import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import { fetchApi } from "@/helpers/fetchApi";
 import { setToast } from "@/redux/slices/toastSlice";
 import { Post } from "@/types/post.types";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import ImageInput from "./ImageInput";
+import getFullName from "@/helpers/getFullName";
 
 type CreatePostModalProps = {
   modalShowing: boolean;
   hideModal: () => void;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
-  fullName: string;
-  avatar: string;
+  fullName?: string;
+  avatar?: string;
 
   // Optional group id to create post in a group
   // If groupId is provided, the post will be created in the group
   groupId?: string;
+
+  // if a post is passed into this modal
+  // it means the modal is in edit mode
+  post?: Post;
 };
 
 export default function CreatePostModal({
@@ -31,11 +36,12 @@ export default function CreatePostModal({
   fullName,
   avatar,
   groupId,
+  post,
 }: CreatePostModalProps) {
   const contentInputRef = useRef<HTMLTextAreaElement | null>(null);
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<string[]>(post?.images || []);
   const [privacy, setPrivacy] = useState<PostVisibilityLevel>(
-    PostVisibilityLevel.PUBLIC
+    post?.visibilityLevel || PostVisibilityLevel.PUBLIC
   );
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
 
@@ -44,6 +50,12 @@ export default function CreatePostModal({
   const updateImages = (images: string[]) => {
     setImages(images);
   };
+
+  useEffect(() => {
+    if (post) {
+      contentInputRef.current!.value = post.content;
+    }
+  }, [post]);
 
   const submitPost = async () => {
     if (!contentInputRef.current) {
@@ -79,13 +91,67 @@ export default function CreatePostModal({
     }
   };
 
+  const completeEditPost = async () => {
+    if (!contentInputRef.current) {
+      return;
+    }
+    const edittedContent = contentInputRef.current.value.trim();
+    if (!contentInputRef.current.value.trim()) {
+      dispatch(
+        setToast({
+          message: "Please enter some content 🥺🥺🥺",
+          type: "error",
+        })
+      );
+      return;
+    }
+    // if there is no change in the post, we don't need to send a request
+    if (
+      edittedContent === post!.content &&
+      images.every((img, index) => post!.images[index] === img) &&
+      privacy === post!.visibilityLevel
+    ) {
+      dispatch(
+        setToast({
+          message: "Edited post cannot be the same as the original one. 🥺🥺🥺",
+          type: "error",
+        })
+      );
+      return;
+    }
+
+    const content = contentInputRef.current.value;
+    const res = await fetchApi<Post>(
+      `/api/posts/${post!._id}`,
+      "PATCH",
+      dispatch,
+      {
+        content,
+        images,
+        visibilityLevel: groupId ? PostVisibilityLevel.GROUP : privacy,
+      }
+    );
+    if (res) {
+      setPosts((posts) =>
+        posts.map((prevPost) => (prevPost._id === post!._id ? res : prevPost))
+      );
+      hideModal();
+
+      dispatch(
+        setToast({ message: "Edit Post Successfully", type: "success" })
+      );
+    }
+  };
+
   return (
     <Modal open={modalShowing} hideModal={hideModal}>
       <div className="flex items-center w-[680px] max-w-[680px]">
-        <Avatar photoURL={avatar} />
+        <Avatar photoURL={post ? post.author.avatar : avatar} />
         <div className="ml-3 flex-1">
           <div className="relative inline-block text-left">
-            <div className="font-semibold">{fullName}</div>
+            <div className="font-semibold">
+              {post ? getFullName(post.author) : fullName}
+            </div>
             {/*  We only show the privacy selector if the post is not in a group */}
             {!groupId && (
               <>
@@ -98,7 +164,8 @@ export default function CreatePostModal({
                       className="inline-flex justify-center items-center px-4 py-2 text-sm font-medium
                        text-gray-700 bg-white border border-light-grey rounded-md hover:bg-gray-50 
                        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary
-                       w-full sm:w-auto">
+                       w-full sm:w-auto"
+                    >
                       {privacy === PostVisibilityLevel.PUBLIC ? (
                         <GlobalIcon className="mr-2 h-4 w-4" />
                       ) : (
@@ -106,7 +173,8 @@ export default function CreatePostModal({
                       )}
                       {capitalizeFirstLetter(privacy)}
                     </button>
-                  }>
+                  }
+                >
                   <div className="mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1" role="none">
                       <button
@@ -114,7 +182,8 @@ export default function CreatePostModal({
                         onClick={() => {
                           setPrivacy(PostVisibilityLevel.PUBLIC);
                           setPopoverOpen(false);
-                        }}>
+                        }}
+                      >
                         <GlobalIcon className="mr-2 h-4 w-4" />
                         <span>Public</span>
                       </button>
@@ -123,7 +192,8 @@ export default function CreatePostModal({
                         onClick={() => {
                           setPrivacy(PostVisibilityLevel.FRIEND);
                           setPopoverOpen(false);
-                        }}>
+                        }}
+                      >
                         <FriendIcon className="mr-2 h-4 w-4" />
                         <span>Friends</span>
                       </button>
@@ -145,13 +215,13 @@ export default function CreatePostModal({
       />
       <ImageInput images={images} updateImages={updateImages} />
       <button
-        onClick={submitPost}
+        onClick={post ? completeEditPost : submitPost}
         className="mt-4 w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-blue-300 disabled:cursor-not-allowed"
 
         // below is error
         // disabled={!contentInputRef.current?.value.trim()}
       >
-        Post
+        {post ? "Complete Edit" : "Post"}
       </button>
     </Modal>
   );

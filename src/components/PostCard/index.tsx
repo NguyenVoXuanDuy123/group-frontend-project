@@ -37,11 +37,6 @@ const PostCard = ({
 
   const [postModalShowing, setPostModalShowing] = useState<boolean>(false);
 
-  useEffect(() => {
-    // console.log(post);
-    console.log(!!(!group && post.group?.name));
-  }, []);
-
   const showPostModal = () => {
     if (inCommentModal) return;
     setPostModalShowing(true);
