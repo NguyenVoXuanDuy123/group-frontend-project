@@ -12,15 +12,16 @@ import getFullName from "@/helpers/getFullName";
 import { timeAgo } from "@/helpers/timeAgo";
 import { Group } from "@/types/group.types";
 import { Post, UserReaction } from "@/types/post.types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 type PostCardProps = {
   post: Post;
-  inCommentModal?: boolean;
+  inModal?: boolean;
+  readonly?: boolean;
 
   // setPosts is used to update the post list when post is deleted or updated (reactions, comments, edit, etc)
-  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  setPosts?: React.Dispatch<React.SetStateAction<Post[]>>;
 
   // the group Object is passed means that post was fetched while user was viewing a group
   group?: Group;
@@ -28,7 +29,8 @@ type PostCardProps = {
 
 const PostCard = ({
   post,
-  inCommentModal = false,
+  inModal = false,
+  readonly = false,
   setPosts,
   group,
 }: PostCardProps) => {
@@ -38,7 +40,7 @@ const PostCard = ({
   const [postModalShowing, setPostModalShowing] = useState<boolean>(false);
 
   const showPostModal = () => {
-    if (inCommentModal) return;
+    if (inModal) return;
     setPostModalShowing(true);
   };
 
@@ -55,6 +57,8 @@ const PostCard = ({
   };
 
   const updateReaction = (newReaction: UserReaction) => {
+    if (!setPosts) return;
+
     if (!post.userReaction) {
       // user has not reacted to the post
       setPosts((prev) =>
@@ -135,11 +139,11 @@ const PostCard = ({
 
   return (
     <>
-      <div className="w-full mx-auto bg-white rounded-xl overflow-hidden my-4">
+      <div
+        className={`w-full mx-auto rounded-xl overflow-hidden my-4 ${readonly ? "bg-light-grey" : "bg-white"}`}
+      >
         <div className="md:flex flex-1">
-          <div
-            className={`flex-1 flex flex-col ${inCommentModal ? "" : "px-4 pt-4"}`}
-          >
+          <div className={`flex-1 flex flex-col ${inModal ? "" : "px-4 pt-4"}`}>
             {/* Profile Section */}
             <div className="flex items-center mb-2">
               {/* Avatar Section */}
@@ -185,14 +189,16 @@ const PostCard = ({
                       </Link>
                     )}
                   </div>
-                  <PostActions
-                    post={post}
-                    setPosts={setPosts}
-                    // If the post is fetched while user is viewing a group, we pass the group.admin.id
-                    // Otherwise we pass the post.group.admin, which is the admin id of the group where the post was created
-                    // If the post is not created in a group, null is passed
-                    groupAdminId={group?.admin._id || post.group?.admin}
-                  />
+                  {!readonly && (
+                    <PostActions
+                      post={post}
+                      setPosts={setPosts!}
+                      // If the post is fetched while user is viewing a group, we pass the group.admin.id
+                      // Otherwise we pass the post.group.admin, which is the admin id of the group where the post was created
+                      // If the post is not created in a group, null is passed
+                      groupAdminId={group?.admin._id || post.group?.admin}
+                    />
+                  )}
                 </div>
                 <div className="text-dark-grey text-sm flex space-x-1 items-center">
                   {!group && post.group?.name && (
@@ -215,53 +221,57 @@ const PostCard = ({
 
             <TruncateText text={post.content} maxLength={200} />
 
-            {post.images.length > 0 && <ImageCarousel images={post.images} />}
+            {post.images.length > 0 && (
+              <ImageCarousel readonly={readonly} images={post.images} />
+            )}
 
             {/* Reactions and Comments */}
-            <div className="my-3 flex justify-between text-dark-grey text-sm">
-              <div className=" flex items-center">
-                {post.reactionCount > 0 && (
-                  <ThreeMostReaction
-                    id={post._id}
-                    reactionSummary={post.reactionSummary}
+            {!readonly && (
+              <>
+                <div className="mb-3 flex justify-between text-dark-grey text-sm">
+                  <div className=" flex items-center">
+                    {post.reactionCount > 0 && (
+                      <ThreeMostReaction
+                        id={post._id}
+                        reactionSummary={post.reactionSummary}
+                      />
+                    )}
+                    <span
+                      className="leading-6 hover:underline cursor-pointer"
+                      onClick={showReactionModal}
+                    >
+                      {post.reactionCount}{" "}
+                      {post.reactionCount > 0 ? "Reactions" : "Reaction"}
+                    </span>
+                  </div>
+                  <div className="flex items-center">
+                    <span
+                      className="leading-6 hover:underline cursor-pointer"
+                      onClick={readonly ? showPostModal : () => {}}
+                    >
+                      {post.commentCount}{" "}
+                      {post.commentCount > 0 ? "Comments" : "Comment"}
+                    </span>
+                  </div>
+                </div>
+                <div
+                  className={`border-t py-2 flex justify-between items-center text-dark-grey ${inModal ? "border-b" : ""}`}
+                >
+                  <ReactionButton
+                    userReaction={post.userReaction}
+                    updateUserReaction={updateReaction}
+                    postId={post._id}
                   />
-                )}
-                <span
-                  className="leading-6 hover:underline cursor-pointer"
-                  onClick={showReactionModal}
-                >
-                  {post.reactionCount}{" "}
-                  {post.reactionCount > 0 ? "Reactions" : "Reaction"}
-                </span>
-              </div>
-              <div className="flex items-center">
-                <span
-                  className="leading-6 hover:underline cursor-pointer"
-                  onClick={showPostModal}
-                >
-                  {post.commentCount}{" "}
-                  {post.commentCount > 0 ? "Comments" : "Comment"}
-                </span>
-              </div>
-            </div>
-
-            {/* Reactions and Comments */}
-            <div
-              className={`border-t py-2 flex justify-between items-center text-dark-grey ${inCommentModal ? "border-b" : ""}`}
-            >
-              <ReactionButton
-                userReaction={post.userReaction}
-                updateUserReaction={updateReaction}
-                postId={post._id}
-              />
-              <div
-                onClick={showPostModal}
-                className="rounded-lg p-3 flex flex-1 items-center justify-center cursor-pointer hover:bg-light-grey"
-              >
-                <CommentAction />
-                <span className="ml-2">Comment</span>
-              </div>
-            </div>
+                  <div
+                    onClick={showPostModal}
+                    className="rounded-lg p-3 flex flex-1 items-center justify-center cursor-pointer hover:bg-light-grey"
+                  >
+                    <CommentAction />
+                    <span className="ml-2">Comment</span>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -272,7 +282,7 @@ const PostCard = ({
       />
 
       <PostModal
-        setPosts={setPosts}
+        setPosts={setPosts!}
         hideModal={hidePostModal}
         open={postModalShowing}
         post={post}

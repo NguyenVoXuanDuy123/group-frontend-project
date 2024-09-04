@@ -12,6 +12,7 @@ import EditIcon from "@/components/svg/EditIcon";
 import HistoryIcon from "@/components/svg/HistoryIcon";
 import WarningModal from "@/components/Common/Modal/WarningUnfriendModal";
 import CreatePostModal from "../Home/CreatePostModal";
+import EditHistoryModal from "./PostModal/EditHistoryModal";
 
 type SiteAdminActionsProps = {
   post: Post;
@@ -30,16 +31,26 @@ const PostActions = ({
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
   const [warningDeletePostModal, setWarningDeletePostModal] =
     useState<boolean>(false);
-  const [showEditPostModal, setShowEditPostModal] = useState<boolean>(false);
+  const [editPostModalOpen, setEditPostModalOpen] = useState<boolean>(false);
+  const [editHistoryModalOpen, setEditHistoryModalOpen] =
+    useState<boolean>(false);
 
   const user = useSelector((state: RootState) => state.auth.user!);
 
+  const showEditHistoryModal = () => {
+    setEditHistoryModalOpen(true);
+  };
+
+  const hideEditHistoryModal = () => {
+    setEditHistoryModalOpen(false);
+  };
+
   const showEditModal = () => {
-    setShowEditPostModal(true);
+    setEditPostModalOpen(true);
   };
 
   const hideEditModal = () => {
-    setShowEditPostModal(false);
+    setEditPostModalOpen(false);
   };
 
   const handleDeletePost = async () => {
@@ -94,7 +105,10 @@ const PostActions = ({
             </button>
           )}
 
-          <button className="flex w-full px-4 rounded-md py-2 text-gray-700 hover:bg-gray-100 text-left items-center">
+          <button
+            onClick={showEditHistoryModal}
+            className="flex w-full px-4 rounded-md py-2 text-gray-700 hover:bg-gray-100 text-left items-center"
+          >
             <div className="mr-2 mb-[2px]">
               <HistoryIcon />
             </div>
@@ -109,10 +123,15 @@ const PostActions = ({
         warningContent="Are you sure you want to delete this post?"
       />
       <CreatePostModal
-        modalShowing={showEditPostModal}
+        modalShowing={editPostModalOpen}
         hideModal={hideEditModal}
         setPosts={setPosts}
         post={post}
+      />
+      <EditHistoryModal
+        originalPost={post}
+        modalShowing={editHistoryModalOpen}
+        hideModal={hideEditHistoryModal}
       />
     </>
   );

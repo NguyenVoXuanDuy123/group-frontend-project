@@ -5,9 +5,13 @@ import CloseIcon from "@/components/svg/CloseIcon";
 
 type ImageCarouselProps = {
   images: string[];
+  readonly?: boolean;
 };
 
-export default function ImageCarousel({ images }: ImageCarouselProps) {
+export default function ImageCarousel({
+  images,
+  readonly,
+}: ImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -40,6 +44,7 @@ export default function ImageCarousel({ images }: ImageCarouselProps) {
   }, [images.length]);
 
   const handleImageClick = () => {
+    if (readonly) return;
     setIsFullScreen(true);
   };
 
@@ -50,25 +55,28 @@ export default function ImageCarousel({ images }: ImageCarouselProps) {
   return (
     <>
       <div
-        className="relative w-full mx-auto max-h-[620px] min-h-[300px]"
-        ref={containerRef}>
+        className="relative w-full mx-auto mb-4 max-h-[620px] min-h-[300px]"
+        ref={containerRef}
+      >
         <div className="overflow-hidden rounded-lg w-full h-full">
           <div
             className="w-full h-full flex items-center justify-center"
             style={{
               width: `${images.length * 100}%`,
-            }}>
+            }}
+          >
             {images.map((src, index) => (
               <div
                 key={src + index}
                 className="bg-grey flex justify-center items-center transition-transform duration-300 ease-in-out h-full w-full"
                 style={{
                   transform: `translateX(calc(-${currentIndex * 100}%))`,
-                }}>
+                }}
+              >
                 <img
                   src={src}
                   alt={`Image ${index + 1}`}
-                  className="w-full h-full object-cover cursor-pointer"
+                  className={`w-full h-full object-cover ${readonly ? "" : "cursor-pointer"}`}
                   draggable="false"
                   onClick={handleImageClick}
                   loading="lazy"
@@ -83,13 +91,15 @@ export default function ImageCarousel({ images }: ImageCarouselProps) {
             <button
               onClick={goToPrevious}
               className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-opacity"
-              aria-label="Previous image">
+              aria-label="Previous image"
+            >
               <ChevronLeft className="w-6 h-6" />
             </button>
             <button
               onClick={goToNext}
               className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-opacity"
-              aria-label="Next image">
+              aria-label="Next image"
+            >
               <ChevronRight className="w-6 h-6" />
             </button>
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3">
@@ -115,12 +125,14 @@ export default function ImageCarousel({ images }: ImageCarouselProps) {
             <button
               onClick={closeFullScreen}
               className="absolute top-4 right-4 text-white bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-75 transition-opacity z-10"
-              aria-label="Close full screen">
+              aria-label="Close full screen"
+            >
               <CloseIcon className="w-6 h-6" />
             </button>
             <div
               className="w-full h-full flex items-center justify-center"
-              onClick={closeFullScreen}>
+              onClick={closeFullScreen}
+            >
               <img
                 src={images[currentIndex]}
                 alt={`Full screen image ${currentIndex + 1}`}
@@ -137,7 +149,8 @@ export default function ImageCarousel({ images }: ImageCarouselProps) {
                   }}
                   className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 
                   rounded-full hover:bg-opacity-10 transition-all duration-300"
-                  aria-label="Previous image">
+                  aria-label="Previous image"
+                >
                   <ChevronLeft className="w-8 h-8" />
                 </button>
                 <button
@@ -146,7 +159,8 @@ export default function ImageCarousel({ images }: ImageCarouselProps) {
                     goToNext();
                   }}
                   className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-75 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                  aria-label="Next image">
+                  aria-label="Next image"
+                >
                   <ChevronRight className="w-8 h-8" />
                 </button>
                 <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3">

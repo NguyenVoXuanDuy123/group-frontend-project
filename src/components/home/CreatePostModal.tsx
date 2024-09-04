@@ -52,6 +52,8 @@ export default function CreatePostModal({
   };
 
   useEffect(() => {
+    console.log(post);
+
     if (post) {
       contentInputRef.current!.value = post.content;
     }

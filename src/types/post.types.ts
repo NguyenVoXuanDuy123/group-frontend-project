@@ -84,6 +84,11 @@ export type EditHistory = {
    */
   _id: string;
   /**
+   * Defines the visibility level of a post, determining who can view it based on the selected
+   * level.
+   */
+  visibilityLevel: PostVisibilityLevel;
+  /**
    * The list of image URLs, provided as an array.
    */
   images: string[] | null;
