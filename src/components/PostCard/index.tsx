@@ -1,19 +1,19 @@
-import VisibilityLevelIcon from "@/components/PostCard/VisibilityLevelIcon";
-import getFullName from "@/helpers/getFullName";
-import { timeAgo } from "@/helpers/timeAgo";
-import { Post, UserReaction } from "@/types/post.types";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import Avatar from "@/components/Common/User/Avatar";
-import CommentAction from "@/components/svg/post/CommentAction";
-import PostModal from "@/components/PostCard/PostModal";
 import ImageCarousel from "@/components/PostCard/ImageCarousel";
+import PostActions from "@/components/PostCard/PostActions";
+import PostModal from "@/components/PostCard/PostModal";
 import ReactionButton from "@/components/PostCard/ReactionButton";
 import ReactionListModal from "@/components/PostCard/ReactionListModal";
 import ThreeMostReaction from "@/components/PostCard/ThreeMostReaction";
 import TruncateText from "@/components/PostCard/TruncateContent";
-import PostActions from "@/components/PostCard/PostActions";
+import VisibilityLevelIcon from "@/components/PostCard/VisibilityLevelIcon";
+import CommentAction from "@/components/svg/post/CommentAction";
+import getFullName from "@/helpers/getFullName";
+import { timeAgo } from "@/helpers/timeAgo";
 import { Group } from "@/types/group.types";
+import { Post, UserReaction } from "@/types/post.types";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 type PostCardProps = {
   post: Post;
@@ -38,9 +38,9 @@ const PostCard = ({
   const [postModalShowing, setPostModalShowing] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(post.reactionSummary);
-    console.log(post.reactionCount);
-  }, [post.reactionSummary]);
+    // console.log(post);
+    console.log(!!(!group && post.group?.name));
+  }, []);
 
   const showPostModal = () => {
     if (inCommentModal) return;
@@ -175,14 +175,20 @@ const PostCard = ({
                           </Link>
                         )
                     }
-                    <Link
-                      to={`/${post.author.username}`}
-                      className="text-black no-underline"
-                    >
-                      <div className="hover:underline">
-                        {getFullName(post.author)}
-                      </div>
-                    </Link>
+
+                    {(group || !post.group?.name) && (
+                      // Only show the author name as primary title
+                      // if the post is fetched while user is viewing a group
+                      // or the post is not created in a group
+                      <Link
+                        to={`/${post.author.username}`}
+                        className="text-black no-underline"
+                      >
+                        <div className="hover:underline">
+                          {getFullName(post.author)}
+                        </div>
+                      </Link>
+                    )}
                   </div>
                   <PostActions
                     post={post}
@@ -193,8 +199,20 @@ const PostCard = ({
                     groupAdminId={group?.admin._id || post.group?.admin}
                   />
                 </div>
-                <div className="text-dark-grey text-sm flex  items-center">
-                  {timeAgo(post.createdAt)} •{" "}
+                <div className="text-dark-grey text-sm flex space-x-1 items-center">
+                  {!group && post.group?.name && (
+                    // Show the author name as secondary title
+                    // if the user on feed is viewing a post created in a group
+                    <Link
+                      to={`/${post.author.username}`}
+                      className="text-dark-grey no-underline"
+                    >
+                      <div className="hover:underline">
+                        {getFullName(post.author) + " • "}
+                      </div>
+                    </Link>
+                  )}
+                  <span> {` ${timeAgo(post.createdAt)}  •`}</span>
                   <VisibilityLevelIcon visibilityLevel={post.visibilityLevel} />
                 </div>
               </div>
