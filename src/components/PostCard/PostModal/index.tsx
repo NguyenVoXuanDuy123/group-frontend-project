@@ -33,6 +33,21 @@ export const PostModal = ({ open, hideModal, post, setPosts }: Props) => {
     );
   };
 
+  const deleteComment = (commentId: string) => {
+    setComments((prev) => prev.filter((c) => c._id !== commentId));
+    setPosts((prev) =>
+      prev.map((p) => {
+        if (p._id === post._id) {
+          return {
+            ...p,
+            commentCount: p.commentCount - 1,
+          };
+        }
+        return p;
+      })
+    );
+  };
+
   const createNewComment = (newComment: Comment) => {
     setComments((prev) => [newComment, ...prev]);
     setPosts((prev) =>
@@ -68,6 +83,7 @@ export const PostModal = ({ open, hideModal, post, setPosts }: Props) => {
                   comment={comment}
                   postAuthorId={post.author._id}
                   updateComment={updateComment}
+                  deleteComment={deleteComment}
                 />
               )}
             />

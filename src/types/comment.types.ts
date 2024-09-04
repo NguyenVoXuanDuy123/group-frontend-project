@@ -17,7 +17,7 @@ export type Comment = {
   /**
    * Edit histories of this comment.
    */
-  editHistory: Array<null | CommentEditHistory>;
+  editHistory: Array<CommentEditHistory>;
   /**
    * Must be a 24-character hexadecimal string.
    */
