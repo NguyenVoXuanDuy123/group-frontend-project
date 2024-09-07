@@ -19,13 +19,11 @@ const COMMENTS_PER_PAGE = 15;
 
 export const PostModal = ({ open, hideModal, post, setPosts }: Props) => {
   const { user } = useAuth();
-  //add edit and delete comment nhe <3
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [comments, setComments, loadMore, isLoading] =
-    useInfiniteScroll<Comment>({
-      endpoint: `/api/posts/${post._id}/comments`,
-      limit: COMMENTS_PER_PAGE,
-    });
+
+  const [comments, setComments, loadMore] = useInfiniteScroll<Comment>({
+    endpoint: `/api/posts/${post._id}/comments`,
+    limit: COMMENTS_PER_PAGE,
+  });
 
   const updateComment = (updatedComment: Comment) => {
     setComments((prev) =>
@@ -65,7 +63,7 @@ export const PostModal = ({ open, hideModal, post, setPosts }: Props) => {
 
   return (
     <Modal open={open} hideModal={hideModal}>
-      <div className="flex-grow overflow-y-auto w-[720px]  ">
+      <div className="flex-grow overflow-y-auto mt-1 px-2  w-[720px]  ">
         {open ? (
           <>
             <PostCard setPosts={setPosts} inModal post={post} />
@@ -92,11 +90,6 @@ export const PostModal = ({ open, hideModal, post, setPosts }: Props) => {
           <div className="bg-white h-[300px]"></div>
         )}
       </div>
-      {!isLoading && comments.length === 0 && (
-        <div className="mt-2 text-center text-gray-500">
-          No comments to display.
-        </div>
-      )}
     </Modal>
   );
 };

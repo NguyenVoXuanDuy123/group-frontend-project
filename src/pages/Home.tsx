@@ -1,4 +1,4 @@
-import CreatePostPrompt from "@/components/Home/CreatePostPrompt";
+import CreatePostPrompt from "@/components/Common/Post/CreatePostPrompt";
 import { Post } from "@/types/post.types";
 import PostCard from "@/components/PostCard";
 import InfiniteScroll from "@/components/Common/InfiniteScroll";

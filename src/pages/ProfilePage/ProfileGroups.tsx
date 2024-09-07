@@ -14,7 +14,6 @@ const ProfileGroups = () => {
   const [groups, _, loadMoreGroups, isLoading] = useInfiniteScroll<GroupCard>({
     endpoint: `/api/users/${user._id}/groups`,
     limit: 10,
-    idBased: true,
   });
 
   return (
@@ -28,12 +27,7 @@ const ProfileGroups = () => {
             <div
               key={`group-${group._id}`}
               className="flex justify-center sm:justify-start">
-              <ProfileGroupCard
-                _id={group._id}
-                name={group.name}
-                memberCount={group.memberCount}
-                visibilityLevel={group.visibilityLevel}
-              />
+              <ProfileGroupCard group={group} />
             </div>
           )}
         />

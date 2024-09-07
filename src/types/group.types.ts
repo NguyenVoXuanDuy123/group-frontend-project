@@ -11,7 +11,10 @@ export type GroupCard = {
   name: string;
   visibilityLevel: GroupVisibilityLevel;
   status: GroupStatus;
+  description: string;
   memberCount: number;
+  admin?: UserInformation;
+  rejectedReason?: string;
 };
 
 export type Group = {

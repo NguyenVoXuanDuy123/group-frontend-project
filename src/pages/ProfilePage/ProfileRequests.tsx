@@ -1,6 +1,5 @@
 import InfiniteScroll from "@/components/Common/InfiniteScroll";
 import FriendRequestCard from "@/components/Profile/FriendRequestCard";
-import getFullName from "@/helpers/getFullName";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { ProfileLayoutContextType } from "@/pages/layout/ProfileLayout";
 import { RootState } from "@/redux/store";
@@ -9,15 +8,18 @@ import { useSelector } from "react-redux";
 import { useOutletContext } from "react-router-dom";
 
 const ProfileRequests = () => {
-  const [friendRequests, setFriendRequests, fetchMoreRequests, isLoading] =
-    useInfiniteScroll<FriendRequestCardType>({
-      endpoint: "/api/users/me/friends/pending-requests",
-      limit: 10,
-    });
   const { user, setUser } = useOutletContext<ProfileLayoutContextType>();
   const { username } = useSelector(
     (state: RootState) => state.auth.user || { username: "" }
   );
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [friendRequests, setFriendRequests, fetchMoreRequests, isLoading] =
+    useInfiniteScroll<FriendRequestCardType>({
+      endpoint: "/api/users/me/friends/pending-requests",
+      limit: 10,
+      // Only allow fetching if the user is the owner of the profile
+      isAllowFetch: user?.username === username,
+    });
 
   if (user.username !== username)
     return (
@@ -38,13 +40,10 @@ const ProfileRequests = () => {
               key={`friend-request-${friendRequest._id}`}>
               <FriendRequestCard
                 user={user}
-                fullName={getFullName(friendRequest.senderDetail)}
-                mutualFriendCount={friendRequest.senderDetail.mutualFriendCount}
-                username={friendRequest.senderDetail.username}
-                avatar={friendRequest.senderDetail.avatar}
+                senderDetail={friendRequest.senderDetail}
                 setUser={setUser}
-                friendRequest={friendRequest}
-                setFriendRequests={setFriendRequests}
+                friendRequestId={friendRequest._id}
+                createdAt={friendRequest.createdAt}
               />
             </div>
           )}

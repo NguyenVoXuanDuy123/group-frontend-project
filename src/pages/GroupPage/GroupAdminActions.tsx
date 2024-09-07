@@ -30,7 +30,7 @@ const GroupAdminActions = ({
       dispatch
     );
     // If the member is removed successfully
-    if (response) {
+    if (response.status === "success") {
       // Remove the member from the list
       setMembers((prevMembers) =>
         prevMembers.filter((member) => member._id !== userId)

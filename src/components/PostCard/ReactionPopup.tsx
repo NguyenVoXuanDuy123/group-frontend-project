@@ -9,10 +9,10 @@ type ReactionPopupProps = {
   handleReaction: (reaction: ReactionType) => void;
 };
 
-export default function ReactionPopup({
+const ReactionPopup = ({
   showReactions,
   handleReaction,
-}: ReactionPopupProps) {
+}: ReactionPopupProps) => {
   return (
     <div
       className={`absolute bottom-full left-0 bg-white border border-gray-200 rounded-lg p-2 flex space-x-2
@@ -41,4 +41,6 @@ export default function ReactionPopup({
       ))}
     </div>
   );
-}
+};
+
+export default ReactionPopup;

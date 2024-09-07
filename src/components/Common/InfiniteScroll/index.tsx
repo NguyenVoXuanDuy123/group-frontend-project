@@ -40,11 +40,9 @@ const InfiniteScroll = <T,>({
   return (
     <>
       {items.map(renderItem)}
-      {
-        <div
-          ref={observerTarget}
-          className="w-full h-1 flex items-center justify-center"></div>
-      }
+      <div
+        ref={observerTarget}
+        className="w-full h-1 flex items-center justify-center"></div>
     </>
   );
 };

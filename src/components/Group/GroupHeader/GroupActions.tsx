@@ -1,5 +1,5 @@
 import WarningModal from "@/components/Common/Modal/WarningUnfriendModal";
-import CreateOrUpdateGroupModal from "@/components/Group/CreateOrUpdateGroupModal";
+import CreateOrEditGroupModal from "@/components/Group/CreateOrEditGroupModal";
 import AddFriendIcon from "@/components/svg/profile-actions/AddFriendIcon";
 import CancelFriendRequestIcon from "@/components/svg/profile-actions/CancelFriendRequestIcon";
 import EditProfileIcon from "@/components/svg/profile-actions/EditProfileIcon";
@@ -31,7 +31,7 @@ const GroupActions = ({ group, setGroup }: ProfileActionsProps) => {
       dispatch
     );
 
-    if (response?.status === "success") {
+    if (response.status === "success") {
       const updatedgroup: Group = {
         ...group,
         memberCount: group.memberCount - 1,
@@ -50,11 +50,11 @@ const GroupActions = ({ group, setGroup }: ProfileActionsProps) => {
       dispatch
     );
 
-    if (response) {
+    if (response.status === "success") {
       const updatedGroup: Group = {
         ...group,
         userGroupRelation: UserGroupRelation.OUTGOING_REQUEST,
-        groupJoinRequest: response,
+        groupJoinRequest: response.result,
       };
       setGroup(updatedGroup);
     }
@@ -72,7 +72,7 @@ const GroupActions = ({ group, setGroup }: ProfileActionsProps) => {
       }
     );
 
-    if (response?.status === "success") {
+    if (response.status === "success") {
       const updatedGroup: Group = {
         ...group,
         userGroupRelation: UserGroupRelation.NOT_MEMBER,
@@ -95,7 +95,7 @@ const GroupActions = ({ group, setGroup }: ProfileActionsProps) => {
   if (group.userGroupRelation === UserGroupRelation.ADMIN) {
     return (
       <div className="mt-6 flex space-x-4 absolute right-0 bottom-0">
-        <CreateOrUpdateGroupModal
+        <CreateOrEditGroupModal
           hideModal={hideEditGroupModal}
           open={editGroupModalOpen}
           group={group}

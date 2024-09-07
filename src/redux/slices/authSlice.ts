@@ -1,5 +1,6 @@
 import { UserRole, UserStatus } from "@/enums/user.enums";
 import { fetchApi } from "@/helpers/fetchApi";
+import { resetNotifications } from "@/redux/slices/notificationSlice";
 
 import { RootState } from "@/redux/store";
 
@@ -40,13 +41,16 @@ export const introspectUser = createAsyncThunk(
     },
     { rejectWithValue }
   ) => {
-    const userAuth = await fetchApi<{
+    const response = await fetchApi<{
       isAuthenticated: boolean;
       user: UserAuth;
     }>("/api/auth/introspect", "GET", payload.dispatch);
 
-    if (userAuth?.isAuthenticated) {
-      return userAuth.user;
+    if (response.status === "success") {
+      const userAuth = response.result;
+      if (userAuth?.isAuthenticated) {
+        return userAuth.user;
+      }
     }
 
     return rejectWithValue("Failed to introspect user");
@@ -67,7 +71,9 @@ export const logOut = createAsyncThunk(
       payload.dispatch
     );
 
-    if (response?.status === "success") {
+    payload.dispatch(resetNotifications());
+
+    if (response.status === "success") {
       return true;
     }
 
@@ -112,4 +118,4 @@ export const { updateUser } = authSlice.actions;
 
 export const selectAuthState = (state: RootState) => state.auth;
 
-export default authSlice;
+export default authSlice.reducer;

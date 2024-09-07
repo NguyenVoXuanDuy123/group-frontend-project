@@ -10,13 +10,13 @@ import { setToast } from "@/redux/slices/toastSlice";
 import { Post } from "@/types/post.types";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import ImageInput from "./ImageInput";
+import ImageInput from "@/components/Common/Post/CreateOrEditPostModal/ImageInput";
 import getFullName from "@/helpers/getFullName";
 
-type CreatePostModalProps = {
+type CreateOrEditPostModalProps = {
   modalShowing: boolean;
   hideModal: () => void;
-  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  setPosts?: React.Dispatch<React.SetStateAction<Post[]>>;
   fullName?: string;
   avatar?: string;
 
@@ -29,7 +29,7 @@ type CreatePostModalProps = {
   post?: Post;
 };
 
-export default function CreatePostModal({
+const CreateOrEditPostModal = ({
   modalShowing,
   hideModal,
   setPosts,
@@ -37,7 +37,7 @@ export default function CreatePostModal({
   avatar,
   groupId,
   post,
-}: CreatePostModalProps) {
+}: CreateOrEditPostModalProps) => {
   const contentInputRef = useRef<HTMLTextAreaElement | null>(null);
   const [images, setImages] = useState<string[]>(post?.images || []);
   const [privacy, setPrivacy] = useState<PostVisibilityLevel>(
@@ -52,8 +52,6 @@ export default function CreatePostModal({
   };
 
   useEffect(() => {
-    console.log(post);
-
     if (post) {
       contentInputRef.current!.value = post.content;
     }
@@ -74,14 +72,16 @@ export default function CreatePostModal({
     }
 
     const content = contentInputRef.current.value;
-    const res = await fetchApi<Post>("/api/posts", "POST", dispatch, {
+    const response = await fetchApi<Post>("/api/posts", "POST", dispatch, {
       content,
       images,
       visibilityLevel: groupId ? PostVisibilityLevel.GROUP : privacy,
       groupId,
     });
-    if (res) {
-      setPosts((posts) => [res, ...posts]);
+    if (response.status === "success") {
+      if (setPosts) {
+        setPosts((posts) => [response.result, ...posts]);
+      }
       hideModal();
 
       setImages([]);
@@ -97,7 +97,7 @@ export default function CreatePostModal({
     if (!contentInputRef.current) {
       return;
     }
-    const edittedContent = contentInputRef.current.value.trim();
+    const editedContent = contentInputRef.current.value.trim();
     if (!contentInputRef.current.value.trim()) {
       dispatch(
         setToast({
@@ -109,7 +109,7 @@ export default function CreatePostModal({
     }
     // if there is no change in the post, we don't need to send a request
     if (
-      edittedContent === post!.content &&
+      editedContent === post!.content &&
       images.every((img, index) => post!.images[index] === img) &&
       privacy === post!.visibilityLevel
     ) {
@@ -123,7 +123,7 @@ export default function CreatePostModal({
     }
 
     const content = contentInputRef.current.value;
-    const res = await fetchApi<Post>(
+    const response = await fetchApi<Post>(
       `/api/posts/${post!._id}`,
       "PATCH",
       dispatch,
@@ -133,10 +133,14 @@ export default function CreatePostModal({
         visibilityLevel: groupId ? PostVisibilityLevel.GROUP : privacy,
       }
     );
-    if (res) {
-      setPosts((posts) =>
-        posts.map((prevPost) => (prevPost._id === post!._id ? res : prevPost))
-      );
+    if (response.status === "success") {
+      if (setPosts) {
+        setPosts((posts) =>
+          posts.map((prevPost) =>
+            prevPost._id === post!._id ? response.result : prevPost
+          )
+        );
+      }
       hideModal();
 
       dispatch(
@@ -166,8 +170,7 @@ export default function CreatePostModal({
                       className="inline-flex justify-center items-center px-4 py-2 text-sm font-medium
                        text-gray-700 bg-white border border-light-grey rounded-md hover:bg-gray-50 
                        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary
-                       w-full sm:w-auto"
-                    >
+                       w-full sm:w-auto">
                       {privacy === PostVisibilityLevel.PUBLIC ? (
                         <GlobalIcon className="mr-2 h-4 w-4" />
                       ) : (
@@ -175,8 +178,7 @@ export default function CreatePostModal({
                       )}
                       {capitalizeFirstLetter(privacy)}
                     </button>
-                  }
-                >
+                  }>
                   <div className="mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1" role="none">
                       <button
@@ -184,8 +186,7 @@ export default function CreatePostModal({
                         onClick={() => {
                           setPrivacy(PostVisibilityLevel.PUBLIC);
                           setPopoverOpen(false);
-                        }}
-                      >
+                        }}>
                         <GlobalIcon className="mr-2 h-4 w-4" />
                         <span>Public</span>
                       </button>
@@ -194,8 +195,7 @@ export default function CreatePostModal({
                         onClick={() => {
                           setPrivacy(PostVisibilityLevel.FRIEND);
                           setPopoverOpen(false);
-                        }}
-                      >
+                        }}>
                         <FriendIcon className="mr-2 h-4 w-4" />
                         <span>Friends</span>
                       </button>
@@ -227,4 +227,6 @@ export default function CreatePostModal({
       </button>
     </Modal>
   );
-}
+};
+
+export default CreateOrEditPostModal;

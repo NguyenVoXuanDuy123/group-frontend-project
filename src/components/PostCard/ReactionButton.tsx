@@ -33,7 +33,7 @@ const ReactionButton = ({
         dispatch
       );
 
-      if (response) {
+      if (response.status === "success") {
         updateUserReaction({ type: reactionType });
       }
     } else {
@@ -45,7 +45,7 @@ const ReactionButton = ({
           type: reactionType,
         }
       );
-      if (response) {
+      if (response.status === "success") {
         updateUserReaction({ type: reactionType });
       }
     }

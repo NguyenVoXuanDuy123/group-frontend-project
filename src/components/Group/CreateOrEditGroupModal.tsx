@@ -4,26 +4,32 @@ import { GroupVisibilityLevel } from "@/enums/group.enums";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import GlobalIcon from "@/components/svg/GlobalIcon";
 import PrivateIcon from "@/components/svg/PrivateIcon";
-import { Group } from "@/types/group.types";
+import { Group, GroupCard } from "@/types/group.types";
 import { fetchApi } from "@/helpers/fetchApi";
 import { useDispatch } from "react-redux";
 import { setToast } from "@/redux/slices/toastSlice";
 
-type CreateNewGroupModalProps = {
+type CreateOrEditGroupModalProps = {
   open: boolean;
   hideModal: () => void;
 
   // Optional props when editing a group
-  group?: Group;
+  group?: Group | GroupCard;
+
+  // Optional props when editing a group, or create a new group card in my groups section in the profile
+  setGroupCards?: (callBack: (prevGroups: GroupCard[]) => GroupCard[]) => void;
+
+  // Optional props when editing a group
   setGroup?: React.Dispatch<React.SetStateAction<Group | null>>;
 };
 
-const CreateOrUpdateGroupModal = ({
+const CreateOrEditGroupModal = ({
   open,
   hideModal,
   group,
+  setGroupCards,
   setGroup,
-}: CreateNewGroupModalProps) => {
+}: CreateOrEditGroupModalProps) => {
   const [name, setName] = useState<string>(group?.name || "");
   const [description, setDescription] = useState<string>(
     group?.description || ""
@@ -36,8 +42,8 @@ const CreateOrUpdateGroupModal = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    if (group && setGroup) {
+    // If group exists, then we are editing the group
+    if (group) {
       const response = await fetchApi(
         `/api/groups/${group._id}`,
         "PATCH",
@@ -49,27 +55,44 @@ const CreateOrUpdateGroupModal = ({
         }
       );
 
-      if (response?.status === "success") {
-        const newGroup: Group = {
-          ...group,
-          name,
-          description,
-          visibilityLevel,
-        };
-        setGroup(newGroup);
+      if (response.status === "success") {
+        if (setGroupCards) {
+          setGroupCards((prevGroups) =>
+            prevGroups.map((prevGroup) =>
+              prevGroup._id === group._id
+                ? {
+                    ...prevGroup,
+                    name,
+                    description,
+                    visibilityLevel,
+                  }
+                : prevGroup
+            )
+          );
+        }
+        if (setGroup) {
+          setGroup((prevGroup) => ({
+            ...prevGroup!,
+            name,
+            description,
+            visibilityLevel,
+          }));
+        }
         dispatch(
           setToast({ type: "success", message: "Group updated successfully" })
         );
         hideModal();
       }
-    } else {
-      const response = await fetchApi("/api/groups", "POST", dispatch, {
+    }
+    // If group does not exist, then we are creating a new group
+    else {
+      const response = await fetchApi<Group>("/api/groups", "POST", dispatch, {
         name,
         description,
         visibilityLevel,
       });
 
-      if (response?.status === "success") {
+      if (response.status === "success") {
         hideModal();
         dispatch(
           setToast({ type: "success", message: "Group created successfully" })
@@ -77,6 +100,20 @@ const CreateOrUpdateGroupModal = ({
         setName("");
         setDescription("");
         setVisibilityLevel(GroupVisibilityLevel.PUBLIC);
+        const group = response.result;
+
+        if (!setGroupCards) return;
+        const newGroup: GroupCard = {
+          _id: group._id,
+          name: group.name,
+          description: group.description,
+          visibilityLevel: group.visibilityLevel,
+          status: group.status,
+          memberCount: 1,
+        };
+
+        // If setGroupCards is provided, then we are updating the group card
+        setGroupCards((prevGroups) => [newGroup, ...prevGroups]);
       }
     }
   };
@@ -169,4 +206,4 @@ const CreateOrUpdateGroupModal = ({
   );
 };
 
-export default CreateOrUpdateGroupModal;
+export default CreateOrEditGroupModal;

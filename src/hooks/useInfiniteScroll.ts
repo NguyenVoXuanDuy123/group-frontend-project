@@ -4,8 +4,16 @@ import { fetchApi } from "@/helpers/fetchApi";
 type UsePaginatedDataOptions = {
   endpoint: string;
   limit: number;
+  /* If idBased is set to true, the infinite scroll will fetch data based on the last id*/
   idBased?: boolean;
-  moreQueryParams?: { [key: string]: unknown };
+  queryParams?: { [key: string]: string };
+  /*
+   * If isAllowFetch is set to false, the infinite scroll will not fetch data
+   * even though backend will prevent the fetch if the user don't have the permission
+   * but isAllowFetch here will prevent from making the request,
+   * so that we don't have to wait for the response and save the user's bandwidth
+   */
+  isAllowFetch?: boolean;
 };
 
 const DATA_PER_RENDER = 4;
@@ -13,9 +21,9 @@ type WithIdAndCreatedAt = { _id: string; createdAt?: string };
 export const useInfiniteScroll = <T extends WithIdAndCreatedAt>({
   endpoint,
   limit,
-  // If the infinite scroll is based on id, set idBased to true
   idBased = false,
-  moreQueryParams,
+  queryParams,
+  isAllowFetch = true,
 }: UsePaginatedDataOptions) => {
   const [data, setData] = useState<T[]>([]);
   const [renderedData, setRenderedData] = useState<T[]>([]);
@@ -24,22 +32,27 @@ export const useInfiniteScroll = <T extends WithIdAndCreatedAt>({
   const dispatch = useDispatch();
 
   const fetchData = useCallback(
-    async (limit: number, condition?: { [key: string]: unknown }) => {
+    async (
+      limit: number,
+      condition?: { [key: string]: string | undefined }
+    ) => {
+      if (!isAllowFetch) return;
       setIsLoading(true);
       try {
         const query = new URLSearchParams({
           limit: limit.toString(),
           ...condition,
-          ...moreQueryParams,
+          ...queryParams,
         }).toString();
 
-        const newData = await fetchApi<T[]>(
+        const response = await fetchApi<T[]>(
           `${endpoint}?${query}`,
           "GET",
           dispatch
         );
 
-        if (newData !== null) {
+        if (response.status === "success") {
+          const newData = response.result;
           setData((prevData) => [...prevData, ...newData]);
 
           // If the data length is less than the limit, it means there is no more data to fetch
@@ -49,7 +62,7 @@ export const useInfiniteScroll = <T extends WithIdAndCreatedAt>({
         setIsLoading(false);
       }
     },
-    [moreQueryParams, endpoint, dispatch]
+    [isAllowFetch, endpoint, dispatch]
   );
 
   useEffect(() => {
@@ -57,7 +70,7 @@ export const useInfiniteScroll = <T extends WithIdAndCreatedAt>({
   }, [fetchData, limit]);
 
   const loadMore = useCallback(() => {
-    if (isLoading) return;
+    if (isLoading || !isAllowFetch) return;
     if (renderedData.length < data.length) {
       setRenderedData((prevData) => [
         ...prevData,
@@ -82,6 +95,7 @@ export const useInfiniteScroll = <T extends WithIdAndCreatedAt>({
     fetchData,
     hasMore,
     idBased,
+    isAllowFetch,
     isLoading,
     limit,
     renderedData.length,

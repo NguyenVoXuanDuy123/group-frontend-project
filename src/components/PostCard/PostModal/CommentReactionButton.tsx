@@ -45,7 +45,7 @@ const CommentReactionButton = ({
           "DELETE",
           dispatch
         );
-        if (response) {
+        if (response.status === "success") {
           updateCommentReaction(reactionType);
         }
       } else {
@@ -55,7 +55,7 @@ const CommentReactionButton = ({
           dispatch,
           { type: reactionType }
         );
-        if (response) {
+        if (response.status === "success") {
           updateCommentReaction(reactionType);
         }
       }

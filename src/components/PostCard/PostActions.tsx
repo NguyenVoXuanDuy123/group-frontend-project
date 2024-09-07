@@ -10,13 +10,13 @@ import { useDispatch, useSelector } from "react-redux";
 import EditIcon from "@/components/svg/EditIcon";
 import HistoryIcon from "@/components/svg/HistoryIcon";
 import WarningModal from "@/components/Common/Modal/WarningUnfriendModal";
-import CreatePostModal from "../Home/CreatePostModal";
+import CreateOrEditPostModal from "../Common/Post/CreateOrEditPostModal";
 import EditHistoryModal from "./PostModal/EditHistoryModal";
 import { RootState } from "@/redux/store";
 
 type SiteAdminActionsProps = {
   post: Post;
-  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  setPosts?: React.Dispatch<React.SetStateAction<Post[]>>;
 
   // groupAdminId is passed when the post is fetched from a group, so that the group admin can delete the post
   groupAdminId?: string;
@@ -59,7 +59,8 @@ const PostActions = ({
       "DELETE",
       dispatch
     );
-    if (response) {
+    if (response.status === "success") {
+      if (!setPosts) return;
       setPosts((prevPosts) =>
         prevPosts.filter((prevPost) => prevPost._id !== post._id)
       );
@@ -118,7 +119,7 @@ const PostActions = ({
         open={warningDeletePostModal}
         warningContent="Are you sure you want to delete this post?"
       />
-      <CreatePostModal
+      <CreateOrEditPostModal
         modalShowing={editPostModalOpen}
         hideModal={hideEditModal}
         setPosts={setPosts}

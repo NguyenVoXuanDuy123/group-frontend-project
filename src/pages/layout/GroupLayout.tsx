@@ -17,13 +17,13 @@ const GroupLayout = () => {
   useEffect(() => {
     if (!groupId) return;
     const fetchData = async () => {
-      const group = await fetchApi<Group>(
+      const response = await fetchApi<Group>(
         `/api/groups/${groupId}`,
         "GET",
         dispatch
       );
-      if (group) {
-        setGroup(group);
+      if (response.status === "success") {
+        setGroup(response.result);
       }
     };
     fetchData();

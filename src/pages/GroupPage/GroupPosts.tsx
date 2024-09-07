@@ -1,8 +1,14 @@
 import InfiniteScroll from "@/components/Common/InfiniteScroll";
-import CreatePostPrompt from "@/components/Home/CreatePostPrompt";
+import CreatePostPrompt from "@/components/Common/Post/CreatePostPrompt";
 import PostCard from "@/components/PostCard";
 import { POSTS_PER_FETCH } from "@/constants";
-import { GroupStatus, UserGroupRelation } from "@/enums/group.enums";
+import {
+  GroupStatus,
+  GroupVisibilityLevel,
+  UserGroupRelation,
+} from "@/enums/group.enums";
+import { UserRole } from "@/enums/user.enums";
+import { useAuth } from "@/hooks/useAuth";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { GroupLayoutContextType } from "@/pages/layout/GroupLayout";
 import { Post } from "@/types/post.types";
@@ -10,9 +16,19 @@ import { useOutletContext } from "react-router-dom";
 
 const GroupPosts = () => {
   const { group } = useOutletContext<GroupLayoutContextType>();
+  const { user } = useAuth();
   const [posts, setPosts, loadMorePosts, isLoading] = useInfiniteScroll<Post>({
     endpoint: `/api/groups/${group._id}/posts`,
     limit: POSTS_PER_FETCH,
+    isAllowFetch:
+      /*
+       * Only allow fetching if the user is a member or admin of the group or the user is site-admin
+       * Or the group is public
+       */
+      group.visibilityLevel === GroupVisibilityLevel.PUBLIC ||
+      user?.role === UserRole.ADMIN ||
+      group.userGroupRelation === UserGroupRelation.ADMIN ||
+      group.userGroupRelation === UserGroupRelation.MEMBER,
   });
 
   return (
@@ -42,7 +58,8 @@ const GroupPosts = () => {
       />
 
       {/* Show a message if the user is not a member of the group and the group is private */}
-      {group.userGroupRelation === UserGroupRelation.NOT_MEMBER &&
+      {(group.userGroupRelation === UserGroupRelation.NOT_MEMBER ||
+        group.userGroupRelation === UserGroupRelation.OUTGOING_REQUEST) &&
         posts.length === 0 &&
         !isLoading && (
           <div className="py-10 bg-white rounded-xl mt-3">

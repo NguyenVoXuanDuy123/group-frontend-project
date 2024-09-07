@@ -2,7 +2,7 @@ import Avatar from "@/components/Common/User/Avatar";
 import getFullName from "@/helpers/getFullName";
 import { Post } from "@/types/post.types";
 import { useState } from "react";
-import CreatePostModal from "./CreatePostModal";
+import CreateOrEditPostModal from "@/components/Common/Post/CreateOrEditPostModal";
 import { useAuth } from "@/hooks/useAuth";
 
 type CreatePostPromptProps = {
@@ -39,7 +39,7 @@ const CreatePostPrompt = ({ setPosts, groupId }: CreatePostPromptProps) => {
           </div> */}
         </button>
       </div>
-      <CreatePostModal
+      <CreateOrEditPostModal
         groupId={groupId}
         fullName={getFullName(user)}
         avatar={user.avatar}

@@ -19,12 +19,14 @@ const ProfileLayout = () => {
   useEffect(() => {
     if (!username) return;
     const fetchData = async () => {
-      const user = await fetchApi<UserProfile>(
+      const response = await fetchApi<UserProfile>(
         `/api/users/profile/${username}`,
         "GET",
         dispatch
       );
-      setUser(user);
+      if (response.status === "success") {
+        setUser(response.result);
+      }
     };
     fetchData();
   }, [username, dispatch, setUser]);

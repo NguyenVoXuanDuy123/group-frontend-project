@@ -29,7 +29,7 @@ const EditHistoryModal = ({
               images: history.images || [],
             };
             return (
-              <div>
+              <div key={history._id}>
                 <span>{`Edited ${timeAgo(history.editedAt)}`}</span>
                 <PostCard
                   readonly
@@ -61,7 +61,7 @@ const EditHistoryModal = ({
               content: history.content,
             };
             return (
-              <div>
+              <div key={history._id}>
                 <span className="mb-4">{`Edited ${timeAgo(history.editedAt)}`}</span>
                 <CommentCard comment={comment} readonly />
                 <div className="h-[1px] bg-grey w-full mb-8"></div>

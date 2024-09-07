@@ -1,5 +1,5 @@
 import InfiniteScroll from "@/components/Common/InfiniteScroll";
-import CreatePostPrompt from "@/components/Home/CreatePostPrompt";
+import CreatePostPrompt from "@/components/Common/Post/CreatePostPrompt";
 import PostCard from "@/components/PostCard";
 import { POSTS_PER_FETCH } from "@/constants";
 import { UserFriendRelation } from "@/enums/user.enums";

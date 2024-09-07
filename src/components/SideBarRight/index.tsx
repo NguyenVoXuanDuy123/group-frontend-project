@@ -19,8 +19,8 @@ const SideBarRight = () => {
         "GET",
         dispatch
       );
-      if (response) {
-        setFriends(response);
+      if (response.status === "success") {
+        setFriends(response.result);
       }
     };
     fetchFriends();

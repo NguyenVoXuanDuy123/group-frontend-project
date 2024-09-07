@@ -35,7 +35,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
       dispatch
     );
 
-    if (response?.status === "success") {
+    if (response.status === "success") {
       const updatedUser: UserProfile = {
         ...user,
         friendCount: user.friendCount - 1,
@@ -54,11 +54,11 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
       dispatch
     );
 
-    if (response) {
+    if (response.status === "success") {
       const updatedUser: UserProfile = {
         ...user,
         userFriendRelation: UserFriendRelation.OUTGOING_REQUEST,
-        friendRequest: response,
+        friendRequest: response.result,
       };
       setUser(updatedUser);
     }
@@ -76,7 +76,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
       }
     );
 
-    if (response?.status === "success") {
+    if (response.status === "success") {
       const updatedUser: UserProfile = {
         ...user,
         userFriendRelation: UserFriendRelation.NOT_FRIEND,
@@ -98,7 +98,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
       }
     );
 
-    if (response?.status === "success") {
+    if (response.status === "success") {
       const updatedUser: UserProfile = {
         ...user,
         friendCount: user.friendCount + 1,
@@ -121,7 +121,7 @@ const ProfileActions = ({ user, setUser }: ProfileActionsProps) => {
       }
     );
 
-    if (response?.status === "success") {
+    if (response.status === "success") {
       const updatedUser: UserProfile = {
         ...user,
         userFriendRelation: UserFriendRelation.NOT_FRIEND,

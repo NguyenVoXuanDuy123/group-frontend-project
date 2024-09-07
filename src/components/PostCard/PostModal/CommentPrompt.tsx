@@ -13,12 +13,8 @@ type CommentPromptProps = {
   onSubmit: (comment: Comment) => void;
 };
 
-export default function CommentPrompt({
-  postId,
-  user,
-  onSubmit,
-}: CommentPromptProps) {
-  const [message, setMessage] = useState("");
+const CommentPrompt = ({ postId, user, onSubmit }: CommentPromptProps) => {
+  const [message, setMessage] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const dispatch = useDispatch();
 
@@ -40,7 +36,7 @@ export default function CommentPrompt({
       );
       return;
     }
-    const res = await fetchApi<Comment>(
+    const response = await fetchApi<Comment>(
       `/api/posts/${postId}/comments`,
       "POST",
       dispatch,
@@ -48,9 +44,9 @@ export default function CommentPrompt({
         content: message.trim(),
       }
     );
-    if (res) {
+    if (response.status === "success") {
       setMessage("");
-      onSubmit(res);
+      onSubmit(response.result);
     }
   };
 
@@ -64,8 +60,7 @@ export default function CommentPrompt({
           rows={1}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Type your comment here..."
-          className=" w-full pr-3 text-black bg-light-grey focus:outline-none resize-none overflow-y-auto  "
-        ></textarea>
+          className=" w-full pr-3 text-black bg-light-grey focus:outline-none resize-none overflow-y-auto  "></textarea>
 
         <div className="self-end cursor-pointer w-10 h-10 flex items-center justify-center hover:bg-grey rounded-full">
           <SendIcon onClick={handleSubmit} />
@@ -73,4 +68,6 @@ export default function CommentPrompt({
       </div>
     </div>
   );
-}
+};
+
+export default CommentPrompt;

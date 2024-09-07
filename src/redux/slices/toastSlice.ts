@@ -30,4 +30,4 @@ const toastSlice = createSlice({
 
 export const { setToast, clearToast } = toastSlice.actions;
 
-export default toastSlice;
+export default toastSlice.reducer;

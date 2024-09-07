@@ -75,7 +75,7 @@ const UploadAvatarModal = ({
         avatar: selectedAvatar,
       }
     );
-    if (response) {
+    if (response.status === "success") {
       setUser({ ...user, avatar: selectedAvatar });
       setIsFemale(false);
       hideModal();

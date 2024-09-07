@@ -25,7 +25,7 @@ const SiteAdminActions = ({ user, setUser }: SiteAdminActionsProps) => {
       dispatch,
       { status }
     );
-    if (response) {
+    if (response.status === "success") {
       if (status === UserStatus.ACTIVE) {
         dispatch(setToast({ message: "User is now active", type: "success" }));
       }

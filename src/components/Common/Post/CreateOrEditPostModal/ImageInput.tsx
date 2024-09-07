@@ -3,7 +3,7 @@ import { uploadImage } from "@/helpers/uploadImage";
 import { setToast } from "@/redux/slices/toastSlice";
 import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
-import ScrollableImageList from "./ScrollableImageList";
+import ScrollableImageList from "@/components/Common/Post/CreateOrEditPostModal/ScrollableImageList";
 
 type ImageInputProps = {
   images: string[];
@@ -138,8 +138,7 @@ const ImageInput = React.memo(({ images, updateImages }: ImageInputProps) => {
         className="flex flex-col cursor-pointer items-center justify-center h-40 bg-light-grey rounded-lg border-2 border-dashed border-grey"
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        onClick={handleClick}
-      >
+        onClick={handleClick}>
         <div className="flex flex-col items-center">
           <PlusIcon />
           <span className="my-2 font-bold">Add photos</span>

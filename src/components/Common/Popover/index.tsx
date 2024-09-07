@@ -1,4 +1,6 @@
+import { RootState } from "@/redux/store";
 import { useEffect, useRef, useCallback } from "react";
+import { useSelector } from "react-redux";
 
 type PopoverProps = {
   displayComponent: React.ReactNode;
@@ -15,9 +17,14 @@ const Popover = ({
 }: PopoverProps) => {
   const popoverRef = useRef<HTMLDivElement>(null);
   const displayComponentRef = useRef<HTMLDivElement>(null);
+  const openModalsCount = useSelector(
+    (state: RootState) => state.modal.openModalsCount
+  );
 
   const handleClickOutside = useCallback(
     (event: MouseEvent) => {
+      // Close the popover if there are no open modals
+      if (openModalsCount > 0) return;
       if (
         popoverRef.current &&
         !popoverRef.current.contains(event.target as Node) &&
@@ -27,7 +34,7 @@ const Popover = ({
         setPopoverOpen(false);
       }
     },
-    [setPopoverOpen]
+    [openModalsCount, setPopoverOpen]
   );
 
   useEffect(() => {
@@ -44,8 +51,7 @@ const Popover = ({
       <div
         onClick={togglePopover}
         ref={displayComponentRef}
-        className="cursor-pointer z-40"
-      >
+        className="cursor-pointer z-30">
         {displayComponent}
       </div>
       {popoverOpen && (

@@ -33,7 +33,7 @@ const Login = ({ setIsLogin }: LoginProps) => {
       password,
     });
 
-    if (response?.status === "success") {
+    if (response.status === "success") {
       await dispatch(introspectUser({ dispatch }));
     }
     setIsLoading(false);

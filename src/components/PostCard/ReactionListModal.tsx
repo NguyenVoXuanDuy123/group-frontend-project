@@ -3,8 +3,8 @@ import getFullName from "@/helpers/getFullName";
 import { ReactionUserInfo } from "@/types/reaction.types";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import Modal from "../Common/Modal";
-import UserCard from "../Common/UserCard";
+import Modal from "@/components/Common/Modal";
+import UserCard from "@/components/Common/UserCard";
 import { ReactionType } from "@/enums/post.enums";
 
 type ReactionListModalProps = {
@@ -56,10 +56,14 @@ const ReactionListModal = ({
         dispatch
       );
 
-      setReactionLikeUserInfos(likeRes || []);
-      setReactionLoveUserInfos(loveRes || []);
-      setReactionHahaUserInfos(hahaRes || []);
-      setReactionAngryUserInfos(angryRes || []);
+      if (likeRes.status === "success")
+        setReactionLikeUserInfos(likeRes.result);
+      if (loveRes.status === "success")
+        setReactionLoveUserInfos(loveRes.result);
+      if (hahaRes.status === "success")
+        setReactionHahaUserInfos(hahaRes.result);
+      if (angryRes.status === "success")
+        setReactionAngryUserInfos(angryRes.result);
     };
     if (open) {
       fetchReactions();

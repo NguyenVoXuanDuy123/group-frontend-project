@@ -189,7 +189,7 @@ const PostCard = ({
                   {!readonly && (
                     <PostActions
                       post={post}
-                      setPosts={setPosts!}
+                      setPosts={setPosts}
                       // If the post is fetched while user is viewing a group, we pass the group.admin.id
                       // Otherwise we pass the post.group.admin, which is the admin id of the group where the post was created
                       // If the post is not created in a group, null is passed
@@ -203,10 +203,11 @@ const PostCard = ({
                     // if the user on feed is viewing a post created in a group
                     <Link
                       to={`/${post.author.username}`}
-                      className="text-dark-grey no-underline">
+                      className="text-dark-grey no-underline flex">
                       <div className="hover:underline">
-                        {getFullName(post.author) + " • "}
+                        {getFullName(post.author)}
                       </div>
+                      <span className="ml-1"> • </span>
                     </Link>
                   )}
                   <span> {` ${timeAgo(post.createdAt)}  •`}</span>

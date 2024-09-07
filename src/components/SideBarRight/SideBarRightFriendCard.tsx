@@ -1,4 +1,5 @@
 import Avatar from "@/components/Common/User/Avatar";
+import { truncateText } from "@/helpers/truncateText";
 import { Link } from "react-router-dom";
 
 type FriendCardProps = {
@@ -21,7 +22,9 @@ const SideBarRightFriendCard = ({
       </Link>
       <div className="flex flex-col">
         <Link to={`/${username}`} className="h-5">
-          <span className="ml-4 font-medium hover:underline">{name}</span>
+          <span className="ml-4 font-medium hover:underline">
+            {truncateText(name, 25)}
+          </span>
         </Link>
         <Link to={`/${username}/friends`}>
           {mutualFriendCount && (

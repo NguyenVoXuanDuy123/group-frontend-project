@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import CloseIcon from "../svg/CloseIcon";
+import CloseIcon from "../../../svg/CloseIcon";
 
-interface ScrollableImageListProps {
+type ScrollableImageListProps = {
   images: string[];
   deleteImage: (index: number) => void;
-}
+};
 
-export default function ScrollableImageList({
+const ScrollableImageList = ({
   images,
   deleteImage,
-}: ScrollableImageListProps) {
+}: ScrollableImageListProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   //   const [activeIndex, setActiveIndex] = useState(0);
@@ -73,14 +73,12 @@ export default function ScrollableImageList({
         ref={containerRef}
         className="flex w-full pb-1 space-x-2 overflow-x-scroll hide-scrollbar cursor-grab active:cursor-grabbing mb-4"
         onMouseDown={handleDragStart}
-        onTouchStart={handleDragStart}
-      >
+        onTouchStart={handleDragStart}>
         {images.map((src, index) => (
           <div
             key={index}
             className="flex-shrink-0 relative rounded-lg overflow-hidden"
-            onDragStart={(e) => e.preventDefault()}
-          >
+            onDragStart={(e) => e.preventDefault()}>
             <img
               src={src}
               alt={`Image ${index + 1}`}
@@ -91,8 +89,7 @@ export default function ScrollableImageList({
               onClick={(e) => {
                 e.stopPropagation();
                 handleDelete(index);
-              }}
-            >
+              }}>
               <CloseIcon width={20} height={20} />
             </button>
           </div>
@@ -100,7 +97,7 @@ export default function ScrollableImageList({
       </div>
     </div>
   );
-}
+};
 
 // // CSS to hide scrollbar
 // const style = document.createElement("style");
@@ -114,3 +111,5 @@ export default function ScrollableImageList({
 //   }
 // `;
 // document.head.appendChild(style);
+
+export default ScrollableImageList;
