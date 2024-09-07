@@ -1,4 +1,4 @@
-import SideBarRightFriendCard from "@/components/SideBarRight/SideBarRightFriendCard";
+import FriendCard from "@/components/SideBarRight/FriendCard";
 import { RootState } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -37,7 +37,7 @@ const SideBarRight = () => {
         <h2 className="text-lg font-bold mb-1">Friends</h2>
         {friends.map((friend) => {
           return (
-            <SideBarRightFriendCard
+            <FriendCard
               key={friend._id}
               username={friend.username}
               name={friend.firstName + " " + friend.lastName}

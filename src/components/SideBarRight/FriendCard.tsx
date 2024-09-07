@@ -9,7 +9,7 @@ type FriendCardProps = {
   mutualFriendCount?: number;
 };
 
-const SideBarRightFriendCard = ({
+const FriendCard = ({
   name,
   username,
   avatar,
@@ -38,4 +38,4 @@ const SideBarRightFriendCard = ({
   );
 };
 
-export default SideBarRightFriendCard;
+export default FriendCard;
