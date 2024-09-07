@@ -62,7 +62,7 @@ export const useInfiniteScroll = <T extends WithIdAndCreatedAt>({
         setIsLoading(false);
       }
     },
-    [isAllowFetch, endpoint, dispatch]
+    [isAllowFetch, queryParams, endpoint, dispatch]
   );
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export const useInfiniteScroll = <T extends WithIdAndCreatedAt>({
       ]);
     }
     if (!hasMore) return;
-
+    console.log("loadMore");
     // ALways fetch limit/2 more data when data.length - renderedData.length < limit/2
     //, so that the data still extends when the internet is disconnected
     const halfLimit = Math.ceil(limit / 2);
@@ -107,6 +107,7 @@ export const useInfiniteScroll = <T extends WithIdAndCreatedAt>({
     (callback: React.SetStateAction<T[]>) => {
       setData(callback);
       setRenderedData(callback);
+      setHasMore(true);
     },
     [setData, setRenderedData]
   );

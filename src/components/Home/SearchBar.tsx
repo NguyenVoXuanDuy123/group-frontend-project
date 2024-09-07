@@ -1,49 +1,110 @@
 import { SearchBy } from "@/enums/search.enums";
-import { FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
+import React, { useState } from "react";
+import { redirect, useNavigate } from "react-router-dom";
+import Popover from "../Common/Popover";
+import FriendIcon from "../svg/side-bar-icons/FriendIcon";
+import GroupIcon from "../svg/side-bar-icons/GroupIcon";
+import ChevronDown from "../svg/ChevronDown";
+import SearchIcon from "../svg/SearchIcon";
+import { UserInformation } from "@/types/user.types";
+import { GroupCard } from "@/types/group.types";
 
-export default function SearchBar() {
+type SearchBarProps = {
+  setSearchResults?: React.Dispatch<
+    React.SetStateAction<(UserInformation | GroupCard)[]>
+  >;
+};
+
+export default function SearchBar({ setSearchResults }: SearchBarProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchBy, setSearchBy] = useState<SearchBy>(SearchBy.USER);
+  const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(searchQuery, searchBy);
+    // if (setSearchResults) setSearchResults([]);
+
     if (searchQuery.trim()) {
-      navigate(
-        `/search?q=${encodeURIComponent(searchQuery)}&searchBy=${searchBy}`
-      );
+      navigate("/");
+      setTimeout(() => {
+        navigate(`/search?q=${searchQuery}&searchBy=${searchBy}`);
+      }, 100);
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex items-center space-x-2 max-w-2xl mx-auto my-8"
+      className="flex items-center space-x-2 max-w-2xl mx-auto my-8 w-full"
     >
-      <div className="relative flex-grow">
+      <div className="flex items-center rounded-lg p-2 w-full bg-white">
+        <Popover
+          popoverOpen={popoverOpen}
+          setPopoverOpen={setPopoverOpen}
+          displayComponent={
+            <button
+              type="button"
+              className="inline-flex justify-center items-center px-4 py-2 text-sm font-medium
+                       text-gray-700 bg-white border border-light-grey rounded-md hover:bg-gray-50 
+                       focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary
+                       w-full sm:w-auto"
+            >
+              {searchBy === SearchBy.GROUP ? (
+                <GroupIcon className="mr-2 h-4 w-4" />
+              ) : (
+                <FriendIcon className="mr-2 h-4 w-4" />
+              )}
+              {capitalizeFirstLetter(searchBy)}
+              <ChevronDown />
+            </button>
+          }
+        >
+          <div className="mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <div className="py-1" role="none">
+              <button
+                className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                onClick={() => {
+                  setSearchBy(SearchBy.USER);
+                  setPopoverOpen(false);
+                }}
+              >
+                <GroupIcon className="mr-2 h-4 w-4" />
+                <span>User</span>
+              </button>
+              <button
+                className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                onClick={() => {
+                  setSearchBy(SearchBy.GROUP);
+                  setPopoverOpen(false);
+                }}
+              >
+                <FriendIcon className="mr-2 h-4 w-4" />
+                <span>Group</span>
+              </button>
+            </div>
+          </div>
+        </Popover>
+
+        <div className="mx-2 h-8 w-[1px] bg-light-grey"></div>
+
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search..."
-          className="w-full px-4 py-2 text-gray-900 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder="Search"
+          className="flex-grow p-2 border-0 focus:outline-none text-gray-700"
         />
+
+        <button
+          onClick={handleSubmit}
+          className="p-2 text-blue-500 hover:text-blue-700"
+        >
+          <SearchIcon />
+        </button>
       </div>
-      <select
-        value={searchBy}
-        onChange={(e) => setSearchBy(e.target.value as SearchBy)}
-        className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-      >
-        <option value={SearchBy.GROUP}>Group</option>
-        <option value={SearchBy.USER}>User</option>
-      </select>
-      <button
-        type="submit"
-        className="px-6 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-      >
-        Search
-      </button>
     </form>
   );
 }

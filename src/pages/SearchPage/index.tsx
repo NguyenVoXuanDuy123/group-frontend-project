@@ -4,6 +4,10 @@ import { UserInformation } from "@/types/user.types";
 import { useSearchParams } from "react-router-dom";
 import { SearchBy } from "@/enums/search.enums";
 import InfiniteScroll from "@/components/Common/InfiniteScroll";
+import ProfileGroupCard from "@/components/Profile/ProfileGroupCard";
+import SearchBar from "@/components/Home/SearchBar";
+import FriendCard from "@/components/SideBarRight/FriendCard";
+import getFullName from "@/helpers/getFullName";
 
 const SearchPage = () => {
   const [searchParams] = useSearchParams();
@@ -24,37 +28,23 @@ const SearchPage = () => {
 
   return (
     <div className="container mx-auto px-4">
-      <div className="mt-8">
-        {searchResults.map((item) => (
-          <div key={item._id} className="mb-4 p-4 border rounded-md">
-            {"name" in item ? (
-              <h2 className="text-xl font-semibold">
-                {(item as GroupCard).name}
-              </h2>
-            ) : (
-              <h2 className="text-xl font-semibold">
-                {(item as UserInformation).username}
-              </h2>
-            )}
-            {/* Add more details as needed */}
-          </div>
-        ))}
-      </div>
+      <SearchBar setSearchResults={setSearchResults} />
+
       <InfiniteScroll
         items={searchResults}
         loadMore={loadMoreSearchResults}
         renderItem={(item) => (
-          <div key={item._id} className="mb-4 p-4 border rounded-md">
+          <div key={item._id} className="mb-4 p-4 pb-2 rounded-lg bg-white">
             {"name" in item ? (
-              <h2 className="text-xl font-semibold">
-                {(item as GroupCard).name}
-              </h2>
+              <ProfileGroupCard group={item} />
             ) : (
-              <h2 className="text-xl font-semibold">
-                {(item as UserInformation).username}
-              </h2>
+              <FriendCard
+                avatar={item.avatar}
+                name={getFullName(item)}
+                username={item.username}
+                mutualFriendCount={item.mutualFriendCount}
+              />
             )}
-            {/* Add more details as needed */}
           </div>
         )}
       />
