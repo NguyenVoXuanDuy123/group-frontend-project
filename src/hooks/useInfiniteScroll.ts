@@ -4,6 +4,7 @@ import { fetchApi } from "@/helpers/fetchApi";
 type UsePaginatedDataOptions = {
   endpoint: string;
   limit: number;
+  dataPerRender?: number;
   /* If idBased is set to true, the infinite scroll will fetch data based on the last id*/
   idBased?: boolean;
   queryParams?: { [key: string]: string };
@@ -16,7 +17,6 @@ type UsePaginatedDataOptions = {
   isAllowFetch?: boolean;
 };
 
-const DATA_PER_RENDER = 4;
 type WithIdAndCreatedAt = { _id: string; createdAt?: string };
 export const useInfiniteScroll = <T extends WithIdAndCreatedAt>({
   endpoint,
@@ -24,6 +24,7 @@ export const useInfiniteScroll = <T extends WithIdAndCreatedAt>({
   idBased = false,
   queryParams,
   isAllowFetch = true,
+  dataPerRender = 4,
 }: UsePaginatedDataOptions) => {
   const [data, setData] = useState<T[]>([]);
   const [renderedData, setRenderedData] = useState<T[]>([]);
@@ -50,7 +51,6 @@ export const useInfiniteScroll = <T extends WithIdAndCreatedAt>({
           "GET",
           dispatch
         );
-
         if (response.status === "success") {
           const newData = response.result;
           setData((prevData) => [...prevData, ...newData]);
@@ -74,7 +74,7 @@ export const useInfiniteScroll = <T extends WithIdAndCreatedAt>({
     if (renderedData.length < data.length) {
       setRenderedData((prevData) => [
         ...prevData,
-        ...data.slice(prevData.length, prevData.length + DATA_PER_RENDER),
+        ...data.slice(prevData.length, prevData.length + dataPerRender),
       ]);
     }
     if (!hasMore) return;

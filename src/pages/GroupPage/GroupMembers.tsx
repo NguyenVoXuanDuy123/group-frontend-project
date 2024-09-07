@@ -1,11 +1,11 @@
 import InfiniteScroll from "@/components/Common/InfiniteScroll";
 import UserCard from "@/components/Common/UserCard";
+import GroupAdminActions from "@/components/Group/GroupAdminActions";
 import { GroupVisibilityLevel, UserGroupRelation } from "@/enums/group.enums";
 import { UserRole } from "@/enums/user.enums";
 import getFullName from "@/helpers/getFullName";
 import { useAuth } from "@/hooks/useAuth";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
-import GroupAdminActions from "@/components/Group/GroupAdminActions";
 import { GroupLayoutContextType } from "@/pages/layout/GroupLayout";
 import { UserInformation } from "@/types/user.types";
 import { useOutletContext } from "react-router-dom";

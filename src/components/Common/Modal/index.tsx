@@ -51,7 +51,6 @@ const Modal = ({ open, hideModal, children }: Props) => {
   return ReactDOM.createPortal(
     <div
       onClick={(e) => {
-        console.log("clicked");
         e.stopPropagation();
         hideModal();
       }}

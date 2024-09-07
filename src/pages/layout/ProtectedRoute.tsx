@@ -28,7 +28,6 @@ const ProtectedRoute = () => {
 
     const sync = async () => {
       const success = await syncOfflineReactions();
-      console.log(success);
 
       if (success) {
         delay = 5000; // Reset delay to 5 seconds
@@ -39,7 +38,6 @@ const ProtectedRoute = () => {
         clearInterval(intervalRef.current);
       }
       intervalRef.current = setInterval(sync, delay);
-      console.log(delay);
     };
 
     if (user && user.status !== UserStatus.BANNED) {

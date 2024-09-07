@@ -27,8 +27,6 @@ const NotificationWithPopover = () => {
     dispatch(resetUnreadNotificationCount());
   }, [dispatch, popoverOpen]);
 
-  console.log("notifications", unreadCount);
-
   return (
     <Popover
       displayComponent={

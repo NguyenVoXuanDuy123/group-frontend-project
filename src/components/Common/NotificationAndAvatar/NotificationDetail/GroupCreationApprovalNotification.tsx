@@ -14,7 +14,6 @@ const GroupCreationApprovalNotification = ({
   createdAt,
   isRead,
 }: GroupJoinRequestAcceptedNotificationProps) => {
-  console.log(isRead);
   return (
     <Link to={`/groups/${group._id}`}>
       <div className="bg-white w-full rounded-md hover:bg-dark-grey/20 p-1 cursor-pointer text-sm">

@@ -15,6 +15,7 @@ const ProfileFriends = () => {
       endpoint: `/api/users/${user._id}/friends`,
       limit: 20,
       idBased: true,
+      dataPerRender: 10,
     });
 
   return (

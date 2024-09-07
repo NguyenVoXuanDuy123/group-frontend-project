@@ -28,7 +28,6 @@ export const PostModal = ({
   group,
 }: Props) => {
   const { user } = useAuth();
-  // console.log(group);
 
   const [comments, setComments, loadMore] = useInfiniteScroll<Comment>({
     endpoint: `/api/posts/${post._id}/comments`,

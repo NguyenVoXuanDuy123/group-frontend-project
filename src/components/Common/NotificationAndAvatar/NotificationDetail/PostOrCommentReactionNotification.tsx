@@ -49,10 +49,6 @@ const PostOrCommentReactionNotification = ({
     fetchPost();
   }, [dispatch, postId]);
 
-  useEffect(() => {
-    console.log("PostOrCommentReactionNotification");
-  }, [PostModalOpen]);
-
   return (
     <>
       <div
@@ -91,7 +87,6 @@ const PostOrCommentReactionNotification = ({
       {posts.length !== 0 && (
         <PostModal
           hideModal={() => {
-            console.log("hideModal");
             setPostModalOpen(false);
           }}
           open={PostModalOpen}
