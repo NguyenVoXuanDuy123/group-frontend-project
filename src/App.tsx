@@ -17,6 +17,7 @@ import { store } from "@/redux/store";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Toast from "./components/Common/Toast";
+import SearchPage from "./pages/SearchPage";
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
                 path="/group-creation-requests"
                 element={<GroupCreationRequests />}
               />
+              <Route path="/search" element={<SearchPage />} />
             </Route>
             <Route path="/:username/" element={<ProfileLayout />}>
               <Route index element={<ProfilePosts />} />

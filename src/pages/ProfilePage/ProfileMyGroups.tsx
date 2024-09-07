@@ -114,7 +114,8 @@ const ProfileMyGroups = () => {
               groupStatus === GroupStatus.APPROVED
                 ? "bg-primary text-white scale-105 "
                 : "text-light-grey bg-dark-grey"
-            } px-4 py-2 rounded-md transition-transform duration-300 ease-in-out transform focus:outline-none hover:scale-105 `}>
+            } px-4 py-2 rounded-md transition-transform duration-300 ease-in-out transform focus:outline-none hover:scale-105 `}
+          >
             Approved
           </button>
           <button
@@ -123,7 +124,8 @@ const ProfileMyGroups = () => {
               groupStatus === GroupStatus.PENDING
                 ? "bg-primary text-white scale-105 "
                 : "text-light-grey bg-dark-grey"
-            } px-4 py-2 rounded-md transition-transform duration-300 ease-in-out transform focus:outline-none hover:scale-105 `}>
+            } px-4 py-2 rounded-md transition-transform duration-300 ease-in-out transform focus:outline-none hover:scale-105 `}
+          >
             Pending
           </button>
           <button
@@ -132,7 +134,8 @@ const ProfileMyGroups = () => {
               groupStatus === GroupStatus.REJECTED
                 ? "bg-primary text-white scale-105 "
                 : "text-light-grey bg-dark-grey"
-            } px-4 py-2 rounded-md transition-transform duration-300 ease-in-out transform focus:outline-none hover:scale-105 `}>
+            } px-4 py-2 rounded-md transition-transform duration-300 ease-in-out transform focus:outline-none hover:scale-105 `}
+          >
             Rejected
           </button>
         </div>
@@ -154,7 +157,8 @@ const ProfileMyGroups = () => {
           renderItem={(group) => (
             <div
               key={`group-${group._id}`}
-              className="flex justify-center sm:justify-start">
+              className="flex justify-center sm:justify-start"
+            >
               <ProfileGroupCard
                 group={group}
                 setGroupCards={setPendingGroups}
