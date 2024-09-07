@@ -30,6 +30,7 @@ export const useInfiniteScroll = <T extends WithIdAndCreatedAt>({
   const [renderedData, setRenderedData] = useState<T[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [queryParamsObject] = useState(queryParams || {});
   const dispatch = useDispatch();
 
   const fetchData = useCallback(
@@ -43,7 +44,7 @@ export const useInfiniteScroll = <T extends WithIdAndCreatedAt>({
         const query = new URLSearchParams({
           limit: limit.toString(),
           ...condition,
-          ...queryParams,
+          ...queryParamsObject,
         }).toString();
 
         const response = await fetchApi<T[]>(
@@ -62,7 +63,7 @@ export const useInfiniteScroll = <T extends WithIdAndCreatedAt>({
         setIsLoading(false);
       }
     },
-    [isAllowFetch, queryParams, endpoint, dispatch]
+    [isAllowFetch, queryParamsObject, endpoint, dispatch]
   );
 
   useEffect(() => {
@@ -92,6 +93,7 @@ export const useInfiniteScroll = <T extends WithIdAndCreatedAt>({
     }
   }, [
     data,
+    dataPerRender,
     fetchData,
     hasMore,
     idBased,
