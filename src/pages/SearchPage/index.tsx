@@ -28,8 +28,6 @@ const SearchPage = () => {
 
   return (
     <div className="container mx-auto px-4">
-      <SearchBar setSearchResults={setSearchResults} />
-
       <InfiniteScroll
         items={searchResults}
         loadMore={loadMoreSearchResults}

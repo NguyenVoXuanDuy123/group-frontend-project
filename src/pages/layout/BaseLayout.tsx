@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 
 const BaseLayout = () => {
   return (
-    <div className="w-full h-full">
+    <div className="relative w-full h-full">
       <Header />
       <div className="relative mx-auto flex justify-between w-full h-full ">
         <SideBarLeft />

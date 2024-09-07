@@ -1,13 +1,13 @@
-import { APP_NAME } from "@/constants";
-import Logo from "../svg/Logo";
+import LogoWithName from "../Common/LogoWithName";
+import NotificationAndAvatar from "../Common/NotificationAndAvatar";
+import SearchBar from "../Home/SearchBar";
 
 const Header = () => {
   return (
-    <div className="w-full px-4 h-16 bg-white flex justify-between items-center">
-      <div className="flex">
-        <Logo className="w-10 h-10" />
-        <h1 className="">{APP_NAME}</h1>
-      </div>
+    <div className="sticky top-0 w-full border-b border-light-grey px-4 h-20 bg-white flex justify-between items-center">
+      <LogoWithName />
+      <SearchBar />
+      <NotificationAndAvatar />
     </div>
   );
 };

@@ -1,14 +1,14 @@
 import { SearchBy } from "@/enums/search.enums";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
+import { GroupCard } from "@/types/group.types";
+import { UserInformation } from "@/types/user.types";
 import React, { useState } from "react";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Popover from "../Common/Popover";
-import FriendIcon from "../svg/side-bar-icons/FriendIcon";
-import GroupIcon from "../svg/side-bar-icons/GroupIcon";
 import ChevronDown from "../svg/ChevronDown";
 import SearchIcon from "../svg/SearchIcon";
-import { UserInformation } from "@/types/user.types";
-import { GroupCard } from "@/types/group.types";
+import FriendIcon from "../svg/side-bar-icons/FriendIcon";
+import GroupIcon from "../svg/side-bar-icons/GroupIcon";
 
 type SearchBarProps = {
   setSearchResults?: React.Dispatch<
@@ -38,7 +38,7 @@ export default function SearchBar({ setSearchResults }: SearchBarProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex items-center space-x-2 max-w-2xl mx-auto my-8 w-full"
+      className="flex items-center space-x-2 max-w-2xl mx-auto my-8 w-full border border-light-grey rounded-lg"
     >
       <div className="flex items-center rounded-lg p-2 w-full bg-white">
         <Popover
@@ -48,7 +48,7 @@ export default function SearchBar({ setSearchResults }: SearchBarProps) {
             <button
               type="button"
               className="inline-flex justify-center items-center px-4 py-2 text-sm font-medium
-                       text-gray-700 bg-white border border-light-grey rounded-md hover:bg-gray-50 
+                       text-gray-700 bg-white  rounded-md hover:bg-gray-50 
                        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary
                        w-full sm:w-auto"
             >

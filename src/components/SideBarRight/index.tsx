@@ -1,10 +1,9 @@
 import FriendCard from "@/components/SideBarRight/FriendCard";
-import { RootState } from "@/redux/store";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 import { fetchApi } from "@/helpers/fetchApi";
+import { RootState } from "@/redux/store";
 import { UserInformation } from "@/types/user.types";
-import NotificationAndAvatar from "@/components/Common/NotificationAndAvatar";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const SideBarRight = () => {
   const dispatch = useDispatch();
@@ -31,9 +30,6 @@ const SideBarRight = () => {
   return (
     <div className="w-80 h-screen p-4 sticky top-0 bg-white">
       <div className="my-4">
-        <div className="flex justify-end">
-          <NotificationAndAvatar />
-        </div>
         <h2 className="text-lg font-bold mb-1">Friends</h2>
         {friends.map((friend) => {
           return (
