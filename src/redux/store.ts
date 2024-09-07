@@ -2,6 +2,7 @@ import authSlice from "@/redux/slices/authSlice";
 import modalSlice from "@/redux/slices/modalSlice";
 import notificationSlice from "@/redux/slices/notificationSlice";
 import toastSlice from "@/redux/slices/toastSlice";
+import reactionsSlice from "@/redux/slices/reactionSlice";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
     toast: toastSlice,
     notification: notificationSlice,
     modal: modalSlice,
+    reactions: reactionsSlice,
   },
 });
 

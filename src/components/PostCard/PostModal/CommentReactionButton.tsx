@@ -6,6 +6,7 @@ import { UserReaction } from "@/types/post.types";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import ReactionPopup from "@/components/PostCard/ReactionPopup";
+import { saveReactionToIndexedDB } from "@/helpers/indexedDB";
 
 type ReactionButtonProps = {
   commentId: string;
@@ -37,32 +38,36 @@ const CommentReactionButton = ({
     }
   };
 
-  const reactToComment = async (reactionType: ReactionType) => {
-    try {
-      if (userReaction && userReaction.type === reactionType) {
-        const response = await fetchApi(
-          `/api/comments/${commentId}/reactions`,
-          "DELETE",
-          dispatch
-        );
-        if (response.status === "success") {
-          updateCommentReaction(reactionType);
-        }
-      } else {
-        const response = await fetchApi(
-          `/api/comments/${commentId}/reactions`,
-          "PUT",
-          dispatch,
-          { type: reactionType }
-        );
-        if (response.status === "success") {
-          updateCommentReaction(reactionType);
-        }
-      }
+  const reactToComment = async (newReaction: ReactionType) => {
+    const oldReaction = userReaction?.type;
+    updateCommentReaction(newReaction);
+    hideReactionModal();
 
-      hideReactionModal();
-    } catch (error) {
-      console.error("Error reacting to comment:", error);
+    const response = await fetchApi(
+      `/api/comments/${commentId}/reactions`,
+      oldReaction == newReaction ? "DELETE" : "PUT",
+      dispatch,
+      { type: newReaction }
+    );
+    if (
+      response.status === "error" &&
+      response.errorCode === "ERR_CONNECTION_REFUSED"
+    ) {
+      await saveReactionToIndexedDB({
+        id: commentId,
+        type: oldReaction == newReaction ? ReactionType.UNREACT : newReaction,
+        isComment: true,
+      });
+
+      return;
+    }
+    // if the server returns an error not related to offline support, revert the reaction
+    if (response.status === "error") {
+      if (oldReaction) {
+        updateCommentReaction(oldReaction);
+      } else {
+        updateCommentReaction(userReaction!.type);
+      }
     }
   };
 
@@ -78,7 +83,8 @@ const CommentReactionButton = ({
     <div
       onMouseEnter={showReactionModal}
       onMouseLeave={delayedHideModal}
-      className="relative font-bold px-4 py-2 cursor-pointer">
+      className="relative font-bold px-4 py-2 cursor-pointer"
+    >
       <div className="mr-2 text-dark-grey" onClick={handleClickReaction}>
         <span
           style={
@@ -87,7 +93,8 @@ const CommentReactionButton = ({
                   color: reactionColors[userReaction?.type],
                 }
               : {}
-          }>
+          }
+        >
           {capitalizeFirstLetter(userReaction?.type || "Like")}
         </span>
       </div>

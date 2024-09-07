@@ -7,5 +7,6 @@ export const reactionColors = {
   love: "#F06D6D",
   haha: "#FCC738",
   angry: "#E56232",
+  unreact: "#777777",
 };
 export const POSTS_PER_FETCH = 20;

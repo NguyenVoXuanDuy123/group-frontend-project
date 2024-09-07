@@ -7,18 +7,28 @@ import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { Comment } from "@/types/comment.types";
 import { Post } from "@/types/post.types";
 import CommentPrompt from "./CommentPrompt";
+import { Group } from "@/types/group.types";
+import { UserGroupRelation } from "@/enums/group.enums";
 
 type Props = {
   open: boolean;
   hideModal: () => void;
   post: Post;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  group?: Group;
 };
 
 const COMMENTS_PER_PAGE = 15;
 
-export const PostModal = ({ open, hideModal, post, setPosts }: Props) => {
+export const PostModal = ({
+  open,
+  hideModal,
+  post,
+  setPosts,
+  group,
+}: Props) => {
   const { user } = useAuth();
+  // console.log(group);
 
   const [comments, setComments, loadMore] = useInfiniteScroll<Comment>({
     endpoint: `/api/posts/${post._id}/comments`,
@@ -67,11 +77,14 @@ export const PostModal = ({ open, hideModal, post, setPosts }: Props) => {
         {open ? (
           <>
             <PostCard setPosts={setPosts} inModal post={post} />
-            <CommentPrompt
-              onSubmit={createNewComment}
-              postId={post._id}
-              user={user!}
-            />
+            {(group?.userGroupRelation === UserGroupRelation.ADMIN ||
+              group?.userGroupRelation === UserGroupRelation.MEMBER) && (
+              <CommentPrompt
+                onSubmit={createNewComment}
+                postId={post._id}
+                user={user!}
+              />
+            )}
             <InfiniteScroll
               items={comments}
               loadMore={loadMore}

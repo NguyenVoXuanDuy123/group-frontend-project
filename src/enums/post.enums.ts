@@ -9,6 +9,7 @@ export enum ReactionType {
   LOVE = "love",
   HAHA = "haha",
   ANGRY = "angry",
+  UNREACT = "unreact",
 }
 
 export enum ReactionTargetType {

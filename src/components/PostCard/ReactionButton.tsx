@@ -1,13 +1,14 @@
+import ReactionPopup from "@/components/PostCard/ReactionPopup";
+import LikeAction from "@/components/svg/post/LikeAction";
+import { reactionColors } from "@/constants";
 import reactionMap from "@/constants/reactionMap";
 import { ReactionType } from "@/enums/post.enums";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import { fetchApi } from "@/helpers/fetchApi";
+import { saveReactionToIndexedDB } from "@/helpers/indexedDB";
 import { UserReaction } from "@/types/post.types";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import LikeAction from "@/components/svg/post/LikeAction";
-import ReactionPopup from "@/components/PostCard/ReactionPopup";
-import { reactionColors } from "@/constants";
 
 type ReactionButtonProps = {
   postId: string;
@@ -25,31 +26,37 @@ const ReactionButton = ({
   const [hideDelay, setHideDelay] = useState<NodeJS.Timeout | null>(null);
   const dispatch = useDispatch();
 
-  const handleReaction = async (reactionType: ReactionType) => {
-    if (userReaction && userReaction.type === reactionType) {
-      const response = await fetchApi(
-        `/api/posts/${postId}/reactions`,
-        "DELETE",
-        dispatch
-      );
+  const handleReaction = async (newReaction: ReactionType) => {
+    const oldReaction = userReaction?.type;
+    updateUserReaction({ type: newReaction });
+    setShowReactions(false);
 
-      if (response.status === "success") {
-        updateUserReaction({ type: reactionType });
-      }
-    } else {
-      const response = await fetchApi(
-        `/api/posts/${postId}/reactions`,
-        "PUT",
-        dispatch,
-        {
-          type: reactionType,
-        }
-      );
-      if (response.status === "success") {
-        updateUserReaction({ type: reactionType });
+    const response = await fetchApi(
+      `/api/posts/${postId}/reactions`,
+      oldReaction == newReaction ? "DELETE" : "PUT",
+      dispatch,
+      { type: newReaction }
+    );
+    if (
+      response.status === "error" &&
+      response.errorCode === "ERR_CONNECTION_REFUSED"
+    ) {
+      await saveReactionToIndexedDB({
+        id: postId,
+        type: oldReaction == newReaction ? ReactionType.UNREACT : newReaction,
+        isComment: false,
+      });
+
+      return;
+    }
+    // if the server returns an error not related to offline support, revert the reaction
+    if (response.status === "error") {
+      if (oldReaction) {
+        updateUserReaction({ type: oldReaction });
+      } else {
+        updateUserReaction({ type: newReaction });
       }
     }
-    setShowReactions(false);
   };
 
   const handleClickReaction = () => {
@@ -68,8 +75,13 @@ const ReactionButton = ({
         <>
           <Reaction />
           <span
-            style={{ color: reactionColors[userReaction.type] }}
-            className={`ml-2 font-bold`}>
+            style={
+              reactionColors[userReaction.type]
+                ? { color: reactionColors[userReaction.type] }
+                : {}
+            }
+            className={`ml-2 font-bold`}
+          >
             {capitalizeFirstLetter(userReaction.type)}
           </span>
         </>
@@ -99,10 +111,12 @@ const ReactionButton = ({
     <div
       className="relative flex-1"
       onMouseEnter={showReactionChoices}
-      onMouseLeave={hideReactionChoices}>
+      onMouseLeave={hideReactionChoices}
+    >
       <div
         className="flex-1 rounded-lg p-3 relative flex items-center justify-center cursor-pointer hover:bg-light-grey"
-        onClick={handleClickReaction}>
+        onClick={handleClickReaction}
+      >
         {userReaction ? (
           _renderReaction()
         ) : (

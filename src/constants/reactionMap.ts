@@ -8,6 +8,7 @@ const reactionMap = {
   love: LoveReaction,
   haha: HahaReaction,
   angry: AngryReaction,
+  unreact: null,
 };
 
 export default reactionMap;

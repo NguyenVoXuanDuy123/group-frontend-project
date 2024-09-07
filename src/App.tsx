@@ -1,22 +1,22 @@
+import GroupCreationRequests from "@/pages/AdminPage/GroupCreationRequests";
+import GroupMembers from "@/pages/GroupPage/GroupMembers";
+import GroupPosts from "@/pages/GroupPage/GroupPosts";
+import GroupRequests from "@/pages/GroupPage/GroupRequests";
+import Home from "@/pages/Home";
+import NoPage from "@/pages/NoPage";
+import ProfileFriends from "@/pages/ProfilePage/ProfileFriends";
+import ProfileGroups from "@/pages/ProfilePage/ProfileGroups";
+import ProfileMyGroups from "@/pages/ProfilePage/ProfileMyGroups";
+import ProfilePosts from "@/pages/ProfilePage/ProfilePosts";
+import ProfileRequests from "@/pages/ProfilePage/ProfileRequests";
+import BaseLayout from "@/pages/layout/BaseLayout";
+import GroupLayout from "@/pages/layout/GroupLayout";
 import ProfileLayout from "@/pages/layout/ProfileLayout";
+import ProtectedRoute from "@/pages/layout/ProtectedRoute";
 import { store } from "@/redux/store";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Toast from "./components/Common/Toast";
-import ProfilePosts from "@/pages/ProfilePage/ProfilePosts";
-import ProfileFriends from "@/pages/ProfilePage/ProfileFriends";
-import ProfileRequests from "@/pages/ProfilePage/ProfileRequests";
-import ProfileGroups from "@/pages/ProfilePage/ProfileGroups";
-import ProfileMyGroups from "@/pages/ProfilePage/ProfileMyGroups";
-import BaseLayout from "@/pages/layout/BaseLayout";
-import Home from "@/pages/Home";
-import NoPage from "@/pages/NoPage";
-import GroupLayout from "@/pages/layout/GroupLayout";
-import GroupPosts from "@/pages/GroupPage/GroupPosts";
-import GroupMembers from "@/pages/GroupPage/GroupMembers";
-import GroupRequests from "@/pages/GroupPage/GroupRequests";
-import ProtectedRoute from "@/pages/layout/ProtectedRoute";
-import GroupCreationRequests from "@/pages/AdminPage/GroupCreationRequests";
 
 export default function App() {
   return (
