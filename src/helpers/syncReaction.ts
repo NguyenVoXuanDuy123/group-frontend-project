@@ -19,7 +19,7 @@ const syncOfflineReactions = async () => {
         const endpoint = isComment
           ? `/api/comments/${id}/reactions`
           : `/api/posts/${id}/reactions`;
-        const method = type === "unreact" ? "DELETE" : "PUT";
+        const method = type === "" ? "DELETE" : "PUT";
         const response = await fetchApi(endpoint, method, store.dispatch, {
           type,
         });

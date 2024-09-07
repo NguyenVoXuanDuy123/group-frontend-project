@@ -43,7 +43,7 @@ const ReactionButton = ({
     ) {
       await saveReactionToIndexedDB({
         id: postId,
-        type: oldReaction == newReaction ? ReactionType.UNREACT : newReaction,
+        type: oldReaction == newReaction ? "UNREACT" : newReaction,
         isComment: false,
       });
 
@@ -67,7 +67,7 @@ const ReactionButton = ({
     handleReaction(userReaction.type);
   };
 
-  const _renderReaction = () => {
+  const renderReaction = () => {
     if (userReaction) {
       const Reaction = reactionMap[userReaction?.type] || null;
       if (!Reaction) return null;
@@ -80,8 +80,7 @@ const ReactionButton = ({
                 ? { color: reactionColors[userReaction.type] }
                 : {}
             }
-            className={`ml-2 font-bold`}
-          >
+            className={`ml-2 font-bold`}>
             {capitalizeFirstLetter(userReaction.type)}
           </span>
         </>
@@ -111,14 +110,12 @@ const ReactionButton = ({
     <div
       className="relative flex-1"
       onMouseEnter={showReactionChoices}
-      onMouseLeave={hideReactionChoices}
-    >
+      onMouseLeave={hideReactionChoices}>
       <div
         className="flex-1 rounded-lg p-3 relative flex items-center justify-center cursor-pointer hover:bg-light-grey"
-        onClick={handleClickReaction}
-      >
+        onClick={handleClickReaction}>
         {userReaction ? (
-          _renderReaction()
+          renderReaction()
         ) : (
           <>
             <LikeAction />

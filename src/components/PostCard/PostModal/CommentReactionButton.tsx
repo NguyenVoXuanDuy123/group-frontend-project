@@ -55,7 +55,7 @@ const CommentReactionButton = ({
     ) {
       await saveReactionToIndexedDB({
         id: commentId,
-        type: oldReaction == newReaction ? ReactionType.UNREACT : newReaction,
+        type: oldReaction == newReaction ? "UNREACT" : newReaction,
         isComment: true,
       });
 
@@ -83,8 +83,7 @@ const CommentReactionButton = ({
     <div
       onMouseEnter={showReactionModal}
       onMouseLeave={delayedHideModal}
-      className="relative font-bold px-4 py-2 cursor-pointer"
-    >
+      className="relative font-bold px-4 py-2 cursor-pointer">
       <div className="mr-2 text-dark-grey" onClick={handleClickReaction}>
         <span
           style={
@@ -93,8 +92,7 @@ const CommentReactionButton = ({
                   color: reactionColors[userReaction?.type],
                 }
               : {}
-          }
-        >
+          }>
           {capitalizeFirstLetter(userReaction?.type || "Like")}
         </span>
       </div>

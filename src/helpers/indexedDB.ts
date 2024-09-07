@@ -1,3 +1,5 @@
+import { ReactionType } from "@/enums/post.enums";
+
 // helpers/indexedDB.ts
 const dbName = "ReactionsDB";
 const storeName = "offlineReactions";
@@ -22,18 +24,20 @@ request.onerror = (event: Event) => {
   );
 };
 
-export const saveReactionToIndexedDB = (reaction: {
+type OfflineReaction = {
   id: string;
-  type: string;
+  type: ReactionType | "UNREACT";
   isComment: boolean;
-}) => {
+};
+
+export const saveReactionToIndexedDB = (offlineReaction: OfflineReaction) => {
   return new Promise<void>((resolve, reject) => {
     const request = indexedDB.open(dbName, 1);
     request.onsuccess = (event: Event) => {
       const db = (event.target as IDBOpenDBRequest).result;
       const transaction = db.transaction(storeName, "readwrite");
       const store = transaction.objectStore(storeName);
-      store.put(reaction);
+      store.put(offlineReaction);
       transaction.oncomplete = () => resolve();
       transaction.onerror = (event: Event) =>
         reject((event.target as IDBRequest).error);
@@ -44,22 +48,20 @@ export const saveReactionToIndexedDB = (reaction: {
 };
 
 export const getOfflineReactionsFromIndexedDB = () => {
-  return new Promise<Array<{ id: string; type: string; isComment: boolean }>>(
-    (resolve, reject) => {
-      const request = indexedDB.open(dbName, 1);
-      request.onsuccess = (event: Event) => {
-        const db = (event.target as IDBOpenDBRequest).result;
-        const transaction = db.transaction(storeName, "readonly");
-        const store = transaction.objectStore(storeName);
-        const getAllRequest = store.getAll();
-        getAllRequest.onsuccess = () => resolve(getAllRequest.result);
-        getAllRequest.onerror = (event: Event) =>
-          reject((event.target as IDBRequest).error);
-      };
-      request.onerror = (event: Event) =>
-        reject((event.target as IDBOpenDBRequest).error);
-    }
-  );
+  return new Promise<Array<OfflineReaction>>((resolve, reject) => {
+    const request = indexedDB.open(dbName, 1);
+    request.onsuccess = (event: Event) => {
+      const db = (event.target as IDBOpenDBRequest).result;
+      const transaction = db.transaction(storeName, "readonly");
+      const store = transaction.objectStore(storeName);
+      const getAllRequest = store.getAll();
+      getAllRequest.onsuccess = () => resolve(getAllRequest.result);
+      getAllRequest.onerror = (event: Event) =>
+        reject((event.target as IDBRequest).error);
+    };
+    request.onerror = (event: Event) =>
+      reject((event.target as IDBOpenDBRequest).error);
+  });
 };
 
 export const clearIndexedDB = () => {
