@@ -5,7 +5,7 @@ import { UserRole } from "@/enums/user.enums";
 import getFullName from "@/helpers/getFullName";
 import { useAuth } from "@/hooks/useAuth";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
-import GroupAdminActions from "@/pages/GroupPage/GroupAdminActions";
+import GroupAdminActions from "@/components/Group/GroupAdminActions";
 import { GroupLayoutContextType } from "@/pages/layout/GroupLayout";
 import { UserInformation } from "@/types/user.types";
 import { useOutletContext } from "react-router-dom";

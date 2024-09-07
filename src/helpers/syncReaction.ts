@@ -10,7 +10,6 @@ import { clearOfflineReactions } from "@/redux/slices/reactionSlice";
 const syncOfflineReactions = async () => {
   try {
     const offlineReactions = await getOfflineReactionsFromIndexedDB();
-    console.log(offlineReactions);
 
     let error = false;
     await Promise.all(
@@ -19,7 +18,7 @@ const syncOfflineReactions = async () => {
         const endpoint = isComment
           ? `/api/comments/${id}/reactions`
           : `/api/posts/${id}/reactions`;
-        const method = type === "" ? "DELETE" : "PUT";
+        const method = type === "UNREACT" ? "DELETE" : "PUT";
         const response = await fetchApi(endpoint, method, store.dispatch, {
           type,
         });
