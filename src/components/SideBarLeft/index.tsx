@@ -8,6 +8,7 @@ import { logOut } from "@/redux/slices/authSlice";
 import { AppDispatch, RootState } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import AdminIcon from "../svg/AdminIcon";
 
 const SideBarLeft = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -32,11 +33,8 @@ const SideBarLeft = () => {
             <TabItem title="Groups" icon={<GroupIcon />} />
           </Link>
           {role === UserRole.ADMIN && (
-            <Link
-              to={`/group-creation-requests`}
-              className="text-black no-underline"
-            >
-              <TabItem title="Group Creation Requests" icon={<GroupIcon />} />
+            <Link to={`/admin-dashboard`} className="text-black no-underline">
+              <TabItem title="Admin Dashboard" icon={<AdminIcon />} />
             </Link>
           )}
         </div>

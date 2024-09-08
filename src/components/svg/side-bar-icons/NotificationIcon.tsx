@@ -5,6 +5,7 @@ const NotificationIcon = (props: SVGProps<SVGSVGElement>) => (
     className="block"
     width={24}
     height={24}
+    viewBox="0 0 24 24 "
     {...props}
   >
     <g fill="none">

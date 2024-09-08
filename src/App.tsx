@@ -17,7 +17,9 @@ import { store } from "@/redux/store";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Toast from "./components/Common/Toast";
+import AdminDashboard from "./pages/AdminPage";
 import SearchPage from "./pages/SearchPage";
+import AdminLayout from "./pages/layout/AdminLayout";
 
 export default function App() {
   return (
@@ -33,6 +35,10 @@ export default function App() {
               />
               <Route path="/search" element={<SearchPage />} />
             </Route>
+            <Route path="/admin-dashboard" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+            </Route>
+
             <Route path="/:username/" element={<ProfileLayout />}>
               <Route index element={<ProfilePosts />} />
               <Route path="friends" element={<ProfileFriends />} />
