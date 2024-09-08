@@ -14,8 +14,8 @@ import { Link } from "react-router-dom";
 
 type CommentCardProps = {
   comment: Comment;
-  updateComment: (comment: Comment) => void;
-  deleteComment: (commentId: string) => void;
+  updateComment?: (comment: Comment) => void;
+  deleteComment?: (commentId: string) => void;
   postAuthorId?: string;
   readonly?: boolean;
 };
@@ -119,6 +119,7 @@ const CommentCard = ({
       }
     );
     if (response.status === "success") {
+      if (!updateComment) return;
       updateComment(response.result);
       setEditMode(false);
       dispatch(
@@ -146,7 +147,7 @@ const CommentCard = ({
                   comment={comment}
                   postAuthorId={postAuthorId!}
                   setEditMode={setEditMode}
-                  deleteComment={deleteComment}
+                  deleteComment={deleteComment!}
                 />
               )}
             </div>

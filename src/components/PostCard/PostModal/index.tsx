@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { Comment } from "@/types/comment.types";
 import { Post } from "@/types/post.types";
-import CommentPrompt from "./CommentPrompt";
+import CommentPrompt from "@/components/PostCard/PostModal/CommentPrompt";
 import { Group } from "@/types/group.types";
 import { UserGroupRelation } from "@/enums/group.enums";
 

@@ -10,8 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import EditIcon from "@/components/svg/EditIcon";
 import HistoryIcon from "@/components/svg/HistoryIcon";
 import WarningModal from "@/components/Common/Modal/WarningUnfriendModal";
-import CreateOrEditPostModal from "../Common/Post/CreateOrEditPostModal";
-import EditHistoryModal from "./PostModal/EditHistoryModal";
+import CreateOrEditPostModal from "@/components/Common/Post/CreateOrEditPostModal";
+import EditHistoryModal from "@/components/PostCard/PostModal/EditHistoryModal";
 import { RootState } from "@/redux/store";
 
 type SiteAdminActionsProps = {

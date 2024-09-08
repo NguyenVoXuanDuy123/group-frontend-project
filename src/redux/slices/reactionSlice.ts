@@ -2,7 +2,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ReactionType } from "@/enums/post.enums";
 import { UserReaction } from "@/types/post.types";
-import { RootState } from "../store";
+import { RootState } from "@/redux/store";
 
 type ReactionState = {
   reactions: Record<string, UserReaction>;

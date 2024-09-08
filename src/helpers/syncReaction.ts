@@ -3,7 +3,7 @@ import {
   getOfflineReactionsFromIndexedDB,
   clearIndexedDB,
 } from "@/helpers/indexedDB";
-import { fetchApi } from "./fetchApi";
+import { fetchApi } from "@/helpers/fetchApi";
 import { store } from "@/redux/store";
 import { clearOfflineReactions } from "@/redux/slices/reactionSlice";
 

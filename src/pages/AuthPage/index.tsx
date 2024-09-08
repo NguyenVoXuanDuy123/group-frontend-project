@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import loginPicture from "@/assets/image/LoginPicture.png";
 import Login from "@/pages/AuthPage/Login";
 import Register from "@/pages/AuthPage/Register";

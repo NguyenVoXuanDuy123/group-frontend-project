@@ -2,11 +2,11 @@ import { SearchBy } from "@/enums/search.enums";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Popover from "../Common/Popover";
-import ChevronDown from "../svg/ChevronDown";
-import SearchIcon from "../svg/SearchIcon";
-import FriendIcon from "../svg/side-bar-icons/FriendIcon";
-import GroupIcon from "../svg/side-bar-icons/GroupIcon";
+import Popover from "@/components/Common/Popover";
+import ChevronDown from "@/components/svg/ChevronDown";
+import SearchIcon from "@/components/svg/SearchIcon";
+import FriendIcon from "@/components/svg/side-bar-icons/FriendIcon";
+import GroupIcon from "@/components/svg/side-bar-icons/GroupIcon";
 
 export default function SearchBar() {
   const [searchQuery, setSearchQuery] = useState("");

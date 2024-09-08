@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import CloseIcon from "../../../svg/CloseIcon";
+import CloseIcon from "@/components/svg/CloseIcon";
 
 type ScrollableImageListProps = {
   images: string[];
@@ -73,14 +73,12 @@ const ScrollableImageList = ({
         ref={containerRef}
         className="flex w-full pb-1 space-x-2 overflow-x-scroll hide-scrollbar cursor-grab active:cursor-grabbing mb-4"
         onMouseDown={handleDragStart}
-        onTouchStart={handleDragStart}
-      >
+        onTouchStart={handleDragStart}>
         {images.map((src, index) => (
           <div
             key={src + index}
             className="flex-shrink-0 relative rounded-lg overflow-hidden"
-            onDragStart={(e) => e.preventDefault()}
-          >
+            onDragStart={(e) => e.preventDefault()}>
             <img
               src={src}
               alt={`Image ${index + 1}`}
@@ -91,8 +89,7 @@ const ScrollableImageList = ({
               onClick={(e) => {
                 e.stopPropagation();
                 handleDelete(index);
-              }}
-            >
+              }}>
               <CloseIcon width={20} height={20} />
             </button>
           </div>

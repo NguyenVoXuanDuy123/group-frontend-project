@@ -2,8 +2,8 @@ import Modal from "@/components/Common/Modal";
 import { timeAgo } from "@/helpers/timeAgo";
 import { Comment } from "@/types/comment.types";
 import { Post } from "@/types/post.types";
-import PostCard from "..";
-import CommentCard from "./CommentCard";
+import PostCard from "@/components/PostCard";
+import CommentCard from "@/components/PostCard/PostModal/CommentCard";
 
 type EditHistoryModalProps = {
   originalPost?: Post;

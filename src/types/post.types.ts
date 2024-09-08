@@ -1,5 +1,5 @@
 import { PostVisibilityLevel, ReactionType } from "@/enums/post.enums";
-import { UserInformation } from "./user.types";
+import { UserInformation } from "@/types/user.types";
 
 export type Post = {
   author: UserInformation;

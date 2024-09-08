@@ -11,7 +11,7 @@ import { RootState } from "@/redux/store";
 import { Comment } from "@/types/comment.types";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import EditHistoryModal from "./EditHistoryModal";
+import EditHistoryModal from "@/components/PostCard/PostModal/EditHistoryModal";
 
 type CommentActionsProps = {
   comment: Comment;
@@ -68,8 +68,7 @@ const CommentActions = ({
         key={comment._id}
         popoverOpen={popoverOpen}
         setPopoverOpen={setPopoverOpen}
-        displayComponent={<ThreeDotsIcon />}
-      >
+        displayComponent={<ThreeDotsIcon />}>
         <div className=" w-[244px] bg-white shadow-md rounded-md ">
           {/* Comment can only be deleted by the comment author, post author, site-admin or group admin */}
           {(user._id === comment.author._id ||
@@ -78,8 +77,7 @@ const CommentActions = ({
             user._id === groupAdminId) && (
             <button
               onClick={() => setWarningDeleteCommentModal(true)}
-              className="flex w-full px-4  py-2 text-gray-700 hover:bg-gray-100 text-left items-center"
-            >
+              className="flex w-full px-4  py-2 text-gray-700 hover:bg-gray-100 text-left items-center">
               <div className="mr-2 mb-[2px]">
                 <TrashIcon />
               </div>
@@ -90,8 +88,7 @@ const CommentActions = ({
           {user._id === comment.author._id && (
             <button
               onClick={() => setEditMode(true)}
-              className="flex w-full px-4  py-2 text-gray-700 hover:bg-gray-100 text-left items-center"
-            >
+              className="flex w-full px-4  py-2 text-gray-700 hover:bg-gray-100 text-left items-center">
               <div className="mr-2 mb-[2px]">
                 <EditIcon />
               </div>
@@ -101,8 +98,7 @@ const CommentActions = ({
 
           <button
             onClick={showEditHistoryModal}
-            className="flex w-full px-4 rounded-md py-2 text-gray-700 hover:bg-gray-100 text-left items-center"
-          >
+            className="flex w-full px-4 rounded-md py-2 text-gray-700 hover:bg-gray-100 text-left items-center">
             <div className="mr-2 mb-[2px]">
               <HistoryIcon />
             </div>

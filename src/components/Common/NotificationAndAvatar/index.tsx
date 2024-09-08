@@ -1,5 +1,6 @@
 import AvatarWithPopover from "@/components/Common/NotificationAndAvatar/AvatarWithPopover";
 import NotificationWithPopover from "@/components/Common/NotificationAndAvatar/NotificationWithPopover";
+import { UserRole } from "@/enums/user.enums";
 import { useAuth } from "@/hooks/useAuth";
 
 const NotificationAndAvatar = () => {
@@ -8,9 +9,13 @@ const NotificationAndAvatar = () => {
 
   return (
     <div className="flex w-fit ">
-      <NotificationWithPopover />
+      {user.role !== UserRole.ADMIN && <NotificationWithPopover />}
 
-      <AvatarWithPopover avatar={user.avatar} username={user.username} />
+      <AvatarWithPopover
+        role={user.role}
+        avatar={user.avatar}
+        username={user.username}
+      />
     </div>
   );
 };

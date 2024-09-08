@@ -10,6 +10,4 @@ class RouteError extends Error {
   }
 }
 
-// **** Export default **** //
-
 export default RouteError;

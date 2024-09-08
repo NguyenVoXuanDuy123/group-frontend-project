@@ -8,7 +8,7 @@ import { logOut } from "@/redux/slices/authSlice";
 import { AppDispatch, RootState } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import AdminIcon from "../svg/AdminIcon";
+import AdminIcon from "@/components/svg/AdminIcon";
 
 const SideBarLeft = () => {
   const dispatch = useDispatch<AppDispatch>();

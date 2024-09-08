@@ -2,19 +2,18 @@ import GroupCreationRequestCard from "@/components/Admin/GroupCreationRequestCar
 import InfiniteScroll from "@/components/Common/InfiniteScroll";
 import FriendIcon from "@/components/svg/side-bar-icons/FriendIcon";
 import GroupIcon from "@/components/svg/side-bar-icons/GroupIcon";
-import NotificationIcon from "@/components/svg/side-bar-icons/NotificationIcon";
 import { UserRole } from "@/enums/user.enums";
 import { useAuth } from "@/hooks/useAuth";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { GroupCard } from "@/types/group.types";
 import { useEffect, useState } from "react";
-import NoPage from "../NoPage";
+import NoPage from "@/pages/NoPage";
 import GroupManagementTab, {
   ExtendedGroupInformation,
-} from "./GroupManagementTab";
+} from "@/pages/AdminPage/GroupManagementTab";
 import UserManagementTab, {
   ExtendedUserInformation,
-} from "./UserManagementTab";
+} from "@/pages/AdminPage/UserManagementTab";
 
 enum AdminTab {
   OVERVIEW = "Overview",
@@ -29,14 +28,12 @@ const GroupRequestManager = () => {
     role: UserRole.USER,
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [groups, setGroups, loadMoreGroups, isLoading] =
-    useInfiniteScroll<GroupCard>({
-      endpoint: `/api/groups/admin/creation-requests`,
-      limit: 10,
-      // Only allow fetching if the user is an admin
-      isAllowFetch: role === UserRole.ADMIN,
-    });
+  const [groups, , loadMoreGroups, isLoading] = useInfiniteScroll<GroupCard>({
+    endpoint: `/api/groups/admin/creation-requests`,
+    limit: 10,
+    // Only allow fetching if the user is an admin
+    isAllowFetch: role === UserRole.ADMIN,
+  });
 
   if (role !== UserRole.ADMIN) {
     return <NoPage />;
@@ -53,8 +50,7 @@ const GroupRequestManager = () => {
           renderItem={(group) => (
             <div
               key={`group-${group._id}`}
-              className="flex justify-center sm:justify-start "
-            >
+              className="flex justify-center sm:justify-start ">
               <GroupCreationRequestCard groupCreationRequest={group} />
             </div>
           )}
@@ -86,7 +82,7 @@ export default function AdminDashboard() {
       },
     });
 
-  const [groups, setGroups, loadMoreGroups] =
+  const [groups, , loadMoreGroups] =
     useInfiniteScroll<ExtendedGroupInformation>({
       endpoint: "/api/search",
       limit: 10000,
@@ -145,34 +141,13 @@ export default function AdminDashboard() {
                 </div>
               </div>
             </div>
-            <div className="bg-white overflow-hidden shadow rounded-lg">
-              <div className="p-5">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <NotificationIcon width={32} height={32} />
-                  </div>
-                  <div className="ml-5 w-0 flex-1">
-                    <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">
-                        Pending Requests
-                      </dt>
-                      <dd className="text-lg font-medium text-gray-900">17</dd>
-                    </dl>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         );
       case AdminTab.GROUP_REQUESTS:
         return <GroupRequestManager />;
       case AdminTab.GROUP_MANAGEMENT:
         return (
-          <GroupManagementTab
-            groups={groups}
-            setGroups={setGroups}
-            loadMoreGroups={loadMoreGroups}
-          />
+          <GroupManagementTab groups={groups} loadMoreGroups={loadMoreGroups} />
         );
       case AdminTab.USER_MANAGEMENT:
         return (
@@ -201,8 +176,7 @@ export default function AdminDashboard() {
                 activeTab === tab
                   ? "bg-indigo-100 text-primary"
                   : "text-gray-500 hover:text-gray-700"
-              } bg-white px-3 py-2 text-sm rounded-md`}
-            >
+              } bg-white px-3 py-2 text-sm rounded-md`}>
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
             </button>
           ))}

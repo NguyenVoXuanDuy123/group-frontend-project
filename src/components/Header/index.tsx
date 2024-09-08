@@ -1,6 +1,6 @@
-import LogoWithName from "../Common/LogoWithName";
-import NotificationAndAvatar from "../Common/NotificationAndAvatar";
-import SearchBar from "../Home/SearchBar";
+import LogoWithName from "@/components/Common/LogoWithName";
+import NotificationAndAvatar from "@/components/Common/NotificationAndAvatar";
+import SearchBar from "@/components/Home/SearchBar";
 
 const Header = () => {
   return (

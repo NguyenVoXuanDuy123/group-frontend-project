@@ -16,10 +16,10 @@ import ProtectedRoute from "@/pages/layout/ProtectedRoute";
 import { store } from "@/redux/store";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Toast from "./components/Common/Toast";
-import AdminDashboard from "./pages/AdminPage";
-import SearchPage from "./pages/SearchPage";
-import AdminLayout from "./pages/layout/AdminLayout";
+import Toast from "@/components/Common/Toast";
+import AdminDashboard from "@/pages/AdminPage";
+import SearchPage from "@/pages/SearchPage";
+import AdminLayout from "@/pages/layout/AdminLayout";
 
 export default function App() {
   return (

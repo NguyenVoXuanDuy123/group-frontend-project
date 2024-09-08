@@ -11,25 +11,23 @@ export type ExtendedGroupInformation = GroupCard & {
 
 type GroupManagementTabProps = {
   groups: ExtendedGroupInformation[];
-  setGroups: React.Dispatch<React.SetStateAction<ExtendedGroupInformation[]>>;
+
   loadMoreGroups: () => void;
 };
 
 const GroupManagementTab = ({
   groups,
-  setGroups,
+
   loadMoreGroups,
 }: GroupManagementTabProps) => {
   const renderGroup = (group: ExtendedGroupInformation) => (
     <div
       key={group._id}
-      className="bg-white shadow overflow-hidden sm:rounded-lg mb-4"
-    >
+      className="bg-white shadow overflow-hidden sm:rounded-lg mb-4">
       <div className="px-4 py-5 sm:px-6">
         <Link
           to={`/groups/${group._id}`}
-          className="text-lg leading-6 font-medium text-gray-900 hover:underline"
-        >
+          className="text-lg leading-6 font-medium text-gray-900 hover:underline">
           {group.name}
         </Link>
       </div>
@@ -51,8 +49,7 @@ const GroupManagementTab = ({
                   group.visibilityLevel === GroupVisibilityLevel.PUBLIC
                     ? "bg-green-100 text-green-800"
                     : "bg-yellow-100 text-yellow-800"
-                }`}
-              >
+                }`}>
                 {group.visibilityLevel}
               </span>
             </dd>
