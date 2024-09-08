@@ -1,19 +1,17 @@
 import ProfileActions from "@/components/Profile/ProfileHeader/ProfileActions";
 // import UploadAvatarModal from "@/components/Modal/UploadAvatarModal";
+import Avatar from "@/components/Common/User/Avatar";
+import SiteAdminActions from "@/components/Profile/ProfileHeader/SiteAdminActions";
 import TabItem from "@/components/Profile/ProfileHeader/TabItem";
 import UploadAvatarModal from "@/components/Profile/ProfileHeader/UploadAvatarModal";
-import Avatar from "@/components/Common/User/Avatar";
 import { UserFriendRelation, UserRole } from "@/enums/user.enums";
 import { abbreviateNumber } from "@/helpers/abbreviateNumber";
 import getFullName from "@/helpers/getFullName";
+import { RootState } from "@/redux/store";
 import { UserProfile } from "@/types/user.types";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import SiteAdminActions from "@/components/Profile/ProfileHeader/SiteAdminActions";
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-import LogoWithName from "@/components/Common/LogoWithName";
-import NotificationAndAvatar from "@/components/Common/NotificationAndAvatar";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type ProfileHeaderProps = {
   user: UserProfile;
@@ -36,10 +34,6 @@ const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
 
   return (
     <div className="bg-white pt-62 ">
-      <LogoWithName />
-      <div className="absolute right-5 top-8">
-        <NotificationAndAvatar />
-      </div>
       {/* Profile image and details */}
       <div className="flex items-center  relative pt-2 ">
         {/* Avatar Upload Modal */}
@@ -81,7 +75,8 @@ const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
             className="text-dark-grey font-semibold cursor-pointer hover:underline"
             onClick={() => {
               navigate(`/${user.username}/friends`);
-            }}>
+            }}
+          >
             {abbreviateNumber(user.friendCount) + " friends "}{" "}
             {user.userFriendRelation !== UserFriendRelation.SELF &&
               "• " + user.mutualFriendCount + " mutual"}

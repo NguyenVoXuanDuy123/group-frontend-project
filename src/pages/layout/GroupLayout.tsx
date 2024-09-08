@@ -1,4 +1,5 @@
 import GroupHeader from "@/components/Group/GroupHeader";
+import Header from "@/components/Header";
 import { fetchApi } from "@/helpers/fetchApi";
 import { Group } from "@/types/group.types";
 import { useEffect, useState } from "react";
@@ -34,7 +35,8 @@ const GroupLayout = () => {
   return (
     <div>
       <div className="bg-white">
-        <div className="max-w-[880px] mx-auto px-6">
+        <Header />
+        <div className="max-w-[880px] mx-auto px-6 mt-20">
           <GroupHeader group={group} setGroup={setGroup} />
         </div>
       </div>

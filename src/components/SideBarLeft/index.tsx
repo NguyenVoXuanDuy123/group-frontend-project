@@ -19,7 +19,7 @@ const SideBarLeft = () => {
   };
 
   return (
-    <div className="w-80 h-screen p-4 flex flex-col justify-between sticky top-0 bg-white">
+    <div className="sticky h-[calc(100vh-80px)] top-20 w-80 p-4 flex flex-col justify-between bg-white">
       <div className="flex flex-1 flex-col justify-between">
         <div className="mt-4">
           <Link to={`/`} className="text-black no-underline">

@@ -1,7 +1,5 @@
 import { SearchBy } from "@/enums/search.enums";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
-import { GroupCard } from "@/types/group.types";
-import { UserInformation } from "@/types/user.types";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Popover from "../Common/Popover";
@@ -10,13 +8,7 @@ import SearchIcon from "../svg/SearchIcon";
 import FriendIcon from "../svg/side-bar-icons/FriendIcon";
 import GroupIcon from "../svg/side-bar-icons/GroupIcon";
 
-type SearchBarProps = {
-  setSearchResults?: React.Dispatch<
-    React.SetStateAction<(UserInformation | GroupCard)[]>
-  >;
-};
-
-export default function SearchBar({ setSearchResults }: SearchBarProps) {
+export default function SearchBar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchBy, setSearchBy] = useState<SearchBy>(SearchBy.USER);
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
@@ -24,8 +16,6 @@ export default function SearchBar({ setSearchResults }: SearchBarProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(searchQuery, searchBy);
-    // if (setSearchResults) setSearchResults([]);
 
     if (searchQuery.trim()) {
       navigate("/");

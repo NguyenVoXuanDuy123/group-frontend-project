@@ -1,3 +1,4 @@
+import Header from "@/components/Header";
 import ProfileHeader from "@/components/Profile/ProfileHeader";
 import { UserStatus } from "@/enums/user.enums";
 import { fetchApi } from "@/helpers/fetchApi";
@@ -36,7 +37,8 @@ const ProfileLayout = () => {
   return (
     <div>
       <div className="bg-white relative">
-        <div className="max-w-[880px] mx-auto px-6">
+        <Header />
+        <div className="max-w-[880px] mx-auto px-6 mt-20">
           <ProfileHeader user={user} setUser={setUser} />
         </div>
       </div>

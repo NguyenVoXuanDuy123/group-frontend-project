@@ -12,7 +12,7 @@ const SideBarRight = () => {
 
   useEffect(() => {
     const fetchFriends = async () => {
-      const numberOfFriends = 9;
+      const numberOfFriends = 8;
       const response = await fetchApi<UserInformation[]>(
         `/api/users/me/friends?limit=${numberOfFriends}`,
         "GET",
@@ -28,7 +28,7 @@ const SideBarRight = () => {
   if (!user) return null;
 
   return (
-    <div className="w-80 h-screen p-4 sticky top-0 bg-white">
+    <div className="sticky top-20 w-80 h-[calc(100vh-80px)] p-4 bg-white">
       <div className="my-4">
         <h2 className="text-lg font-bold mb-1">Friends</h2>
         {friends.map((friend) => {
