@@ -8,6 +8,7 @@ import { setToast } from "@/redux/slices/toastSlice";
 import { UserInformation } from "@/types/user.types";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export type ExtendedUserInformation = UserInformation & {
   role: "user";
@@ -29,6 +30,7 @@ export default function UserManagementTab({
   loadMoreUsers,
 }: UserManagementTabProps) {
   const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleStatusChange = async (userId: string, newStatus: UserStatus) => {
     const res = await fetchApi(
@@ -55,8 +57,14 @@ export default function UserManagementTab({
     }
   };
 
+  const filteredUsers = users.filter(
+    (user) =>
+      getFullName(user).toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.username.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="bg-white shadow-md rounded-lg overflow-hidden">
+    <div className="bg-white shadow-md rounded-lg overflow-hidden min-h-[800px]">
       <div className="px-4 py-5 sm:px-6">
         <h3 className="text-lg leading-6 font-medium text-gray-900">
           User Management
@@ -64,6 +72,15 @@ export default function UserManagementTab({
         <p className="mt-1 max-w-2xl text-sm text-gray-500">
           Manage user accounts and their statuses
         </p>
+        <div className="mt-4">
+          <input
+            type="text"
+            placeholder="Search users..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
       </div>
       <div className="border-t border-gray-200">
         <table className="min-w-full divide-y divide-gray-200">
@@ -71,45 +88,39 @@ export default function UserManagementTab({
             <tr>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 User
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Role
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Friends
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Groups
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Created At
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Status
               </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             <InfiniteScroll
-              items={users}
+              items={filteredUsers}
               loadMore={loadMoreUsers}
               renderItem={(user) => (
                 <tr key={user._id}>
@@ -117,21 +128,18 @@ export default function UserManagementTab({
                     <div className="flex items-center">
                       <Link
                         to={`/${user.username}`}
-                        className="flex-shrink-0 h-10 w-10"
-                      >
+                        className="flex-shrink-0 h-10 w-10">
                         <Avatar photoURL={user.avatar} size={48} />
                       </Link>
                       <div className="ml-4">
                         <Link
                           to={`/${user.username}`}
-                          className="text-sm font-medium text-gray-900"
-                        >
+                          className="text-sm font-medium text-gray-900">
                           {getFullName(user)}
                         </Link>
                         <Link
                           to={`/${user.username}`}
-                          className="block text-sm text-gray-500"
-                        >
+                          className="block text-sm text-gray-500">
                           @{user.username}
                         </Link>
                       </div>
@@ -160,8 +168,7 @@ export default function UserManagementTab({
                           e.target.value as UserStatus
                         )
                       }
-                      className="block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                    >
+                      className="block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                       <option value={UserStatus.ACTIVE}>Active</option>
                       <option value={UserStatus.BANNED}>Suspended</option>
                     </select>

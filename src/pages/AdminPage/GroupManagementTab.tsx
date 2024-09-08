@@ -1,3 +1,4 @@
+import { useState } from "react";
 import InfiniteScroll from "@/components/Common/InfiniteScroll";
 import { GroupVisibilityLevel } from "@/enums/group.enums";
 import { timeAgo } from "@/helpers/timeAgo";
@@ -11,15 +12,19 @@ export type ExtendedGroupInformation = GroupCard & {
 
 type GroupManagementTabProps = {
   groups: ExtendedGroupInformation[];
-
   loadMoreGroups: () => void;
 };
 
 const GroupManagementTab = ({
   groups,
-
   loadMoreGroups,
 }: GroupManagementTabProps) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredGroups = groups.filter((group) =>
+    group.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const renderGroup = (group: ExtendedGroupInformation) => (
     <div
       key={group._id}
@@ -72,15 +77,35 @@ const GroupManagementTab = ({
   );
 
   return (
-    <div>
-      <h3 className="mb-4 text-lg leading-6 font-medium text-gray-900">
-        Group Management
-      </h3>
-      <InfiniteScroll
-        items={groups}
-        loadMore={loadMoreGroups}
-        renderItem={renderGroup}
-      />
+    <div className="bg-white shadow-md rounded-lg overflow-hidden min-h-[800px]">
+      <div className="px-4 py-5 sm:px-6">
+        <h3 className="text-lg leading-6 font-medium text-gray-900">
+          Group Management
+        </h3>
+        <p className="mt-1 max-w-2xl text-sm text-gray-500">
+          Manage and search for groups
+        </p>
+        <div className="mt-4">
+          <label htmlFor="group-search" className="sr-only">
+            Search groups
+          </label>
+          <input
+            type="text"
+            id="group-search"
+            placeholder="Search groups..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
+      </div>
+      <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
+        <InfiniteScroll
+          items={filteredGroups}
+          loadMore={loadMoreGroups}
+          renderItem={renderGroup}
+        />
+      </div>
     </div>
   );
 };
