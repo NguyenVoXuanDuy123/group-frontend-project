@@ -109,6 +109,7 @@ const CreateOrEditGroupModal = ({
           description: group.description,
           visibilityLevel: group.visibilityLevel,
           status: group.status,
+          createdAt: group.createdAt,
           memberCount: 1,
         };
 

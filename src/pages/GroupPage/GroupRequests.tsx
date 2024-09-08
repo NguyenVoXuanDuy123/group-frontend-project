@@ -9,19 +9,14 @@ import { useOutletContext } from "react-router-dom";
 const GroupRequests = () => {
   const { group, setGroup } = useOutletContext<GroupLayoutContextType>();
 
-  const [
-    groupJoinRequests,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    setGroupJoinRequests,
-    loadMoreGroupJoinRequests,
-    isLoading,
-  ] = useInfiniteScroll<GroupJoinRequestCardType>({
-    endpoint: `/api/groups/${group._id}/pending-requests`,
-    limit: 10,
+  const [groupJoinRequests, , loadMoreGroupJoinRequests, isLoading] =
+    useInfiniteScroll<GroupJoinRequestCardType>({
+      endpoint: `/api/groups/${group._id}/pending-requests`,
+      limit: 10,
 
-    // Only allow fetching if the user is the admin of the group
-    isAllowFetch: group.userGroupRelation === UserGroupRelation.ADMIN,
-  });
+      // Only allow fetching if the user is the admin of the group
+      isAllowFetch: group.userGroupRelation === UserGroupRelation.ADMIN,
+    });
 
   if (group.userGroupRelation !== UserGroupRelation.ADMIN)
     return (

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import InfiniteScroll from "@/components/Common/InfiniteScroll";
 import CreateOrEditGroupModal from "@/components/Group/CreateOrEditGroupModal";
-import CreateOrEditGroupModalProps from "@/components/Group/CreateOrEditGroupModal";
 import ProfileGroupCard from "@/components/Profile/ProfileGroupCard";
 import PlusIcon from "@/components/svg/PlusIcon";
 import { GroupRole, GroupStatus } from "@/enums/group.enums";
@@ -51,7 +50,7 @@ const ProfileMyGroups = () => {
       isAllowFetch: isAllowFetch,
     });
 
-  const [rejectedGroups, setRejectedGroups, loadMoreRejectedGroups] =
+  const [rejectedGroups, _, loadMoreRejectedGroups] =
     useInfiniteScroll<GroupCard>({
       endpoint: `/api/users/me/groups`,
       limit: 10,
@@ -62,6 +61,7 @@ const ProfileMyGroups = () => {
       isAllowFetch: isAllowFetch,
     });
 
+  console.log(approvedGroups);
   // only show groups if the user is viewing their own profile
   if (!isAllowFetch)
     return (
@@ -114,8 +114,7 @@ const ProfileMyGroups = () => {
               groupStatus === GroupStatus.APPROVED
                 ? "bg-primary text-white scale-105 "
                 : "text-light-grey bg-dark-grey"
-            } px-4 py-2 rounded-md transition-transform duration-300 ease-in-out transform focus:outline-none hover:scale-105 `}
-          >
+            } px-4 py-2 rounded-md transition-transform duration-300 ease-in-out transform focus:outline-none hover:scale-105 `}>
             Approved
           </button>
           <button
@@ -124,8 +123,7 @@ const ProfileMyGroups = () => {
               groupStatus === GroupStatus.PENDING
                 ? "bg-primary text-white scale-105 "
                 : "text-light-grey bg-dark-grey"
-            } px-4 py-2 rounded-md transition-transform duration-300 ease-in-out transform focus:outline-none hover:scale-105 `}
-          >
+            } px-4 py-2 rounded-md transition-transform duration-300 ease-in-out transform focus:outline-none hover:scale-105 `}>
             Pending
           </button>
           <button
@@ -134,8 +132,7 @@ const ProfileMyGroups = () => {
               groupStatus === GroupStatus.REJECTED
                 ? "bg-primary text-white scale-105 "
                 : "text-light-grey bg-dark-grey"
-            } px-4 py-2 rounded-md transition-transform duration-300 ease-in-out transform focus:outline-none hover:scale-105 `}
-          >
+            } px-4 py-2 rounded-md transition-transform duration-300 ease-in-out transform focus:outline-none hover:scale-105 `}>
             Rejected
           </button>
         </div>
@@ -157,8 +154,7 @@ const ProfileMyGroups = () => {
           renderItem={(group) => (
             <div
               key={`group-${group._id}`}
-              className="flex justify-center sm:justify-start"
-            >
+              className="flex justify-center sm:justify-start">
               <ProfileGroupCard
                 group={group}
                 setGroupCards={setPendingGroups}

@@ -21,15 +21,14 @@ export default function SearchBar() {
       navigate("/");
       setTimeout(() => {
         navigate(`/search?q=${searchQuery}&searchBy=${searchBy}`);
-      }, 100);
+      }, 0.000000000000000001);
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex items-center space-x-2 max-w-2xl mx-auto my-8 w-full border border-light-grey rounded-lg"
-    >
+      className="flex items-center space-x-2 max-w-2xl mx-auto my-8 w-full border border-light-grey rounded-lg">
       <div className="flex items-center rounded-lg p-2 w-full bg-white">
         <Popover
           popoverOpen={popoverOpen}
@@ -40,8 +39,7 @@ export default function SearchBar() {
               className="inline-flex justify-center items-center px-4 py-2 text-sm font-medium
                        text-gray-700 bg-white  rounded-md hover:bg-gray-50 
                        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary
-                       w-full sm:w-auto"
-            >
+                       w-full sm:w-auto">
               {searchBy === SearchBy.GROUP ? (
                 <GroupIcon className="mr-2 h-4 w-4" />
               ) : (
@@ -50,8 +48,7 @@ export default function SearchBar() {
               {capitalizeFirstLetter(searchBy)}
               <ChevronDown />
             </button>
-          }
-        >
+          }>
           <div className="mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="py-1" role="none">
               <button
@@ -59,8 +56,7 @@ export default function SearchBar() {
                 onClick={() => {
                   setSearchBy(SearchBy.USER);
                   setPopoverOpen(false);
-                }}
-              >
+                }}>
                 <FriendIcon className="mr-2 h-4 w-4" />
                 <span>User</span>
               </button>
@@ -69,8 +65,7 @@ export default function SearchBar() {
                 onClick={() => {
                   setSearchBy(SearchBy.GROUP);
                   setPopoverOpen(false);
-                }}
-              >
+                }}>
                 <GroupIcon className="mr-2 h-4 w-4" />
                 <span>Group</span>
               </button>
@@ -90,8 +85,7 @@ export default function SearchBar() {
 
         <button
           onClick={handleSubmit}
-          className="p-2 text-blue-500 hover:text-blue-700"
-        >
+          className="p-2 text-blue-500 hover:text-blue-700">
           <SearchIcon />
         </button>
       </div>

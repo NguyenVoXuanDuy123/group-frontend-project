@@ -9,8 +9,7 @@ import { useOutletContext } from "react-router-dom";
 const ProfileFriends = () => {
   const { user } = useOutletContext<ProfileLayoutContextType>();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [friends, _, loadMoreFriends, isLoading] =
+  const [friends, , loadMoreFriends, isLoading] =
     useInfiniteScroll<UserProfile>({
       endpoint: `/api/users/${user._id}/friends`,
       limit: 20,

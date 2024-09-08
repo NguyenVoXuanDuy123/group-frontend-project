@@ -5,7 +5,6 @@ import { useSearchParams } from "react-router-dom";
 import { SearchBy } from "@/enums/search.enums";
 import InfiniteScroll from "@/components/Common/InfiniteScroll";
 import ProfileGroupCard from "@/components/Profile/ProfileGroupCard";
-import SearchBar from "@/components/Home/SearchBar";
 import FriendCard from "@/components/SideBarRight/FriendCard";
 import getFullName from "@/helpers/getFullName";
 
@@ -15,16 +14,17 @@ const SearchPage = () => {
   const q = searchParams.get("q") || "";
   const searchBy = (searchParams.get("searchBy") as SearchBy) || SearchBy.USER;
 
-  const [searchResults, setSearchResults, loadMoreSearchResults] =
-    useInfiniteScroll<UserInformation | GroupCard>({
-      endpoint: `/api/search`,
-      limit: 10,
-      queryParams: {
-        q,
-        searchBy,
-      },
-      idBased: true,
-    });
+  const [searchResults, , loadMoreSearchResults] = useInfiniteScroll<
+    UserInformation | GroupCard
+  >({
+    endpoint: `/api/search`,
+    limit: 10,
+    queryParams: {
+      q,
+      searchBy,
+    },
+    idBased: true,
+  });
 
   return (
     <div className="container mx-auto px-4">

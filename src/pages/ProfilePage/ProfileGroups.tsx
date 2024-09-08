@@ -7,11 +7,9 @@ import { useOutletContext } from "react-router-dom";
 
 const ProfileGroups = () => {
   // list of groups of the profile owner
-
   const { user } = useOutletContext<ProfileLayoutContextType>();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [groups, _, loadMoreGroups, isLoading] = useInfiniteScroll<GroupCard>({
+  const [groups, , loadMoreGroups, isLoading] = useInfiniteScroll<GroupCard>({
     endpoint: `/api/users/${user._id}/groups`,
     limit: 10,
   });

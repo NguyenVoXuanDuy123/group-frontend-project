@@ -17,18 +17,19 @@ import { useOutletContext } from "react-router-dom";
 const GroupPosts = () => {
   const { group } = useOutletContext<GroupLayoutContextType>();
   const { user } = useAuth();
+  /*
+   * Only allow fetching if the user is a member or admin of the group or the user is site-admin
+   * Or the group is public
+   */
+  const isAllowFetch =
+    group.visibilityLevel === GroupVisibilityLevel.PUBLIC ||
+    user?.role === UserRole.ADMIN ||
+    group.userGroupRelation === UserGroupRelation.ADMIN ||
+    group.userGroupRelation === UserGroupRelation.MEMBER;
   const [posts, setPosts, loadMorePosts, isLoading] = useInfiniteScroll<Post>({
     endpoint: `/api/groups/${group._id}/posts`,
     limit: POSTS_PER_FETCH,
-    isAllowFetch:
-      /*
-       * Only allow fetching if the user is a member or admin of the group or the user is site-admin
-       * Or the group is public
-       */
-      group.visibilityLevel === GroupVisibilityLevel.PUBLIC ||
-      user?.role === UserRole.ADMIN ||
-      group.userGroupRelation === UserGroupRelation.ADMIN ||
-      group.userGroupRelation === UserGroupRelation.MEMBER,
+    isAllowFetch: isAllowFetch,
   });
 
   return (
@@ -44,30 +45,29 @@ const GroupPosts = () => {
             <CreatePostPrompt setPosts={setPosts} groupId={group._id} />
           </div>
         )}
-      <InfiniteScroll
-        items={posts}
-        loadMore={loadMorePosts}
-        renderItem={(post) => (
-          <PostCard
-            key={post._id}
-            post={post}
-            setPosts={setPosts}
-            group={group}
-          />
-        )}
-      />
+      {isAllowFetch && (
+        <InfiniteScroll
+          items={posts}
+          loadMore={loadMorePosts}
+          renderItem={(post) => (
+            <PostCard
+              key={post._id}
+              post={post}
+              setPosts={setPosts}
+              group={group}
+            />
+          )}
+        />
+      )}
 
       {/* Show a message if the user is not a member of the group and the group is private */}
-      {(group.userGroupRelation === UserGroupRelation.NOT_MEMBER ||
-        group.userGroupRelation === UserGroupRelation.OUTGOING_REQUEST) &&
-        posts.length === 0 &&
-        !isLoading && (
-          <div className="py-10 bg-white rounded-xl mt-3">
-            <p className="text-gray-500 text-center    ">
-              This group is private. Join the group to see posts.
-            </p>
-          </div>
-        )}
+      {!isAllowFetch && !isLoading && (
+        <div className="py-10 bg-white rounded-xl mt-3">
+          <p className="text-gray-500 text-center    ">
+            This group is private. Join the group to see posts.
+          </p>
+        </div>
+      )}
     </>
   );
 };

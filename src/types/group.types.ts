@@ -15,6 +15,7 @@ export type GroupCard = {
   memberCount: number;
   admin?: UserInformation;
   rejectedReason?: string;
+  createdAt: string;
 };
 
 export type Group = {

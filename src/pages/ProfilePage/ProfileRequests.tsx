@@ -12,8 +12,7 @@ const ProfileRequests = () => {
   const { username } = useSelector(
     (state: RootState) => state.auth.user || { username: "" }
   );
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [friendRequests, setFriendRequests, fetchMoreRequests, isLoading] =
+  const [friendRequests, , fetchMoreRequests, isLoading] =
     useInfiniteScroll<FriendRequestCardType>({
       endpoint: "/api/users/me/friends/pending-requests",
       limit: 10,

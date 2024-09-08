@@ -15,6 +15,7 @@ const ProtectedRoute = () => {
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Fetch unread notification count
   useEffect(() => {
     // fetch unread notification count if user is authenticated and not banned
     if (user && user.status !== UserStatus.BANNED) {
@@ -22,6 +23,7 @@ const ProtectedRoute = () => {
     }
   }, [dispatch, user]);
 
+  // Sync offline reactions
   useEffect(() => {
     let delay = 2500; // Initial delay of 2.5 seconds x2 (5 seconds)
     const maxDelay = 30000; // Maximum delay of 30 seconds

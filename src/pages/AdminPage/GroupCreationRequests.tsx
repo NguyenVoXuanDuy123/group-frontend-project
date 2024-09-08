@@ -12,14 +12,12 @@ const GroupCreationRequests = () => {
     role: UserRole.USER,
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [groups, setGroups, loadMoreGroups, isLoading] =
-    useInfiniteScroll<GroupCard>({
-      endpoint: `/api/groups/admin/creation-requests`,
-      limit: 10,
-      // Only allow fetching if the user is an admin
-      isAllowFetch: role === UserRole.ADMIN,
-    });
+  const [groups, , loadMoreGroups, isLoading] = useInfiniteScroll<GroupCard>({
+    endpoint: `/api/groups/admin/creation-requests`,
+    limit: 10,
+    // Only allow fetching if the user is an admin
+    isAllowFetch: role === UserRole.ADMIN,
+  });
 
   if (role !== UserRole.ADMIN) {
     return <NoPage />;

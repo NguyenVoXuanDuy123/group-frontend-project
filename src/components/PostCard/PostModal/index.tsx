@@ -76,7 +76,11 @@ export const PostModal = ({
         {open ? (
           <>
             <PostCard setPosts={setPosts} inModal post={post} />
-            {(group?.userGroupRelation === UserGroupRelation.ADMIN ||
+            {/* 
+              If the group passed, user is a member of the group and can comment
+            */}
+            {(!group ||
+              group?.userGroupRelation === UserGroupRelation.ADMIN ||
               group?.userGroupRelation === UserGroupRelation.MEMBER) && (
               <CommentPrompt
                 onSubmit={createNewComment}
