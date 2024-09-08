@@ -21,7 +21,7 @@ const SideBarLeft = () => {
   return (
     <div className="sticky h-[calc(100vh-80px)] top-20 w-80 p-4 flex flex-col justify-between bg-white">
       <div className="flex flex-1 flex-col justify-between">
-        <div className="mt-4">
+        <div className="">
           <Link to={`/`} className="text-black no-underline">
             <TabItem title="News Feed" icon={<NewsFeedIcon />} />
           </Link>

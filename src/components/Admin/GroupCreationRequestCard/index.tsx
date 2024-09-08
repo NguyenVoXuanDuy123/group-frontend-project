@@ -70,7 +70,8 @@ const GroupCreationRequestCard = ({
     <>
       <div
         onClick={openGroupModal}
-        className="bg-white border rounded-xl p-6 hover:bg-grey/60 cursor-pointer w-full h-[200px]">
+        className="bg-white border rounded-xl p-6 hover:bg-light-grey cursor-pointer w-full h-[200px]"
+      >
         <div className="flex justify-between items-start">
           <div>
             <h3 className="text-xl font-semibold">
@@ -87,7 +88,8 @@ const GroupCreationRequestCard = ({
                   GroupVisibilityLevel.PUBLIC
                     ? "bg-green-100 text-green-800"
                     : "bg-yellow-100 text-yellow-800"
-                }`}>
+                }`}
+              >
                 {capitalizeFirstLetter(groupCreationRequest.visibilityLevel)}
               </span>
             </div>
@@ -114,12 +116,14 @@ const GroupCreationRequestCard = ({
             <div className="z-30 space-x-2 relative">
               <button
                 onClick={openRejectModal}
-                className="px-4 py-2 text-sm bg-dark-grey text-white rounded-md font-medium">
+                className="px-4 py-2 text-sm bg-dark-grey text-white rounded-md font-medium"
+              >
                 Reject
               </button>
               <button
                 onClick={handleApprove}
-                className="px-4 py-2 text-sm bg-primary text-white rounded-md font-medium">
+                className="px-4 py-2 text-sm bg-primary text-white rounded-md font-medium"
+              >
                 Approve
               </button>
             </div>

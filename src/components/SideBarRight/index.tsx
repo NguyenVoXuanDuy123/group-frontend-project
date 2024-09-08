@@ -29,7 +29,7 @@ const SideBarRight = () => {
 
   return (
     <div className="sticky top-20 w-80 h-[calc(100vh-80px)] p-4 bg-white">
-      <div className="my-4">
+      <div className="">
         <h2 className="text-lg font-bold mb-1">Friends</h2>
         {friends.map((friend) => {
           return (

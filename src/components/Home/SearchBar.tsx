@@ -61,7 +61,7 @@ export default function SearchBar() {
                   setPopoverOpen(false);
                 }}
               >
-                <GroupIcon className="mr-2 h-4 w-4" />
+                <FriendIcon className="mr-2 h-4 w-4" />
                 <span>User</span>
               </button>
               <button
@@ -71,7 +71,7 @@ export default function SearchBar() {
                   setPopoverOpen(false);
                 }}
               >
-                <FriendIcon className="mr-2 h-4 w-4" />
+                <GroupIcon className="mr-2 h-4 w-4" />
                 <span>Group</span>
               </button>
             </div>
