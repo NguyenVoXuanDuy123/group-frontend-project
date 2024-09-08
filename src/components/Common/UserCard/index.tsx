@@ -38,15 +38,13 @@ const UserCard = ({
          * If the user displayed is the authenticated user, display "You" instead of the mutual friend
          */}
         {authUserUsername !== username ? (
-          mutualFriendCount && (
-            <Link
-              to={`/${username}/friends`}
-              className="text-black no-underline h-[16px] ">
-              <span className="ml-4 cursor-pointer text-xs text-dark-grey hover:underline">
-                {mutualFriendCount + " mutual friends"}
-              </span>
-            </Link>
-          )
+          <Link
+            to={`/${username}/friends`}
+            className="text-black no-underline h-[16px] ">
+            <span className="ml-4 cursor-pointer text-xs text-dark-grey hover:underline">
+              {mutualFriendCount ? mutualFriendCount + " mutual friends" : ""}
+            </span>
+          </Link>
         ) : (
           <>
             <div className="h-1"></div>

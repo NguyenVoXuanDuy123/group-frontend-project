@@ -75,8 +75,7 @@ const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
             className="text-dark-grey font-semibold cursor-pointer hover:underline"
             onClick={() => {
               navigate(`/${user.username}/friends`);
-            }}
-          >
+            }}>
             {abbreviateNumber(user.friendCount) + " friends "}{" "}
             {user.userFriendRelation !== UserFriendRelation.SELF &&
               "• " + user.mutualFriendCount + " mutual"}
@@ -89,7 +88,9 @@ const ProfileHeader = ({ user, setUser }: ProfileHeaderProps) => {
 
         {/* Edit Profile Action */}
 
-        <ProfileActions user={user} setUser={setUser} />
+        {role !== UserRole.ADMIN && (
+          <ProfileActions user={user} setUser={setUser} />
+        )}
       </div>
 
       {/* Navigation Links */}

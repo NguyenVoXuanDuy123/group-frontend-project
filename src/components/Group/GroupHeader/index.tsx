@@ -3,9 +3,12 @@ import TabItem from "@/components/Profile/ProfileHeader/TabItem";
 import GlobalIcon from "@/components/svg/GlobalIcon";
 import PrivateIcon from "@/components/svg/PrivateIcon";
 import { GroupVisibilityLevel, UserGroupRelation } from "@/enums/group.enums";
+import { UserRole } from "@/enums/user.enums";
 import { abbreviateNumber } from "@/helpers/abbreviateNumber";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
+import { RootState } from "@/redux/store";
 import { Group } from "@/types/group.types";
+import { useSelector } from "react-redux";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -15,6 +18,9 @@ type GroupHeaderProps = {
 };
 
 const GroupHeader = ({ group, setGroup }: GroupHeaderProps) => {
+  const { role } = useSelector(
+    (state: RootState) => state.auth.user || { role: UserRole.USER }
+  );
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -47,8 +53,7 @@ const GroupHeader = ({ group, setGroup }: GroupHeaderProps) => {
                   ) {
                     navigate(`/groups/${group._id}/members`);
                   }
-                }}
-              >
+                }}>
                 {abbreviateNumber(group.memberCount) + " members "}{" "}
               </span>
             </Link>
@@ -60,7 +65,9 @@ const GroupHeader = ({ group, setGroup }: GroupHeaderProps) => {
         </div>
 
         {/* Group Actions */}
-        <GroupActions group={group} setGroup={setGroup} />
+        {role !== UserRole.ADMIN && (
+          <GroupActions group={group} setGroup={setGroup} />
+        )}
       </div>
 
       {/* Navigation Links */}
